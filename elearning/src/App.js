@@ -1,10 +1,18 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Login from './pages/Login/Login'
+import Header from './component/Header/Header'
+import Footer from './component/Footer/Footer'
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-        <p>Wellcome Elearning</p>
+    <div style={{minHeight:'721px'}}>
+        <Header/>
+        <div >
+          <Outlet/>
+        </div>
+        <Footer/>
     </div>
   );
 }
