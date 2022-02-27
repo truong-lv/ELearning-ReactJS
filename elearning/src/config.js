@@ -6,6 +6,6 @@ export const regexPhone=new RegExp(/^\d{3,15}$/)
 export const regexEmail=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
 
 //ROLE ID
-export const adminRole=0
-export const staffRole=1
-export const customerRole=2
+export const ROLE_USER=0
+export const ROLE_MODERATOR=1
+export const ROLE_TEACHER=2

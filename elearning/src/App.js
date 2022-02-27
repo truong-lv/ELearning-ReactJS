@@ -1,14 +1,17 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Login from './pages/Login/Login'
 import Header from './component/Header/Header'
 import Footer from './component/Footer/Footer'
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
-    <div style={{'min-height':'721px'}}>
+    <div style={{minHeight:'721px'}}>
         <Header/>
-        <Login/>
+        <div >
+          <Outlet/>
+        </div>
         <Footer/>
     </div>
   );

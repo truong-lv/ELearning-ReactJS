@@ -1,13 +1,12 @@
 import Navbar from "../../component/Navbar/Nabar"
 
 
-
-function Coures(){
+function Infor(){
     return (
         <>
             <Navbar/>
-            <h2>Wellcome Coures</h2>
+            <h2>Wellcome Infor </h2>
         </>
     )
 }
-export default Coures
+export default Infor

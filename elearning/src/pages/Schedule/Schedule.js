@@ -1,8 +1,11 @@
-
+import Navbar from "../../component/Navbar/Nabar"
 
 function Schedule(){
     return (
-        <h2>Wellcome Coures</h2>
+        <>
+        <Navbar/>
+        <h2>Wellcome Schedule</h2>
+        </>
     )
 }
 export default Schedule

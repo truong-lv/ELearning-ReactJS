@@ -1,7 +1,11 @@
-const loginReducer=(state=false,action)=>{
+const initialState = {
+    value:false
+    }
+
+const loginReducer=(state=initialState,action)=>{
     switch(action.type){
         case 'SET_LOGIN':{
-            return action.payload
+            return {value:action.payload}
         }
         default:
             return state

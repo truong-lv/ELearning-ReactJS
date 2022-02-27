@@ -13,9 +13,16 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import './HeaderStyle.css';
 
+import banner from './banner.png'
+
+import { useSelector} from 'react-redux'
+
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const username=useSelector(state=>state.infor.username)
+  const userRoles=useSelector(state=>state.infor.roles)
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -105,7 +112,7 @@ export default function Header() {
   );
 
   return (
-    <div  style={{ height: '50px !important'}}>
+    <div>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -128,6 +135,7 @@ export default function Header() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {userRoles.some(role => role=="ROLE_USER")&&
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
@@ -136,9 +144,9 @@ export default function Header() {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton>}
             
-            <p>Username</p>
+            <p>{username}</p>
             <IconButton
               size="large"
               edge="end"
@@ -168,6 +176,12 @@ export default function Header() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
+    <img
+        src={banner}
+        alt="ptit"
+        loading="lazy"
+        style={{width: '100%', height: '150px'}}
+      />
     </div>
   );
 }

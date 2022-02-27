@@ -6,7 +6,7 @@ export default function Footer(){
         left: '0px',
         bottom: '0px',
         background: '#ffff',
-        'border-top': '10px solid #009FE5'   
+        borderTop: '10px solid #009FE5'   
     }
     return(
         <div className="footer" style={{...style}}>

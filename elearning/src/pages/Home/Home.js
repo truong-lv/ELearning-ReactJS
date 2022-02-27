@@ -1,8 +1,12 @@
+import Navbar from "../../component/Navbar/Nabar"
 
 
 function Home(){
     return (
-        <h2>Wellcome Coures</h2>
+        <>
+        <Navbar/>
+        <h2>Wellcome Home</h2>
+        </>
     )
 }
 export default Home
