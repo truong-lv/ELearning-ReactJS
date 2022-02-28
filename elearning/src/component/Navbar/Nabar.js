@@ -25,22 +25,21 @@ export default function Navbar() {
     <Tabs className="navbar-container"
       value={value}
       onChange={handleChange}
-      aria-label="icon position tabs example"
     >
         <NavLink className="navLink" to='/home'>
-            <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ" style={{color:'#FFFFFF'}}/>
+            <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ"/>
         </NavLink>
         <NavLink className="navLink" to='/coures'>
-            <Tab label="KHÓA HỌC" style={{color:'#ffff'}}/>
+            <Tab label="KHÓA HỌC"/>
         </NavLink>
         <NavLink className="navLink" to='/schedule'>
-            <Tab label="TKB" style={{color:'#ffff'}}/>
+            <Tab label="TKB"/>
         </NavLink>
         <NavLink className="navLink" to='/infor'>
-            <Tab label="TRANG CÁ NHÂN" style={{color:'#ffff'}}/>
+            <Tab label="TRANG CÁ NHÂN"/>
         </NavLink>
         <NavLink className="navLink" to='/home'>
-            <Tab label="HƯỚNG DẪN" style={{color:'#ffff'}}/>
+            <Tab label="HƯỚNG DẪN"/>
         </NavLink>
     </Tabs>
   );

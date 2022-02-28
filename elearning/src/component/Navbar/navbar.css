@@ -1,5 +1,6 @@
 .navbar-container{
     background:#3171B9;
+    display:flex;
 }
 .navLink{
     text-decoration: none;
