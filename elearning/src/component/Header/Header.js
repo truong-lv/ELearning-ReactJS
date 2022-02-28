@@ -13,7 +13,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import './HeaderStyle.css';
 
-import banner from './banner.png'
+import Banner from './banner'
 
 import { useSelector} from 'react-redux'
 
@@ -176,12 +176,7 @@ export default function Header() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
-    <img
-        src={banner}
-        alt="ptit"
-        loading="lazy"
-        style={{width: '100%', height: '150px'}}
-      />
+    <Banner/>
     </div>
   );
 }
