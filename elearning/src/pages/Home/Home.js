@@ -43,7 +43,6 @@ function Home(){
         }).catch(error => console.log(error))
     },[])
 
-
     return (
         <Fragment>
             <Navbar/>
@@ -63,7 +62,6 @@ function Home(){
                                 <div className="top-post">
                                     <Post listPost={listNewPost}/>
                                 </div>
-                                
                             </Grid>
                         </Grid>
                         <Grid container item md={3} xs={12} direction='column' rowSpacing={2}>
