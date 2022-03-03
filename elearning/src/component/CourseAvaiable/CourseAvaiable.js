@@ -11,37 +11,36 @@ import courseIcon from "../../assets/image/course-icon.png"
 function Course({course}){
     return(
         <Grid item xs={4} md={3} >
-            <Card className="course-box" sx={{ maxWidth: 345 }}>
+            <Card className="course-box" >
                 <CardActionArea>
-                    <div className="course-img" ><img src={courseIcon}/></div>
+                    <div className="course-img" ><img src={courseIcon} alt={course.subjectName} /></div>
                     <CardContent>
-                    <Typography variant="h6" component="div" align="center">
+                    <Typography variant="body1" component="div" align="center" noWrap>
                         {course.subjectName}
                     </Typography>
                     <Typography variant="body2" align="center">
-                    {course.teachers.reduce((pre,cur)=>(pre+', '+cur))}
+                    {course.teachers.reduce((pre,cur)=>(pre+'\n'+cur))}
                     </Typography>
                     <Typography variant="body2" align="center">
                     {course.departmentName}
                     </Typography>
                     <Typography variant="caption" color="text.secondary" align="center">
-                    {'Học kỳ '+course.semester+'-'+'Năm học'+course.schoolYear}
+                    Học kỳ {course.semester}-Năm học {course.schoolYear}
                     </Typography>
                     </CardContent>
                 </CardActionArea>
-            </Card><br/>
+            </Card>
         </Grid>
     )
 }
 
 export default function CouresAvaiable(courses){
-    const [date, setDate] = React.useState(new Date());
     return(
         <React.Fragment>
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                 KHÓA HỌC HIỆN CÓ
             </Typography>
-                <Grid container spacing={2}>
+                <Grid container columnSpacing={2}>
                     {courses.courses.map((course)=>{return <Course key={course.creditClassId} course={course}/>})}
                 </Grid>
         </React.Fragment>
