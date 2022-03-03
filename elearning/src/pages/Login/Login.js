@@ -1,11 +1,11 @@
 import {useState} from 'react';
-import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { setInfor, setLogin } from '../../actions/action';
 import Footer from '../../component/Footer/Footer';
 import Banner from '../../component/Header/banner'
-import background from './background-login.png'
+import background from '../../assets/image/background-login.png'
 
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -20,8 +20,11 @@ function Login(){
     const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [isValid, setValid] = useState('none');
     const dispatch = useDispatch()
     let navigate = useNavigate();
+
+
     const handleChangeAccount = (event) => {
         setAccount(event.target.value);
         // console.log(event.target.value)
@@ -56,6 +59,7 @@ function Login(){
             navigate("/home");
         })
         .catch(function (error) {
+            setValid('block')
             console.log(error);
         });        
     }
@@ -71,7 +75,7 @@ function Login(){
         <div >
             <Banner/>
             <div style={{display:'flex', marginTop:'20px',justifyContent:'center'}}>
-            <img src={background} style={{width: '30%', height: 'auto'}}/>
+            <img src={background} alt="Login" style={{width: '30%', height: 'auto'}}/>
             <div style={{border: '1px solid #CCCCCC', display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',background:'#FFFF'}}>
                 <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Username</InputLabel>
@@ -104,7 +108,7 @@ function Login(){
                         }
                         label="Password"
                     />
-                </FormControl><br/>
+                </FormControl><strong style={{color:"red", display:`${isValid}`}}>Tài khoản hoặc mật khẩu không hợp lệ !!</strong><br/>
                 <Button variant="contained" 
                 size="large" 
                 type="submit"

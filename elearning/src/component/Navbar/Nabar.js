@@ -1,10 +1,8 @@
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
-import Box from '@mui/material/Box';
 import SvgIcon from '@mui/material/SvgIcon';
 import { NavLink } from 'react-router-dom';
+import Container from '@mui/material/Container';
 import './navbar.css'
 
 function HomeIcon(props) {
@@ -15,32 +13,26 @@ function HomeIcon(props) {
   );
 }
 export default function Navbar() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
-    <Tabs className="navbar-container"
-      value={value}
-      onChange={handleChange}
-    >
-        <NavLink className="navLink" to='/home'>
-            <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ"/>
-        </NavLink>
-        <NavLink className="navLink" to='/coures'>
-            <Tab label="KHÓA HỌC"/>
-        </NavLink>
-        <NavLink className="navLink" to='/schedule'>
-            <Tab label="TKB"/>
-        </NavLink>
-        <NavLink className="navLink" to='/infor'>
-            <Tab label="TRANG CÁ NHÂN"/>
-        </NavLink>
-        <NavLink className="navLink" to='/home'>
-            <Tab label="HƯỚNG DẪN"/>
-        </NavLink>
-    </Tabs>
+    <div className="navbar-container">
+      <Container maxWidth="lg" style={{display:'flex'}}>
+          <NavLink className="navLink" to='/home'>
+              <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ"/>
+          </NavLink>
+          <NavLink className="navLink" to='/coures'>
+              <Tab label="KHÓA HỌC"/>
+          </NavLink>
+          <NavLink className="navLink" to='/schedule'>
+              <Tab label="TKB"/>
+          </NavLink>
+          <NavLink className="navLink" to='/infor'>
+              <Tab label="TRANG CÁ NHÂN"/>
+          </NavLink>
+          <NavLink className="navLink" to='/home'>
+              <Tab label="HƯỚNG DẪN"/>
+          </NavLink>
+        </Container>
+    </div>
   );
 }

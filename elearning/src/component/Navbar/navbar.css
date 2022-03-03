@@ -1,11 +1,9 @@
 .navbar-container{
     background:#3171B9;
-    display:flex;
+    margin-bottom:15px;
 }
 .navLink{
     text-decoration: none;
-    color: white;
-    padding: 0;
-    margin: 0;
-    text-align: center
+    color: #FFFFFF;
+    display:flex
 }

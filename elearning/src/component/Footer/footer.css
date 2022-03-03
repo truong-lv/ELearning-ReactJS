@@ -1,0 +1,34 @@
+.footer-container{
+    display: flex;
+    width: 100%;
+    height: 280px;
+    background: #ffff;
+    border-top: 10px solid #009FE5 ;
+    margin-top:30px;
+    padding: 50px 130px
+}
+
+
+.footer_infor{
+    display: flex;
+    width: 70%;
+    justify-content: space-around;
+}
+.footer_infor>div{
+    width:30%;
+}
+
+.link-infor{
+    display:block;
+    color:black;
+    margin-top:5px;
+    word-wrap:break-word;
+}
+
+.infor_title{
+    font-family: 'Average';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+}

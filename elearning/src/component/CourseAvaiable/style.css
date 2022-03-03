@@ -1,0 +1,9 @@
+
+.course-img{
+    display: flex;
+    justify-content: center;
+}
+
+.course-box{
+    border: 1px solid rgba(62, 83, 207, 0.3);
+}
