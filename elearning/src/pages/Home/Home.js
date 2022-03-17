@@ -12,14 +12,16 @@ import Typography from '@mui/material/Typography';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import CalendarPicker from '@mui/lab/CalendarPicker';
+
 import './homeStyle.css'
 
 function Home(){
     const [listTopCourse, setListTopCourse]=useState([])
     const [listNewPost, setListNewPost]=useState([])
     const [date, setDate] = useState(new Date());
-
+    // const [loading, setLoading] = useState(true);
     useEffect(() => {
+        // setLoading(true)
         const token=localStorage.getItem('accessToken')
         axios.get('/api/credit-class/',{
             headers: {
@@ -28,6 +30,7 @@ function Home(){
         }).then((response) => {
             // console.log(response.data)
             setListTopCourse(response.data)
+            // setTimeout(()=>{setLoading(false)},1000);
         }).catch(error => console.log(error))
     },[])
 

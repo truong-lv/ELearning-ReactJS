@@ -1,7 +1,8 @@
 import {
     Routes,
     Route,
-    Outlet,Navigate
+    Outlet,Navigate,
+    useLocation
   } from "react-router-dom";
 
 import App from './App'
@@ -12,13 +13,26 @@ import Schedule from './pages/Schedule/Schedule'
 import Infor from './pages/Infor/Infor'
 import Notification from './pages/Notification/Notification'
 import Admin from './pages/Admin/Admin'
-
 import { useSelector} from 'react-redux'
 
 function CheckLogin() {
+    //get 
+    const location = useLocation();
+    const {pathname} = location;
+    document.title=pathname.charAt(1).toUpperCase()+ pathname.slice(2)
     const isLogin = useSelector(state => state.isLogin.value)
-    // const isinfor = useSelector(state => state.infor)
-    console.log(isLogin)
+    // if(!isLogin){
+    //     const token=localStorage.getItem('accessToken')
+    //     axios.get('/api/credit-class/',{
+    //         headers: {
+    //             'Authorization':`Bearer ${token}`
+    //         }
+    //     }).then((response) => {
+    //         // console.log(response.data)
+    //         setListTopCourse(response.data)
+    //         // setTimeout(()=>{setLoading(false)},1000);
+    //     }).catch(error => console.log(error))
+    // }
     return (
         isLogin?<Outlet/>:<Navigate to='/login'/>
     );
@@ -34,7 +48,7 @@ return (
                 <Route path="/schedule" element={<Schedule/>} />
                 <Route path="/infor" element={<Infor/>} />
                 <Route path="/notification" element={<Notification/>} />
-                <Route path="/admin" element={<Admin/>} />
+                {/* <Route path="/admin" element={<Admin/>} /> */}
             </Route>
         </Route>
         <Route path="/login" element={<Login/>} />

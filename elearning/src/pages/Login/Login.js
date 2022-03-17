@@ -15,11 +15,14 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 function Login(){
     const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const [isValid, setValid] = useState('none');
     const dispatch = useDispatch()
     let navigate = useNavigate();
@@ -34,6 +37,7 @@ function Login(){
         // console.log(event.target.value)
     };
     const handleLogin=()=>{
+        setLoading(true);
         // console.log({account,password})
         var data = JSON.stringify({
             username: account,
@@ -57,10 +61,12 @@ function Login(){
 
             localStorage.setItem('accessToken',accessToken)
             navigate("/home");
+            setLoading(false);
         })
         .catch(function (error) {
             setValid('block')
             console.log(error);
+            setLoading(false);
         });        
     }
 
@@ -109,12 +115,13 @@ function Login(){
                         label="Password"
                     />
                 </FormControl><strong style={{color:"red", display:`${isValid}`}}>Tài khoản hoặc mật khẩu không hợp lệ !!</strong><br/>
-                <Button variant="contained" 
+                <LoadingButton variant="contained" 
                 size="large" 
                 type="submit"
+                loading={loading}
                 onClick={handleLogin}>
                     Đăng nhập
-                </Button>
+                </LoadingButton>
             </div>
             </div>
             <Footer/>
