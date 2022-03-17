@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -14,10 +14,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Button from '@mui/material/Button';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-function Login(){
+function Login() {
     const [account, setAccount] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -43,14 +42,14 @@ function Login(){
             username: account,
             password: password
         });
-        
+
         var config = {
             method: 'post',
-            url: axios.defaults.baseURL+'/api/auth/signin',
-            headers: { 
+            url: axios.defaults.baseURL + '/api/auth/signin',
+            headers: {
                 'Content-Type': 'application/json'
-        },
-         data : data
+            },
+            data: data
         };
 
         axios(config)
@@ -73,26 +72,25 @@ function Login(){
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    
+
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    return(
+    return (
         <div >
-            <Banner/>
-            <div style={{display:'flex', marginTop:'20px',justifyContent:'center'}}>
-            <img src={background} alt="Login" style={{width: '30%', height: 'auto'}}/>
-            <div style={{border: '1px solid #CCCCCC', display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',background:'#FFFF'}}>
-                <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Username</InputLabel>
-                    <OutlinedInput
-                    
-                        id="outlined-adornment-password"
-                        type='text'
-                        value={account} onChange={handleChangeAccount}
-                        label="Username"
-                    />
-                </FormControl><br/>
+            <Banner />
+            <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center' }}>
+                <img src={background} alt="Login" style={{ width: '30%', height: 'auto' }} />
+                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF' }}>
+                    <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">Username</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            type='text'
+                            value={account} onChange={handleChangeAccount}
+                            label="Username"
+                        />
+                    </FormControl><br />
 
                 <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
@@ -124,7 +122,7 @@ function Login(){
                 </LoadingButton>
             </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

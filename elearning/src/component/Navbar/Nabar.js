@@ -16,23 +16,23 @@ export default function Navbar() {
 
   return (
     <div className="navbar-container">
-      <Container maxWidth="lg" style={{display:'flex'}}>
-          <NavLink className="navLink" to='/home'>
-              <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ"/>
-          </NavLink>
-          <NavLink className="navLink" to='/coures'>
-              <Tab label="KHÓA HỌC"/>
-          </NavLink>
-          <NavLink className="navLink" to='/schedule'>
-              <Tab label="TKB"/>
-          </NavLink>
-          <NavLink className="navLink" to='/infor'>
-              <Tab label="TRANG CÁ NHÂN"/>
-          </NavLink>
-          <NavLink className="navLink" to='/home'>
-              <Tab label="HƯỚNG DẪN"/>
-          </NavLink>
-        </Container>
+      <Container maxWidth="lg" style={{ display: 'flex' }}>
+        <NavLink className="navLink" to='/home'>
+          <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ" />
+        </NavLink>
+        <NavLink className="navLink" to='/course'>
+          <Tab label="KHÓA HỌC" />
+        </NavLink>
+        <NavLink className="navLink" to='/schedule'>
+          <Tab label="TKB" />
+        </NavLink>
+        <NavLink className="navLink" to='/infor'>
+          <Tab label="TRANG CÁ NHÂN" />
+        </NavLink>
+        <NavLink className="navLink" to='/home'>
+          <Tab label="HƯỚNG DẪN" />
+        </NavLink>
+      </Container>
     </div>
   );
 }

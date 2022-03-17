@@ -1,0 +1,25 @@
+
+.headingRole{
+    font-weight: bold !important;
+    color: #000000;
+    margin-top: 100px !important;
+}
+
+.listMember{
+    background-color: rgba(255,255,255, 1);
+    margin: 20px 0 40px 40px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    line-height: 2 !important;
+    padding-left: 20px;
+}
+
+.headingContainer{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(163, 163, 163);
+}
+
+.grayText{
+    color: rgba(0,0,0, 0.4);
+}

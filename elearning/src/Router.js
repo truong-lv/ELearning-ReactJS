@@ -7,13 +7,16 @@ import {
 
 import App from './App'
 import Home from './pages/Home/Home'
-import Coures from './pages/Coures/Coures'  
+import Course from './pages/Coures/Coures'
+import CourseDetail from './pages/Coures/CourseDetail'
 import Login from './pages/Login/Login'
 import Schedule from './pages/Schedule/Schedule'
 import Infor from './pages/Infor/Infor'
 import Notification from './pages/Notification/Notification'
 import Admin from './pages/Admin/Admin'
-import { useSelector} from 'react-redux'
+import Member from './pages/Members/Member.js'
+
+import { useSelector } from 'react-redux'
 
 function CheckLogin() {
     //get 
@@ -34,7 +37,8 @@ function CheckLogin() {
     //     }).catch(error => console.log(error))
     // }
     return (
-        isLogin?<Outlet/>:<Navigate to='/login'/>
+        isLogin ? <Outlet /> : <Navigate to='/login' />
+        // console.log(isLogin)
     );
 }
 
@@ -44,16 +48,18 @@ return (
         <Route element={<CheckLogin/>} >
             <Route path="/" element={<App/>}>
                 <Route path="/home" element={<Home/>} />
-                <Route path="/coures" element={<Coures/>} />
+                <Route path="/course" element={<Course/>} />
+                <Route path="/courseDetail" element={<CourseDetail />} />
+                <Route path="/member" element={<Member />} />
                 <Route path="/schedule" element={<Schedule/>} />
                 <Route path="/infor" element={<Infor/>} />
                 <Route path="/notification" element={<Notification/>} />
                 {/* <Route path="/admin" element={<Admin/>} /> */}
             </Route>
         </Route>
-        <Route path="/login" element={<Login/>} />
+        <Route path="/login" element={<Login />} />
     </Routes>
-);
+    );
 }
 export default Router;
 
