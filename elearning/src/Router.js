@@ -29,7 +29,7 @@ function CheckLogin() {
 function Router() {
     return (
         <Routes>
-            {/* <Route element={<CheckLogin />} >
+            <Route element={<CheckLogin />} >
                 <Route path="/" element={<App />}>
                     <Route path="/home" element={<Home />} />
                     <Route path="/course" element={<Course />} />
@@ -39,12 +39,7 @@ function Router() {
                     <Route path="/admin" element={<Admin />} />
                 </Route>
             </Route>
-            <Route path="/login" element={<Login />} /> */}
-            <Route path="/course" element={<Course />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/courseDetail" element={<CourseDetail />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/member" element={<Member />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
     );
 }
