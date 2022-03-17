@@ -15,21 +15,24 @@ import Typography from '@mui/material/Typography';
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import CalendarPicker from '@mui/lab/CalendarPicker';
+
+import './homeStyle.css'
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 function Home() {
     const [listTopCourse, setListTopCourse] = useState([])
     const [listNewPost, setListNewPost] = useState([])
     const [date, setDate] = useState(new Date());
-
+    // const [loading, setLoading] = useState(true);
     useEffect(() => {
-        const token = localStorage.getItem('accessToken')
-        axios.get('/api/credit-class/', {
+        // setLoading(true)
+        const token=localStorage.getItem('accessToken')
+        axios.get('/api/credit-class/',{
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            console.log(response.data)
+            
             setListTopCourse(response.data)
         }).catch(error => console.log(error))
     }, [])

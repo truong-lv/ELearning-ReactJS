@@ -17,9 +17,11 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
 import './HeaderStyle.css';
 import { useDispatch } from 'react-redux';
 import { setInfor, setLogin } from '../../actions/action';
+import stringAvatar from '../../myTool/handleAvatar';
 
 import Banner from './banner'
 
@@ -196,7 +198,7 @@ export default function Header() {
                 </Badge>
               </IconButton>}
               
-              <p style={{ lineHeight:'45px'}}>{username}</p>
+              <p style={{ lineHeight:'60px'}}>{username}</p>
               <IconButton
                 size="large"
                 edge="end"
@@ -206,7 +208,7 @@ export default function Header() {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <Avatar {...stringAvatar(username)} sizes='15'/>
               </IconButton>
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

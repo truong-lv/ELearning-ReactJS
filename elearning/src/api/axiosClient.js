@@ -13,8 +13,18 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config) => {
 // Handle token here ...
-
-    return config;
+    const customToken = {};
+    const token=localStorage.getItem('accessToken');
+    if(token) {
+        customToken.Authorization = `Bearer ${token}`;
+    }
+    return {
+        ...config,
+        headers: {
+            ...customToken,
+            ...config.headers
+        }
+    };
 })
 
 axiosClient.interceptors.response.use((response) => {
