@@ -6,9 +6,9 @@ import { Provider } from 'react-redux';
 import store from './store'
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
-import {REACT_API} from './config';
+import { REACT_API } from './config';
 import Router from './Router';
-axios.defaults.baseURL=REACT_API;
+axios.defaults.baseURL = REACT_API;
 
 ReactDOM.render(
   <Provider store={store}>
