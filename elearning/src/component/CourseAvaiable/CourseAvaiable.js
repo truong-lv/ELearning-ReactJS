@@ -10,7 +10,7 @@ import courseIcon from "../../assets/image/course-icon.png"
 
 function Course({course}){
     return(
-        <Grid item={true} xs={4} md={3}  >
+        <Grid item="true" xs={4} md={3}  >
             <Card className="course-box" title={course.subjectName}>
                 <CardActionArea>
                     <div className="course-img" ><img src={courseIcon} /></div>
@@ -35,7 +35,7 @@ function Course({course}){
 }
 
 export default function CouresAvaiable(courses) {
-    console.log(courses.courses)
+    // console.log(courses.courses)
     return (
         <React.Fragment>
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">
