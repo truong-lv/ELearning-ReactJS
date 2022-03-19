@@ -58,6 +58,10 @@ function Router() {
                 </Route>
             </Route>
             <Route path="/login" element={<Login />} />
+            {/* <Route path="/courseDetail" element={<CourseDetail />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/course" element={<Course />} /> */}
+
         </Routes>
     )
 }

@@ -35,7 +35,6 @@ function Course({ course }) {
 }
 
 export default function CouresAvaiable(courses) {
-    console.log(courses.courses)
     return (
         <React.Fragment>
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">
