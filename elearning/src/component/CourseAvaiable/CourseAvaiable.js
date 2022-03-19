@@ -8,8 +8,8 @@ import { CardActionArea } from '@mui/material';
 import './style.css'
 import courseIcon from "../../assets/image/course-icon.png"
 
-function Course({course}){
-    return(
+function Course({ course }) {
+    return (
         <Grid item={true} xs={4} md={3}  >
             <Card className="course-box" title={course.subjectName}>
                 <CardActionArea>
@@ -35,7 +35,6 @@ function Course({course}){
 }
 
 export default function CouresAvaiable(courses) {
-    console.log(courses.courses)
     return (
         <React.Fragment>
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">
