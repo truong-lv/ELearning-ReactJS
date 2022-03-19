@@ -19,9 +19,9 @@ export default function Footer(){
             <div className="footer_infor" >
                 <div >
                     <h2 className="infor_title">THÔNG TIN</h2>
-                    <a className="link-infor" href="https://ptithcm.edu.vn/" >Trường học viễn công nghệ bưu chính viễn thông HCM</a>
+                    <a className="link-infor" href="https://ptithcm.edu.vn/" >Trường học viện công nghệ bưu chính viễn thông HCM</a>
                     <br/>
-                    <a className="link-infor" href="https://fit.ptithcm.edu.vn/bai-giang" >Khoa CNTT 2 học viễn công nghệ bưu chính viễn thông HCM</a>
+                    <a className="link-infor" href="https://fit.ptithcm.edu.vn/bai-giang" >Khoa CNTT 2 học viện công nghệ bưu chính viễn thông HCM</a>
                 </div>
                 <div>
                     <h2 className="infor_title">LIÊN HỆ</h2>
