@@ -58,6 +58,7 @@ const department = [
 
 function Course() {
 
+    const colHeight = 'value'
     const [schoolYear, setSchoolYear] = useState('')
     const [semester, setSemester] = useState('')
     const [department, setDepartment] = useState('')
@@ -95,10 +96,10 @@ function Course() {
                     <Grid container columnSpacing={4}>
                         <Grid container item md={6} lg={12} xs={12} direction="column" rowSpacing={2}>
                             <Grid item>
-                                <Typography variant="h5" component="div" color="red" fontWeight="bold" >
+                                <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                                     CÁC KHÓA HỌC HIỆN TẠI (? - ?)
                                     <Container style={{ border: '1px solid #000', padding: '20px 30px', marginTop: '20px' }}>
-                                        <CourseAvaiable courses={listCurrentCourses} />
+                                        <CourseAvaiable courses={listCurrentCourses}/>
                                     </Container>
                                 </Typography>
                             </Grid>

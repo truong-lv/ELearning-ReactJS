@@ -1,9 +1,9 @@
 import {
     Routes,
     Route,
-    Outlet,Navigate,
+    Outlet, Navigate,
     useLocation
-  } from "react-router-dom";
+} from "react-router-dom";
 
 import App from './App'
 import Home from './pages/Home/Home'
@@ -21,8 +21,8 @@ import { useSelector } from 'react-redux'
 function CheckLogin() {
     //get 
     const location = useLocation();
-    const {pathname} = location;
-    document.title=pathname.charAt(1).toUpperCase()+ pathname.slice(2)
+    const { pathname } = location;
+    document.title = pathname.charAt(1).toUpperCase() + pathname.slice(2)
     const isLogin = useSelector(state => state.isLogin.value)
     // if(!isLogin){
     //     const token=localStorage.getItem('accessToken')
@@ -43,23 +43,27 @@ function CheckLogin() {
 }
 
 function Router() {
-return (
-    <Routes>
-        <Route element={<CheckLogin/>} >
-            <Route path="/" element={<App/>}>
-                <Route path="/home" element={<Home/>} />
-                <Route path="/course" element={<Course/>} />
-                <Route path="/courseDetail" element={<CourseDetail />} />
-                <Route path="/member" element={<Member />} />
-                <Route path="/schedule" element={<Schedule/>} />
-                <Route path="/infor" element={<Infor/>} />
-                <Route path="/notification" element={<Notification/>} />
-                {/* <Route path="/admin" element={<Admin/>} /> */}
+    return (
+        <Routes>
+            <Route element={<CheckLogin />} >
+                <Route path="/" element={<App />}>
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/course" element={<Course />} />
+                    <Route path="/courseDetail" element={<CourseDetail />} />
+                    <Route path="/member" element={<Member />} />
+                    <Route path="/schedule" element={<Schedule />} />
+                    <Route path="/infor" element={<Infor />} />
+                    <Route path="/notification" element={<Notification />} />
+                    <Route path="/admin" element={<Admin />} />
+                </Route>
             </Route>
-        </Route>
-        <Route path="/login" element={<Login />} />
-    </Routes>
-    );
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/courseDetail" element={<CourseDetail />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/course" element={<Course />} /> */}
+
+        </Routes>
+    )
 }
 export default Router;
 
