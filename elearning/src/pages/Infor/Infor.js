@@ -1,6 +1,8 @@
 import Navbar from "../../component/Navbar/Nabar"
 import Container from '@mui/material/Container';
 import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin, setInfor } from "../../actions/action";
 
 import style from "./style.module.scss"
 import Box from '@mui/material/Box';
@@ -14,13 +16,32 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 import stringAvatar from '../../myTool/handleAvatar';
 import axios from 'axios'
 
+
 function Infor(){
     const [userInfo,setUserInfo]=useState({})
     const [open, setOpen] = useState(false);
+    const [openToast, setOpenToast] = useState(true);
+    
+    const [oldPass, setOldPass] = useState('');
+    const [isValidOldPass, setIsValidOldPass] = useState(false);
+
+    const [newPass, setNewPass] = useState('');
+    const [isValidNewPass, setIsValidNewPass] = useState(false);
+
+    const [confirmPass, setConfirmPass] = useState('');
+    const [isValidConfirmPass, setIsValidConfirmPass] = useState(false);
+
+    const dispatch = useDispatch();
+    const username=useSelector(state=>state.infor.username)
 
     useEffect(() => {
         const token=localStorage.getItem('accessToken')
@@ -40,35 +61,49 @@ function Infor(){
         setOpen(true);
     };
 
+    const verification=()=>{
+        var data = JSON.stringify({
+            username: username,
+            password: oldPass
+        });
+
+        var config = {
+            method: 'post',
+            url: axios.defaults.baseURL + '/api/auth/signin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+        .then(function (response) {
+            let {accessToken,...infor}=response.data
+            dispatch(setInfor(infor));
+            dispatch(setLogin(true));
+
+            localStorage.setItem('accessToken',accessToken)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });        
+    }
+    const handleChangeOldPass = (event) => {
+        setOldPass(event.target.value);
+    };
+    const handleChangeNewPass = (event) => {
+        setNewPass(event.target.value);
+    };
+    const handleChangeConfirmdPass = (event) => {
+        setConfirmPass(event.target.value);
+    };
+
+    const handleChangePass= () => {
+        
+    }
     const handleClose = () => {
         setOpen(false);
     };
-
-    function DialogChangePassword(isOpen){
-        return (
-            <Dialog
-                open={isOpen}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                {"Use Google's location service?"}
-                </DialogTitle>
-                <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Đổi mật khẩu
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Button onClick={handleClose}>Disagree</Button>
-                <Button onClick={handleClose} autoFocus>
-                    Agree
-                </Button>
-                </DialogActions>
-            </Dialog>
-        )
-    }
 
     return (
         <Fragment>
@@ -142,7 +177,7 @@ function Infor(){
                         />
                     </Grid>
                     <Grid item="true" md={12}>
-                        <Button variant="outlined" onClick={handleClickOpen}>
+                        <Button variant="contained" onClick={handleClickOpen}>
                             Đổi mật khẩu
                         </Button>
                         <Dialog
@@ -152,23 +187,68 @@ function Infor(){
                         aria-describedby="alert-dialog-description"
                         >
                             <DialogTitle id="alert-dialog-title">
-                            {"Use Google's location service?"}
+                            Đổi mật khẩu
                             </DialogTitle>
                             <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                Đổi mật khẩu
-                            </DialogContentText>
+                                <DialogContentText id="alert-dialog-description">
+                                <TextField label="Mật khẩu cũ" color="primary" fullWidth="true"
+                                focused
+                                margin="dense"
+                                onChange={handleChangeOldPass}
+                                // error="true"
+                                // helperText="Incorrect entry."
+                                />
+                                <div className={style.txtNewPass}>
+                                <TextField label="Mật khẩu mới" color="success" fullWidth="true"
+                                focused
+                                margin="dense"
+                                onChange={handleChangeNewPass}
+                                />
+                                 <TextField label="Nhập lại mật khẩu mới" color="success" fullWidth="true"
+                                focused
+                                margin="dense"
+                                onChange={handleChangeConfirmdPass}
+                                /></div>
+                                </DialogContentText>
                             </DialogContent>
                             <DialogActions>
-                            <Button onClick={handleClose}>Disagree</Button>
-                            <Button onClick={handleClose} autoFocus>
-                                Agree
+                            <Button onClick={handleClose}>Hủy</Button>
+                            <Button onClick={handleChangePass} autoFocus>
+                                Xác nhận
                             </Button>
                             </DialogActions>
                         </Dialog>
                     </Grid>
                     
                 </Grid>
+                <Snackbar 
+                open={openToast} 
+                sx={{ width: '100%' }} spacing={2}
+                anchorOrigin={{ vertical:'top', horizontal:'right' }} 
+                autoHideDuration={2000} 
+                onClose={() => {
+                    setOpenToast(false);
+                }}
+                
+                >
+                    <Alert severity="success" action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setOpenToast(false);
+                        }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
+                    sx={{ mb: 2 }}>
+                        <AlertTitle>Thành công</AlertTitle>
+                        Cập nhập mật khẩu thành công
+                    </Alert>
+                </Snackbar>
+                    
             </Container>
             </Box>
           </Container>
