@@ -2,6 +2,8 @@
 import { Fragment } from 'react'
 import { Typography } from '@mui/material'
 
+import clsx from 'clsx'
+
 import style from './CreditClass.module.scss'
 
 export default function CreditClassFolder({ folders }) {
@@ -11,7 +13,7 @@ export default function CreditClassFolder({ folders }) {
                 <ul className={style.listFolder}>
                     {folders.map((value) => {
                         return (
-                            <li className={style.listFolderItem} key={value.folderId}>{value.folderName}</li>
+                            <li className={clsx(style.listFolderItem, style.fwBold)} key={value.folderId}>{value.folderName}</li>
                         )
                     })}
                 </ul>
