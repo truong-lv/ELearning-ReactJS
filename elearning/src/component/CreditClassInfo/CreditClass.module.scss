@@ -3,6 +3,11 @@
     font-weight: bold !important;
 }
 
+.dlFlex{
+    display: flex;
+}
+
+
 //-------------------------CreditClassInfo-------------------------
 
 .listInfo{
@@ -21,9 +26,7 @@
     min-width: 300px;
 }
 
-.dlFlex{
-    display: flex;
-}
+
 
 //-------------------------CreditClassExercise-------------------------
 
@@ -68,3 +71,23 @@
     border-radius: 10px;
 }
 
+
+
+//-------------------------CreditClassPosts-------------------------
+
+.postContainer{
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.userAvatar{
+    padding-right: 20px;
+}
+
+.postTime{
+    margin-left: auto !important;
+}
+
+.postContent{
+    margin-top: 40px;
+}

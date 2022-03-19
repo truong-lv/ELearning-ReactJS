@@ -39,13 +39,13 @@ function CourseDetail() {
                     <Grid container columnSpacing={4}>
                         <Grid container item md={9} xs={12} direction='column' rowSpacing={2}>
                             <Grid item>
-                                <Typography gutterBottom variant="h4" component="div" color="#2980B9">Thông tin môn học</Typography>
+                                <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Thông tin môn học</Typography>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassInfo info={info} />
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography variant="h3" component="div" color="black">POSTS</Typography>
+                                <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>POSTS</Typography>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassPosts posts={info.listPost} />
                                 </Typography>
@@ -53,13 +53,13 @@ function CourseDetail() {
                         </Grid>
                         <Grid container item md={3} xs={12} direction='column' rowSpacing={2}>
                             <Grid item>
-                                <Typography gutterBottom variant="h4" component="div" color="red">Tài liệu chia sẻ</Typography>
+                                <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Tài liệu chia sẻ</Typography>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassFolder folders={info.folders} />
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography variant="h6" component="div" color="red">Bài tập đã giao</Typography>
+                                <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Bài tập đã giao</Typography>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassExercise exercises={info.excercises} />
                                 </Typography>
