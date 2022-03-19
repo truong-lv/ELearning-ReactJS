@@ -23,6 +23,7 @@ function Home() {
     const [listTopCourse, setListTopCourse] = useState([])
     const [listNewPost, setListNewPost] = useState([])
     const [date, setDate] = useState(new Date());
+    const [unseenNoti,setUnseenNoti]=useState(0)
     // const [loading, setLoading] = useState(true);
     useEffect(() => {
         // setLoading(true)
@@ -49,19 +50,32 @@ function Home() {
         }).catch(error => console.log(error))
     }, [])
 
+    useEffect(() => {
+        const token=localStorage.getItem('accessToken')
+        axios.get('/api/notification/unseen-notification',{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+          }).then((res) => {
+            setUnseenNoti(res.data)
+          })
+      },[])
     return (
         <Fragment>
             <Navbar />
             <Container maxWidth="lg">
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container columnSpacing={4}>
-                        <Grid container item md={9} xs={12} direction='column' rowSpacing={2}>
-                            <Grid item >
+                        <Grid container item="true" md={9} xs={12} direction='column' rowSpacing={2}>
+                            <Grid item="true" >
                                 <div className="course-component">
+                                    <Typography gutterBottom variant="h6" component="div" color="#2980B9">
+                                        KHÓA HỌC HIỆN CÓ
+                                    </Typography>
                                     <CouresAvaiable courses={listTopCourse} />
                                 </div>
                             </Grid>
-                            <Grid item>
+                            <Grid item="true">
                                 <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                                     BÀI ĐĂNG MỚI NHẤT
                                 </Typography>
@@ -70,8 +84,8 @@ function Home() {
                                 </div>
                             </Grid>
                         </Grid>
-                        <Grid container item md={3} xs={12} direction='column' rowSpacing={2}>
-                            <Grid item>
+                        <Grid container item="true" md={3} xs={12} direction='column' rowSpacing={2}>
+                            <Grid item="true">
                                 <div className="course-component time-picker">
                                     <p className="time-picker__text">LỊCH</p>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -79,10 +93,10 @@ function Home() {
                                     </LocalizationProvider>
                                 </div>
                             </Grid>
-                            <Grid item >
+                            <Grid item="true" >
                                 <div className="course-component">
                                     <p style={{ fontWeight: '600', padding: '5px' }}>Thông báo</p>
-                                    <div className="notifi-text">10 Mail(s)</div>
+                                    <div className="notifi-text">{unseenNoti} Mail(s)</div>
                                 </div>
                             </Grid>
                         </Grid>

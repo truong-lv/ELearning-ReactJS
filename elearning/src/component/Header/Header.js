@@ -45,7 +45,7 @@ export default function Header() {
       }).then((res) => {
         setUnseenNoti(res.data)
       })
-},[])
+  },[])
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

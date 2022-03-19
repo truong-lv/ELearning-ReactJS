@@ -30,7 +30,7 @@ function Schedule(){
               'Authorization':`Bearer ${token}`
           }
       }).then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           let list=response.data.reduce((pre,cur)=>{
             let dateOfWeek
             for(let i=handleDateTime(cur.startTime);i.getTime()<handleDateTime(cur.endTime).getTime();i.setDate(i.getDate()+7)){

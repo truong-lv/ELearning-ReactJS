@@ -18,12 +18,14 @@ function stringToColor(string) {
     return color;
   }
 
-export default  function stringAvatar(name) {
+export default  function stringAvatar(name, numwidth=35, numheight=35) {
     let arr=name.split(' ')
     return {
       sx: {
         bgcolor: stringToColor(name),
+        width: numwidth, 
+        height: numheight
       },
-      children:  (arr.length>2?arr[arr.length - 2][0]:"")+arr[arr.length - 1][0],//arr.reduce((pre,current)=>(pre+current[0]),""),
+      children:  (arr.length>=2?arr[arr.length - 2][0]:"")+arr[arr.length - 1][0],//arr.reduce((pre,current)=>(pre+current[0]),""),
     };
   }
