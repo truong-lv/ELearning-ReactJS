@@ -3,6 +3,7 @@ import Post from "../../component/TopPost/Post";
 import Navbar from "../../component/Navbar/Nabar"
 import CouresAvaiable from "../../component/CourseAvaiable/CourseAvaiable";
 
+
 import axios from "axios";
 
 import { Fragment } from "react";
@@ -16,7 +17,6 @@ import Typography from '@mui/material/Typography';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import CalendarPicker from '@mui/lab/CalendarPicker';
 
-import './homeStyle.css'
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 function Home() {
@@ -40,7 +40,7 @@ function Home() {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken')
-        axios.get('/api/user/top-five-post-currently?creditClassId=1', {
+        axios.get('/api/user/top-five-post-currently', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -80,7 +80,7 @@ function Home() {
                                     BÀI ĐĂNG MỚI NHẤT
                                 </Typography>
                                 <div className="top-post">
-                                    {/* <Post listPost={listNewPost} /> */}
+                                    <Post listPost={listNewPost} />
                                 </div>
                             </Grid>
                         </Grid>
