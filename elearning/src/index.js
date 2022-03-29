@@ -3,18 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './store'
+import {persistor, store} from './store'
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import { REACT_API } from './config';
 import Router from './Router';
+import LoadingView from'./component/LoadingView/LoadingView'
 axios.defaults.baseURL = REACT_API;
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
-        <Router />
+      <PersistGate loading={<LoadingView />} persistor={persistor}>
+      <Router />
+      </PersistGate>
       </React.StrictMode>
     </BrowserRouter>
   </Provider>,

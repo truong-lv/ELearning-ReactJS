@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import stringAvatar from '../../myTool/handleAvatar';
-import fomatDateTime from '../../myTool/fomatDateTime';
+import FomatDateTime from '../../myTool/fomatDateTime';
 
 const MyPost =({post})=> {
   return(
@@ -27,7 +27,7 @@ const MyPost =({post})=> {
                 </Grid>
                 <Grid item style={{ position: 'absolute', right:'0'}}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary"> 
-                {fomatDateTime(post.postedTime)}
+                <FomatDateTime datetime={post.postedTime}/>
                 </Typography>
                 </Grid>
             </Grid>

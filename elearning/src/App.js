@@ -4,7 +4,7 @@ import Header from './component/Header/Header'
 import Footer from './component/Footer/Footer'
 import { Outlet } from 'react-router-dom';
 
-function App() {
+export function CustomerApp() {
   return (
     <div>
         <Header/>
@@ -16,4 +16,14 @@ function App() {
   );
 }
 
-export default App;
+export function AdminApp() {
+  return (
+    <div>
+        <Header/>
+        <div >
+          <Outlet/>
+        </div>
+        <Footer/>
+    </div>
+  );
+}
