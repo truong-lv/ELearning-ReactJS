@@ -5,7 +5,7 @@ import {
     useLocation
 } from "react-router-dom";
 
-import App from './App'
+import {CustomerApp, AdminApp} from './App'
 import Home from './pages/Home/Home'
 import Course from './pages/Coures/Coures'
 import CourseDetail from './pages/Coures/CourseDetail'
@@ -13,40 +13,39 @@ import Login from './pages/Login/Login'
 import Schedule from './pages/Schedule/Schedule'
 import Infor from './pages/Infor/Infor'
 import Notification from './pages/Notification/Notification'
-import Admin from './pages/Admin/Admin'
 import Member from './pages/Members/Member.js'
+import Orders from './pages/Admin/Orders'
+import{MODERATOR} from './config'
 
 import { useSelector } from 'react-redux'
 
 function CheckLogin() {
-    //get 
     const location = useLocation();
     const { pathname } = location;
-    document.title = pathname.charAt(1).toUpperCase() + pathname.slice(2)
+    let pathSplit=pathname.split('/');
+    let titleName=pathSplit[1].charAt(0).toUpperCase() + pathSplit[1].slice(1)
+    document.title = (titleName==='')?"Elearning":titleName;
     const isLogin = useSelector(state => state.isLogin.value)
-    // if(!isLogin){
-    //     const token=localStorage.getItem('accessToken')
-    //     axios.get('/api/credit-class/',{
-    //         headers: {
-    //             'Authorization':`Bearer ${token}`
-    //         }
-    //     }).then((response) => {
-    //         // console.log(response.data)
-    //         setListTopCourse(response.data)
-    //         // setTimeout(()=>{setLoading(false)},1000);
-    //     }).catch(error => console.log(error))
-    // }
     return (
         isLogin ? <Outlet /> : <Navigate to='/login' />
-        // console.log(isLogin)
+    );
+}
+function CheckAdmin() {
+    const isLogin = useSelector(state => state.isLogin.value)
+    const userRole = useSelector(state => state.infor.roles)
+    const isAdmin=userRole.some((role) =>(role===MODERATOR))
+    console.log(userRole)
+    return (
+        isAdmin ? <AdminApp /> :(isLogin?<Outlet />:<Navigate to='/login' />)
     );
 }
 
 function Router() {
     return (
         <Routes>
-            {/* <Route element={<CheckLogin />} >
-                <Route path="/" element={<App />}>
+            <Route element={<CheckLogin />} >
+                <Route path="/" element={<CustomerApp />}>
+                    <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/course" element={<Course />} />
                     <Route path="/courseDetail" element={<CourseDetail />} />
@@ -54,13 +53,15 @@ function Router() {
                     <Route path="/schedule" element={<Schedule />} />
                     <Route path="/infor" element={<Infor />} />
                     <Route path="/notification" element={<Notification />} />
-                    <Route path="/admin" element={<Admin />} />
+                </Route>
+                <Route path="/admin" element={<CheckAdmin />}>
+                    <Route path="/admin/*" element={<Orders />} />
                 </Route>
             </Route>
-            <Route path="/login" element={<Login />} /> */}
-            <Route path="/courseDetail" element={<CourseDetail />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/course" element={<Course />} />
+            <Route path="/course" element={<Course />} /> */}
 
         </Routes>
     )

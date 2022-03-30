@@ -14,7 +14,7 @@ function Course({course}){
             <Card className="course-box" title={course.subjectName}>
                 <CardActionArea>
                     <div className="course-img" ><img src={courseIcon} /></div>
-                    <CardContent>
+                    <CardContent style={{display: 'flex',flexDirection: 'column'}}>
                         <Typography variant="body1" component="div" align="center" noWrap>
                             {course.subjectName}
                         </Typography>

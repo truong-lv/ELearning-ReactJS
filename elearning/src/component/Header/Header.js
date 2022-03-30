@@ -44,6 +44,8 @@ export default function Header() {
         }
       }).then((res) => {
         setUnseenNoti(res.data)
+      }).catch((err) => {
+        handleLogout();
       })
   },[])
 

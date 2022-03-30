@@ -8,10 +8,11 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Grid from '@mui/material/Grid';
 import stringAvatar from '../../myTool/handleAvatar';
+import FomatDateTime from '../../myTool/fomatDateTime';
 
 const MyPost =({post})=> {
   return(
-  <Card variant="outlined" item  >
+  <Card variant="outlined">
     <CardContent>
     <Grid container spacing={1}>
         <Grid item md={0}>
@@ -26,7 +27,7 @@ const MyPost =({post})=> {
                 </Grid>
                 <Grid item style={{ position: 'absolute', right:'0'}}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary"> 
-                {post.postedTime}
+                <FomatDateTime datetime={post.postedTime}/>
                 </Typography>
                 </Grid>
             </Grid>
@@ -47,10 +48,8 @@ const MyPost =({post})=> {
 
 export default function Post(prop) {
   return (
-    <Box sx={{ minWidth: 275 }} >
       <Grid container rowSpacing={3}>
-        {prop.listPost.map((post)=>{return <Grid item><MyPost key={post.creditClassId} post={post}/></Grid>})}
+        {prop.listPost.map((post)=>{return <Grid item md={11} ><MyPost key={post.postId} post={post}/></Grid>})}
       </Grid>
-    </Box>
   );
 }

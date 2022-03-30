@@ -22,19 +22,22 @@ import AlertTitle from '@mui/material/AlertTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
+
 import stringAvatar from '../../myTool/handleAvatar';
 import axios from 'axios'
 
 
 function Infor(){
     const [userInfo,setUserInfo]=useState({})
+
     const [open, setOpen] = useState(false);
-    const [openToast, setOpenToast] = useState(true);
+    const [openToast, setOpenToast] = useState(false);
     
     const [oldPass, setOldPass] = useState('');
     const [isValidOldPass, setIsValidOldPass] = useState(false);
 
     const [newPass, setNewPass] = useState('');
+    const [messApi, setMessApi] = useState('');
     const [isValidNewPass, setIsValidNewPass] = useState(false);
 
     const [confirmPass, setConfirmPass] = useState('');
@@ -54,14 +57,20 @@ function Infor(){
             setUserInfo({...response.data})
         //console.log(response.data)
             
-        }).catch(error => console.log(error))
+        }).catch(error => {
+            
+            console.log(error)
+        })
     },[])
     
     const handleClickOpen = () => {
         setOpen(true);
+        setIsValidOldPass(false);
+        setIsValidNewPass(false);
+        setIsValidConfirmPass(false);
     };
 
-    const verification=()=>{
+    function verification(){
         var data = JSON.stringify({
             username: username,
             password: oldPass
@@ -81,24 +90,63 @@ function Infor(){
             let {accessToken,...infor}=response.data
             dispatch(setInfor(infor));
             dispatch(setLogin(true));
-
             localStorage.setItem('accessToken',accessToken)
+            setIsValidOldPass(false);
+            handleChangePass();
         })
         .catch(function (error) {
-            console.log(error);
-        });        
+            setIsValidOldPass(true);
+            console.log(error)
+        });      
+
+        
     }
     const handleChangeOldPass = (event) => {
         setOldPass(event.target.value);
+        setIsValidOldPass(false);
     };
     const handleChangeNewPass = (event) => {
         setNewPass(event.target.value);
+        setIsValidNewPass(false);
     };
     const handleChangeConfirmdPass = (event) => {
         setConfirmPass(event.target.value);
+        setIsValidConfirmPass(false)
     };
 
-    const handleChangePass= () => {
+    function handleChangePass(){
+        if(newPass!==confirmPass){
+            setIsValidConfirmPass(true)
+            return;
+        }
+
+        var data = JSON.stringify({
+            password: newPass
+        });
+
+        const token=localStorage.getItem('accessToken')
+        var config = {
+            method: 'put',
+            url: axios.defaults.baseURL + '/api/user/update-new-password',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios(config)
+        .then(function (response) {
+            setOpenToast(true);
+            setIsValidNewPass(false);
+            handleClose()
+            setMessApi(response.data)
+        })
+        .catch(function (error) {
+            setIsValidNewPass(true);
+            setOpenToast(false);
+            setMessApi(error.response.data)
+        });        
         
     }
     const handleClose = () => {
@@ -124,7 +172,7 @@ function Infor(){
                 <Grid container rowSpacing={2}>
                     <Grid item container direction='row' columnSpacing={3}>
                         <Grid item="true"  md={6}>
-                            <TextField label="Mã" color="primary" fullWidth="true"
+                            <TextField label="Mã" color="primary" fullWidth={true}
                             focused
                             disabled={true}
                             value={userInfo.userId}
@@ -132,7 +180,7 @@ function Infor(){
                             />
                         </Grid>
                         <Grid item="true"  md={6}>
-                            <TextField label="Họ tên" color="primary" fullWidth="true"
+                            <TextField label="Họ tên" color="primary" fullWidth={true}
                             focused
                             disabled={true}
                             value={userInfo.fullname}
@@ -141,14 +189,15 @@ function Infor(){
                     </Grid>
                     <Grid item container direction='row' columnSpacing={3}>
                         <Grid item="true"  md={6}>
-                            <TextField label="Giới tính" color="primary" fullWidth="true" 
+                            <TextField label="Giới tính" color="primary" fullWidth={true} 
                             focused
                             disabled={true}
-                            value={userInfo.gender}
+                            value={userInfo.gender===1?"Nam":"Nữ"}
                             />
+                            
                         </Grid>
                         <Grid item="true"  md={6}>
-                            <TextField label="Ngày sinh" color="primary" fullWidth="true"
+                            <TextField label="Ngày sinh" color="primary" fullWidth={true}
                             focused
                             disabled={true}
                             value={userInfo.dateOfBirth}
@@ -156,21 +205,21 @@ function Infor(){
                         </Grid>
                     </Grid>
                     <Grid item="true" md={12}>
-                        <TextField label="Email" color="primary" fullWidth="true"
+                        <TextField label="Email" color="primary" fullWidth={true}
                         focused
                         disabled={true}
                         value={userInfo.email}
                         />
                     </Grid>
                     <Grid item="true" md={12}>
-                        <TextField label="Điện thoại" color="primary" fullWidth="true"
+                        <TextField label="Điện thoại" color="primary" fullWidth={true}
                         focused
                         disabled={true}
                         value={userInfo.phone}
                         />
                     </Grid>
                     <Grid item="true" md={12}>
-                        <TextField label="Địa chỉ" color="primary" fullWidth="true"
+                        <TextField label="Địa chỉ" color="primary" fullWidth={true}
                         focused
                         disabled={true}
                         value={userInfo.address}
@@ -191,29 +240,33 @@ function Infor(){
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                <TextField label="Mật khẩu cũ" color="primary" fullWidth="true"
+                                <TextField label="Mật khẩu cũ" color="primary" fullWidth={true}
                                 focused
                                 margin="dense"
                                 onChange={handleChangeOldPass}
-                                // error="true"
-                                // helperText="Incorrect entry."
+                                error={isValidOldPass}
+                                helperText={!isValidOldPass?'':"Mật khẩu không hợp lệ"}
                                 />
-                                <div className={style.txtNewPass}>
-                                <TextField label="Mật khẩu mới" color="success" fullWidth="true"
+                                <p className={style.txtNewPass}>
+                                <TextField label="Mật khẩu mới" color="success" fullWidth={true}
                                 focused
                                 margin="dense"
                                 onChange={handleChangeNewPass}
+                                error={isValidNewPass}
+                                helperText={!isValidNewPass?'':messApi}
                                 />
-                                 <TextField label="Nhập lại mật khẩu mới" color="success" fullWidth="true"
+                                 <TextField label="Nhập lại mật khẩu mới" color="success" fullWidth={true}
                                 focused
                                 margin="dense"
                                 onChange={handleChangeConfirmdPass}
-                                /></div>
+                                error={isValidConfirmPass}
+                                helperText={!isValidConfirmPass?'':"Nhập lại không hợp lệ"}
+                                /></p>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
                             <Button onClick={handleClose}>Hủy</Button>
-                            <Button onClick={handleChangePass} autoFocus>
+                            <Button onClick={verification} autoFocus>
                                 Xác nhận
                             </Button>
                             </DialogActions>
@@ -245,7 +298,7 @@ function Infor(){
                         }
                     sx={{ mb: 2 }}>
                         <AlertTitle>Thành công</AlertTitle>
-                        Cập nhập mật khẩu thành công
+                        {messApi}
                     </Alert>
                 </Snackbar>
                     
