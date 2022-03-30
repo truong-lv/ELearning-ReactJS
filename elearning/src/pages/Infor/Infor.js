@@ -172,7 +172,7 @@ function Infor(){
                 <Grid container rowSpacing={2}>
                     <Grid item container direction='row' columnSpacing={3}>
                         <Grid item="true"  md={6}>
-                            <TextField label="Mã" color="primary" fullWidth={"true"}
+                            <TextField label="Mã" color="primary" fullWidth={true}
                             focused
                             disabled={true}
                             value={userInfo.userId}
@@ -180,7 +180,7 @@ function Infor(){
                             />
                         </Grid>
                         <Grid item="true"  md={6}>
-                            <TextField label="Họ tên" color="primary" fullWidth={"true"}
+                            <TextField label="Họ tên" color="primary" fullWidth={true}
                             focused
                             disabled={true}
                             value={userInfo.fullname}
@@ -189,7 +189,7 @@ function Infor(){
                     </Grid>
                     <Grid item container direction='row' columnSpacing={3}>
                         <Grid item="true"  md={6}>
-                            <TextField label="Giới tính" color="primary" fullWidth={"true"} 
+                            <TextField label="Giới tính" color="primary" fullWidth={true} 
                             focused
                             disabled={true}
                             value={userInfo.gender===1?"Nam":"Nữ"}
@@ -197,7 +197,7 @@ function Infor(){
                             
                         </Grid>
                         <Grid item="true"  md={6}>
-                            <TextField label="Ngày sinh" color="primary" fullWidth={"true"}
+                            <TextField label="Ngày sinh" color="primary" fullWidth={true}
                             focused
                             disabled={true}
                             value={userInfo.dateOfBirth}
@@ -205,21 +205,21 @@ function Infor(){
                         </Grid>
                     </Grid>
                     <Grid item="true" md={12}>
-                        <TextField label="Email" color="primary" fullWidth={"true"}
+                        <TextField label="Email" color="primary" fullWidth={true}
                         focused
                         disabled={true}
                         value={userInfo.email}
                         />
                     </Grid>
                     <Grid item="true" md={12}>
-                        <TextField label="Điện thoại" color="primary" fullWidth={"true"}
+                        <TextField label="Điện thoại" color="primary" fullWidth={true}
                         focused
                         disabled={true}
                         value={userInfo.phone}
                         />
                     </Grid>
                     <Grid item="true" md={12}>
-                        <TextField label="Địa chỉ" color="primary" fullWidth={"true"}
+                        <TextField label="Địa chỉ" color="primary" fullWidth={true}
                         focused
                         disabled={true}
                         value={userInfo.address}
@@ -240,7 +240,7 @@ function Infor(){
                             </DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                <TextField label="Mật khẩu cũ" color="primary" fullWidth={"true"}
+                                <TextField label="Mật khẩu cũ" color="primary" fullWidth={true}
                                 focused
                                 margin="dense"
                                 onChange={handleChangeOldPass}
@@ -248,14 +248,14 @@ function Infor(){
                                 helperText={!isValidOldPass?'':"Mật khẩu không hợp lệ"}
                                 />
                                 <p className={style.txtNewPass}>
-                                <TextField label="Mật khẩu mới" color="success" fullWidth={"true"}
+                                <TextField label="Mật khẩu mới" color="success" fullWidth={true}
                                 focused
                                 margin="dense"
                                 onChange={handleChangeNewPass}
                                 error={isValidNewPass}
                                 helperText={!isValidNewPass?'':messApi}
                                 />
-                                 <TextField label="Nhập lại mật khẩu mới" color="success" fullWidth={"true"}
+                                 <TextField label="Nhập lại mật khẩu mới" color="success" fullWidth={true}
                                 focused
                                 margin="dense"
                                 onChange={handleChangeConfirmdPass}

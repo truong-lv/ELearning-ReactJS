@@ -33,7 +33,7 @@ function Notification(){
   const [detailContent, setDetailContent] = useState('')
   const [openToast, setOpenToast] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
-
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const token=localStorage.getItem('accessToken')
         axios.get('/api/notification/all-notification/',{
@@ -44,7 +44,7 @@ function Notification(){
             
           setListNotifi(response.data)
         }).catch(error => console.log(error))
-  }, [openToast]);
+  }, [refresh]);
 
   useEffect(() => {
     const token=localStorage.getItem('accessToken')
@@ -55,7 +55,7 @@ function Notification(){
       }).then((res) => {
         setUnseenNoti(res.data)
       })
-  },[openToast])
+  },[refresh])
   
   const handleDeleteNotifi=(event) => {
     let targetEle=event.target
@@ -76,6 +76,7 @@ function Notification(){
     .then(function (response) {
       setMessApi({mess:response.data,type:0})
       setOpenToast(true)
+      setRefresh(!refresh)
     })
     .catch(function (error) {
       setMessApi({mess:error.response.data,type:1})
@@ -85,7 +86,28 @@ function Notification(){
   }
 
   const handleClickOpen = (event) => {
+    let targetEle=event.target
+    while(!targetEle.getAttribute("data-key")){
+      targetEle=targetEle.parentElement
+    }
+    const idNotifi=targetEle.getAttribute("data-key");
+    const token=localStorage.getItem('accessToken')
+    var config = {
+      method: 'put',
+      url: 'http://localhost:8080/api/notification/seen/?notification-id='+idNotifi,
+      headers: { 
+        'Authorization': `Bearer ${token}`
+      }
+    };
     
+    axios(config)
+    .then(function (response) {
+      setDetailContent(response.data)
+      setRefresh(!refresh)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     setOpenDetail(true);
   };
 
@@ -108,7 +130,7 @@ function Notification(){
             <List >
               {listNotifi.map((notifi, index) => (
                 <ListItem className={style.listNotifi}  
-                key={notifi.notificationId} 
+                key={notifi.notificationId} data-key={notifi.notificationId}
                 style={{border:`1px solid ${notifi.status?'#0D20C5':'#FFF620'}`,marginBottom:'10px'}}>
                   <ListItem button onClick={handleClickOpen}>
                     <div className={style.verticalBar} style={{background: notifi.status?'#0D20C5':'#FFF620'}}></div>
@@ -119,7 +141,6 @@ function Notification(){
                   </ListItem>
                   <IconButton
                   onClick={handleDeleteNotifi}
-                  data-key={notifi.notificationId}
                   > 
                     <DeleteForeverIcon sx={{ color: red[500] }}/>
                   </IconButton>
@@ -139,7 +160,7 @@ function Notification(){
           aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Use Google's location service?"}
+              {"Thông báo từ hệ thống"}
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
