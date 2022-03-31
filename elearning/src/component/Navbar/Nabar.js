@@ -29,7 +29,7 @@ export default function Navbar() {
         <NavLink className="navLink" to='/infor'>
           <Tab label="TRANG CÁ NHÂN" />
         </NavLink>
-        <NavLink className="navLink" to='/home'>
+        <NavLink className="navLink" to='/admin'>
           <Tab label="HƯỚNG DẪN" />
         </NavLink>
       </Container>

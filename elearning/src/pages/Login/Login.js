@@ -57,7 +57,7 @@ function Login() {
             let {accessToken,...infor}=response.data
             dispatch(setInfor(infor));
             dispatch(setLogin(true));
-
+            console.log(infor);
             localStorage.setItem('accessToken',accessToken)
             navigate("/home");
             setLoading(false);
@@ -85,7 +85,7 @@ function Login() {
                     <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Username</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
+                            id="outlined-adornment-text"
                             type='text'
                             value={account} onChange={handleChangeAccount}
                             label="Username"
