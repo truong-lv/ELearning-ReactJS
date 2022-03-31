@@ -171,24 +171,24 @@ function Infor(){
                 </div>
                 <Grid container rowSpacing={2}>
                     <Grid item container direction='row' columnSpacing={3}>
-                        <Grid item="true"  md={6}>
+                        <Grid item={true}  md={6}>
                             <TextField label="Mã" color="primary" fullWidth={true}
                             focused
                             disabled={true}
-                            value={userInfo.userId}
+                            value={userInfo.userId|| ''}
                             
                             />
                         </Grid>
-                        <Grid item="true"  md={6}>
+                        <Grid item={true}  md={6}>
                             <TextField label="Họ tên" color="primary" fullWidth={true}
                             focused
                             disabled={true}
-                            value={userInfo.fullname}
+                            value={userInfo.fullname|| ''}
                             />
                         </Grid>
                     </Grid>
                     <Grid item container direction='row' columnSpacing={3}>
-                        <Grid item="true"  md={6}>
+                        <Grid item={true}  md={6}>
                             <TextField label="Giới tính" color="primary" fullWidth={true} 
                             focused
                             disabled={true}
@@ -196,36 +196,36 @@ function Infor(){
                             />
                             
                         </Grid>
-                        <Grid item="true"  md={6}>
+                        <Grid item={true}  md={6}>
                             <TextField label="Ngày sinh" color="primary" fullWidth={true}
                             focused
                             disabled={true}
-                            value={userInfo.dateOfBirth}
+                            value={userInfo.dateOfBirth|| ''}
                             />
                         </Grid>
                     </Grid>
-                    <Grid item="true" md={12}>
+                    <Grid item={true} md={12}>
                         <TextField label="Email" color="primary" fullWidth={true}
                         focused
                         disabled={true}
-                        value={userInfo.email}
+                        value={userInfo.email|| ''}
                         />
                     </Grid>
-                    <Grid item="true" md={12}>
+                    <Grid item={true} md={12}>
                         <TextField label="Điện thoại" color="primary" fullWidth={true}
                         focused
                         disabled={true}
-                        value={userInfo.phone}
+                        value={userInfo.phone|| ''}
                         />
                     </Grid>
-                    <Grid item="true" md={12}>
+                    <Grid item={true} md={12}>
                         <TextField label="Địa chỉ" color="primary" fullWidth={true}
                         focused
                         disabled={true}
-                        value={userInfo.address}
+                        value={userInfo.address|| ''}
                         />
                     </Grid>
-                    <Grid item="true" md={12}>
+                    <Grid item={true} md={12}>
                         <Button variant="contained" onClick={handleClickOpen}>
                             Đổi mật khẩu
                         </Button>

@@ -10,7 +10,7 @@ import courseIcon from "../../assets/image/course-icon.png"
 
 function Course({course}){
     return(
-        <Grid item="true" xs={4} md={3}  >
+        <Grid item={true} xs={4} md={3}  >
             <Card className="course-box" title={course.subjectName}>
                 <CardActionArea>
                     <div className="course-img" ><img src={courseIcon} /></div>

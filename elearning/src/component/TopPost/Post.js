@@ -15,23 +15,23 @@ const MyPost =({post})=> {
   <Card variant="outlined">
     <CardContent>
     <Grid container spacing={1}>
-        <Grid item md={0}>
+        <Grid item={true} md={0}>
             <Avatar {...stringAvatar(post.fullname)} />
         </Grid>
-        <Grid container item md={11} direction='row'>
-            <Grid container item style={{ position: 'relative'}}>
-              <Grid item>
+        <Grid container item={true} md={11} direction='row'>
+            <Grid container item={true} style={{ position: 'relative'}}>
+              <Grid item={true}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Bởi {post.fullname} - lớp {post.subjectName}
                 </Typography>
                 </Grid>
-                <Grid item style={{ position: 'absolute', right:'0'}}>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary"> 
+                <Grid item={true} style={{ position: 'absolute', right:'0'}}>
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" variant="div"> 
                 <FomatDateTime datetime={post.postedTime}/>
                 </Typography>
                 </Grid>
             </Grid>
-            <Grid item>
+            <Grid item={true}>
                 <Typography variant="body2" >
                     {post.postContent}
                 </Typography>
@@ -49,7 +49,7 @@ const MyPost =({post})=> {
 export default function Post(prop) {
   return (
       <Grid container rowSpacing={3}>
-        {prop.listPost.map((post)=>{return <Grid item md={11} ><MyPost key={post.postId} post={post}/></Grid>})}
+        {prop.listPost.map((post)=>{return <Grid item={true} md={11}  key={post.postId}><MyPost post={post}/></Grid>})}
       </Grid>
   );
 }

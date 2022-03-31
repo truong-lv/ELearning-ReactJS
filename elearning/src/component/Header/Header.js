@@ -32,8 +32,8 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [unseenNoti,setUnseenNoti]=useState(0)
-  const username=useSelector(state=>state.infor.username)
-  const userRoles=useSelector(state=>state.infor.roles)
+  const username=useSelector(state=>state.infor.username || '')
+  const userRoles=useSelector(state=>state.infor.roles || [])
   const dispatch = useDispatch()
 
   useEffect(() => {
