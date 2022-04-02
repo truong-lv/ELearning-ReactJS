@@ -35,7 +35,7 @@ function Login() {
         setPassword(event.target.value);
         // console.log(event.target.value)
     };
-    const handleLogin=()=>{
+    const handleLogin = () => {
         setLoading(true);
         // console.log({account,password})
         var data = JSON.stringify({
@@ -53,20 +53,20 @@ function Login() {
         };
 
         axios(config)
-        .then(function (response) {
-            let {accessToken,...infor}=response.data
-            dispatch(setInfor(infor));
-            dispatch(setLogin(true));
-            console.log(infor);
-            localStorage.setItem('accessToken',accessToken)
-            navigate("/home");
-            setLoading(false);
-        })
-        .catch(function (error) {
-            setValid('block')
-            console.log(error);
-            setLoading(false);
-        });        
+            .then(function (response) {
+                let { accessToken, ...infor } = response.data
+                dispatch(setInfor(infor));
+                dispatch(setLogin(true));
+                console.log(infor);
+                localStorage.setItem('accessToken', accessToken)
+                navigate("/home");
+                setLoading(false);
+            })
+            .catch(function (error) {
+                setValid('block')
+                console.log(error);
+                setLoading(false);
+            });
     }
 
     const handleClickShowPassword = () => {
@@ -92,35 +92,35 @@ function Login() {
                         />
                     </FormControl><br />
 
-                <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                    <OutlinedInput
-                        id="outlined-adornment-password"
-                        type={showPassword ? 'text' : 'password'}
-                        value={password} onChange={handleChangePassword}
-                        endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                            >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                        }
-                        label="Password"
-                    />
-                </FormControl><strong style={{color:"red", display:`${isValid}`}}>Tài khoản hoặc mật khẩu không hợp lệ !!</strong><br/>
-                <LoadingButton variant="contained" 
-                size="large" 
-                type="submit"
-                loading={loading}
-                onClick={handleLogin}>
-                    Đăng nhập
-                </LoadingButton>
-            </div>
+                    <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={password} onChange={handleChangePassword}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            label="Password"
+                        />
+                    </FormControl><strong style={{ color: "red", display: `${isValid}` }}>Tài khoản hoặc mật khẩu không hợp lệ !!</strong><br />
+                    <LoadingButton variant="contained"
+                        size="large"
+                        type="submit"
+                        loading={loading}
+                        onClick={handleLogin}>
+                        Đăng nhập
+                    </LoadingButton>
+                </div>
             </div>
             <Footer />
         </div>

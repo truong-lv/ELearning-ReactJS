@@ -1,0 +1,63 @@
+//---------------------------*---------------------------
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.listFolder {
+    list-style: none;
+}
+
+.listFolderItem {
+    padding: 20px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    margin: 20px 10px 10px;
+    border-radius: 10px;
+    max-width: 230px;
+    width: 100%;
+}
+
+//---------------------------ExerciseContent---------------------------
+
+.exerciseContainer {
+    font-size: 18px;
+    padding: 25px;
+}
+
+//---------------------------ExerciseSubmitted---------------------------
+
+
+.bold {
+    font-weight: bold;
+}
+
+.submitted {
+    display: flex;
+    color: #00A3FF;
+    justify-content: flex-end;
+}
+
+.submitPadding {
+    padding: 10px 8px;
+}
+
+.notSubmit {
+    color: #d50000;
+}
+
+.submitTime {
+    font-size: 13px !important;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.absolute {
+    position: absolute !important;
+    bottom: 10px;
+}
+
+.btnSubmit {
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 20px;
+}

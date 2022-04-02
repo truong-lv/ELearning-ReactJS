@@ -16,7 +16,7 @@ export default function CreditClassExercise({ exercises }) {
 
                     {exercises.map((value) => {
                         return (
-                            <li className={style.listExerciseItem} key={value.excerciseId}>{value.excerciseContent}</li>
+                            <li className={style.listExerciseItem} key={value.excerciseId}>{value.title}</li>
                         )
                     })}
                 </ul>

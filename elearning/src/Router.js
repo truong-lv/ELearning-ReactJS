@@ -5,26 +5,27 @@ import {
     useLocation
 } from "react-router-dom";
 
-import {CustomerApp, AdminApp} from './App'
+import { MODERATOR } from './config'
 import Home from './pages/Home/Home'
-import Course from './pages/Coures/Coures'
-import CourseDetail from './pages/Coures/CourseDetail'
-import Login from './pages/Login/Login'
-import Schedule from './pages/Schedule/Schedule'
 import Infor from './pages/Infor/Infor'
-import Notification from './pages/Notification/Notification'
-import Member from './pages/Members/Member.js'
+import Login from './pages/Login/Login'
 import Orders from './pages/Admin/Orders'
-import{MODERATOR} from './config'
+import Course from './pages/Coures/Coures'
+import { CustomerApp, AdminApp } from './App'
+import Member from './pages/Members/Member.js'
+import Schedule from './pages/Schedule/Schedule'
+import CourseDetail from './pages/Coures/CourseDetail'
+import Notification from './pages/Notification/Notification'
+import ExerciseDetail from './pages/Exercise/ExerciseDetail'
 
 import { useSelector } from 'react-redux'
 
 function CheckLogin() {
     const location = useLocation();
     const { pathname } = location;
-    let pathSplit=pathname.split('/');
-    let titleName=pathSplit[1].charAt(0).toUpperCase() + pathSplit[1].slice(1)
-    document.title = (titleName==='')?"Elearning":titleName;
+    let pathSplit = pathname.split('/');
+    let titleName = pathSplit[1].charAt(0).toUpperCase() + pathSplit[1].slice(1)
+    document.title = (titleName === '') ? "Elearning" : titleName;
     const isLogin = useSelector(state => state.isLogin.value)
     return (
         isLogin ? <Outlet /> : <Navigate to='/login' />
@@ -33,10 +34,10 @@ function CheckLogin() {
 function CheckAdmin() {
     const isLogin = useSelector(state => state.isLogin.value)
     const userRole = useSelector(state => state.infor.roles)
-    const isAdmin=userRole.some((role) =>(role===MODERATOR))
+    const isAdmin = userRole.some((role) => (role === MODERATOR))
     console.log(userRole)
     return (
-        isAdmin ? <AdminApp /> :(isLogin?<Outlet />:<Navigate to='/login' />)
+        isAdmin ? <AdminApp /> : (isLogin ? <Outlet /> : <Navigate to='/login' />)
     );
 }
 
@@ -62,7 +63,6 @@ function Router() {
             {/* <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
             <Route path="/course" element={<Course />} /> */}
-
         </Routes>
     )
 }

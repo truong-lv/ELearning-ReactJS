@@ -23,13 +23,12 @@ function ComboBox({ label, className, setValue }) {
             className={className}
             disablePortal
             id="combo-box-demo"
-            options={label === 'Năm học' ? schoolYear : label === 'Khoa' ? department : semester}
+            options={label === 'Năm học' ? schoolYear : label === 'Khoa' ? departmentSelect : semester}
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label={label} />}
             onChange={(event, newValue) =>
                 label === 'Năm học' ? setValue(newValue) : label === 'Khoa' ? setValue(newValue) : setValue(newValue)
             }
-
         />
     )
 }
@@ -48,11 +47,7 @@ const semester = [
     '3'
 ]
 
-const department = [
-    'CNTT',
-    'MKT',
-    'DT-VT'
-]
+var departmentSelect;
 
 
 
@@ -79,7 +74,19 @@ function Course() {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        axios.get(`/api/credit-class/get-credit-class?schoolyear=${schoolYear}&semester=${semester}&department_id=1`, {
+        axios.get('/api/department/all', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then(response => {
+            departmentSelect = response.data;
+            console.log(departmentSelect);
+        })
+    }, [])
+
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken');
+        axios.get(`/api/credit-class/get-credit-class?schoolyear=${schoolYear}&semester=${semester}&department_id=${department}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -99,7 +106,7 @@ function Course() {
                                 <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                                     CÁC KHÓA HỌC HIỆN TẠI (? - ?)
                                     <Container style={{ border: '1px solid #000', padding: '20px 30px', marginTop: '20px' }}>
-                                        <CourseAvaiable courses={listCurrentCourses}/>
+                                        <CourseAvaiable courses={listCurrentCourses} />
                                     </Container>
                                 </Typography>
                             </Grid>

@@ -23,17 +23,16 @@ function Home() {
     const [listTopCourse, setListTopCourse] = useState([])
     const [listNewPost, setListNewPost] = useState([])
     const [date, setDate] = useState(new Date());
-    const [unseenNoti,setUnseenNoti]=useState(0)
+    const [unseenNoti, setUnseenNoti] = useState(0)
     // const [loading, setLoading] = useState(true);
     useEffect(() => {
         // setLoading(true)
-        const token=localStorage.getItem('accessToken')
-        axios.get('/api/credit-class/',{
+        const token = localStorage.getItem('accessToken')
+        axios.get('/api/credit-class/', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            
             setListTopCourse(response.data)
         }).catch(error => console.log(error))
     }, [])
@@ -51,15 +50,15 @@ function Home() {
     }, [])
 
     useEffect(() => {
-        const token=localStorage.getItem('accessToken')
-        axios.get('/api/notification/unseen-notification',{
+        const token = localStorage.getItem('accessToken')
+        axios.get('/api/notification/unseen-notification', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-          }).then((res) => {
+        }).then((res) => {
             setUnseenNoti(res.data)
-          })
-      },[])
+        })
+    }, [])
     return (
         <Fragment>
             <Navbar />
@@ -72,6 +71,7 @@ function Home() {
                                     <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                                         KHÓA HỌC HIỆN CÓ
                                     </Typography>
+                                    {console.log(listTopCourse)}
                                     <CouresAvaiable courses={listTopCourse} />
                                 </div>
                             </Grid>
@@ -80,6 +80,7 @@ function Home() {
                                     BÀI ĐĂNG MỚI NHẤT
                                 </Typography>
                                 <div className="top-post">
+                                    {console.log(listNewPost)}
                                     <Post listPost={listNewPost} />
                                 </div>
                             </Grid>
