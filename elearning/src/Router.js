@@ -5,17 +5,18 @@ import {
     useLocation
 } from "react-router-dom";
 
-import { CustomerApp, AdminApp } from './App'
-import Home from './pages/Home/Home'
-import Course from './pages/Coures/Coures'
-import CourseDetail from './pages/Coures/CourseDetail'
-import Login from './pages/Login/Login'
-import Schedule from './pages/Schedule/Schedule'
-import Infor from './pages/Infor/Infor'
-import Notification from './pages/Notification/Notification'
-import Member from './pages/Members/Member.js'
-import Orders from './pages/Admin/Orders'
 import { MODERATOR } from './config'
+import Home from './pages/Home/Home'
+import Infor from './pages/Infor/Infor'
+import Login from './pages/Login/Login'
+import Orders from './pages/Admin/Orders'
+import Course from './pages/Coures/Coures'
+import { CustomerApp, AdminApp } from './App'
+import Member from './pages/Members/Member.js'
+import Schedule from './pages/Schedule/Schedule'
+import CourseDetail from './pages/Coures/CourseDetail'
+import Notification from './pages/Notification/Notification'
+import ExerciseDetail from './pages/Exercise/ExerciseDetail'
 
 import { useSelector } from 'react-redux'
 
@@ -62,7 +63,6 @@ function Router() {
             {/* <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
             <Route path="/course" element={<Course />} /> */}
-
         </Routes>
     )
 }

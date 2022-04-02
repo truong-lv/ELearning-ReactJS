@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import style from './CreditClass.module.scss'
 
 export default function CreditClassFolder({ folders }) {
+    console.log(folders);
     return (
         <Fragment>
             {folders === undefined ? console.log('folder undefined') :
