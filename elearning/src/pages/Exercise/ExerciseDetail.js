@@ -15,6 +15,8 @@ import style from './style.module.scss'
 import ExerciseContent from '../../component/ExerciseInfo/ExerciseContent'
 import ExerciseSubmitted from '../../component/ExerciseInfo/ExerciseSubmitted'
 
+import { getOnlyDate } from '../../myTool/fomatDateTime'
+
 function ExerciseDetail() {
 
     const [exercise, setExercise] = useState({});
@@ -37,13 +39,20 @@ function ExerciseDetail() {
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container columnSpacing={4}>
                         <Grid container item md={12} xs={12} direction='column' rowSpacing={2}>
-                            <Grid item className={clsx(style.headingContainer, style.flex)}>
+                            <Grid item sx={{ pb: 1 }} className={clsx(style.headingContainer, style.flex)}>
                                 <Typography variant='h5' className={style.heading}>{exercise.excerciseTitle}</Typography>
                                 <Typography variant='h6' className={style.btnBack}>Quay lại</Typography>
                             </Grid>
-                            <Grid item className={clsx(style.exerciseInfo, style.flex)}>
-                                <Typography component="div" >Lưu Nguyễn Kì Thư</Typography>
-                                <Typography component="div" >lecgo</Typography>
+                            <Grid item sx={{ mb: 6 }} className={clsx(style.exerciseInfo, style.flex)}>
+                                <Typography component="div" >
+                                    {'TeacherName'} - {' '}
+                                    {typeof exercise.startTime === 'undefined' ? console.log('startTime undefined') : getOnlyDate(exercise.startTime)}
+                                </Typography>
+                                {console.log(exercise.endTime)}
+                                <Typography component="div" style={{ fontWeight: "bold", color: 'black' }}>
+                                    Đến hạn: {' '}
+                                    {typeof exercise.endTime === 'undefined' ? console.log('endTime undefined') : getOnlyDate(exercise.endTime)}
+                                </Typography>
                             </Grid>
                         </Grid>
                         <Grid container item md={9} xs={12} direction='column' rowSpacing={2}>
@@ -63,7 +72,7 @@ function ExerciseDetail() {
                     </Grid>
                 </Box>
             </Container>
-        </Fragment>
+        </Fragment >
     )
 }
 
