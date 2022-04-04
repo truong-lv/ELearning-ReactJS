@@ -6,6 +6,8 @@ import { Fragment } from 'react'
 import { Typography } from '@mui/material'
 import Grid from '@mui/material/Grid'
 
+import { getOnlyDate } from '../../myTool/fomatDateTime'
+
 
 
 export default function CreditClassInfo({ info }) {
@@ -34,11 +36,11 @@ export default function CreditClassInfo({ info }) {
                             </li>
                             <li className={style.dlFlex}>
                                 <Typography component="div" className={clsx(style.minWidthTitle, style.fwBold)}>THỜI GIAN BẮT ĐẦU:</Typography>
-                                {value.startTime}
+                                {getOnlyDate(value.startTime)}
                             </li>
                             <li className={style.dlFlex}>
                                 <Typography component="div" className={clsx(style.minWidthTitle, style.fwBold)}>THỜI GIAN KẾT THÚC:</Typography>
-                                {value.endTime}
+                                {getOnlyDate(value.endTime)}
                             </li>
                         </ul>
                     )

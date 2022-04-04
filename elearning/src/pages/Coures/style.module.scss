@@ -1,43 +1,65 @@
-
+//-------------------------*------------------------------
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
 
 //-------------------------Course------------------------------
 
-.selectTitle{
+.selectTitle {
     font-size: 16px;
     color: #000000;
     align-self: center;
     padding: 0 20px;
 }
 
-.comboboxSelect{
+.comboboxSelect {
     max-width: 140px;
     max-height: 40px;
     padding: 0;
 }
 
-.selectArea{
+.selectArea {
     flex-grow: 1;
     justify-content: flex-end;
     align-items: center;
 }
 
-.titleAnotherClasses{
-   align-self: center;
+.titleAnotherClasses {
+    align-self: center;
 }
-
 
 //-------------------------CourseDetail------------------------------
 
 
-.listInfoContainer{
-    background-color: rgba(0,0,0, 0.03);
+.listInfoContainer {
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
-.listFolderContainer{
+.listFolderContainer {
     padding: 10px;
 }
 
-.title{
+.title {
     margin-top: 40px !important;
     font-weight: bold !important;
+}
+
+.headingContainer {
+
+    margin-top: 60px !important;
+    border-bottom: 1px solid rgb(163, 163, 163);
+
+    .heading {
+        color: #2980b9;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .btnBack {
+        color: red;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
 }

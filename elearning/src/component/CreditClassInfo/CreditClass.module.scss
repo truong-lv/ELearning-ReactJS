@@ -1,20 +1,24 @@
-
-.fwBold{
+.fwBold {
     font-weight: bold !important;
 }
 
-.dlFlex{
+.dlFlex {
     display: flex;
+}
+
+.pd20 {
+    padding: 20px
 }
 
 
 //-------------------------CreditClassInfo-------------------------
 
-.listInfo{
+.listInfo {
     list-style: none;
     color: #000;
     margin-top: 20px;
     padding: 20px 0;
+
     li {
         padding: 20px 20px;
         margin-left: 20px;
@@ -22,7 +26,7 @@
     }
 }
 
-.minWidthTitle{
+.minWidthTitle {
     min-width: 300px;
 }
 
@@ -30,7 +34,7 @@
 
 //-------------------------CreditClassExercise-------------------------
 
-.listExercisesContainer{
+.listExercisesContainer {
     display: flex;
     justify-content: space-between;
     background-color: #c7d9fd;
@@ -39,32 +43,33 @@
 }
 
 
-.listExercise, .listFolder{
+.listExercise,
+.listFolder {
     list-style: none;
 }
 
-.listExerciseItem{
+.listExerciseItem {
     padding: 10px 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.justifyCenter{
+.justifyCenter {
     flex: 1;
     display: flex;
     justify-content: center;
-    
+
 }
 
 //-------------------------CreditClassFolder-------------------------
 
 
-.listFolder{
+.listFolder {
     margin-top: 20px;
     padding: 10px;
     min-height: 425px;
 }
 
-.listFolderItem{
+.listFolderItem {
     padding: 20px 10px;
     border: 1px solid rgba(0, 0, 0, 0.3);
     margin: 20px 10px 10px;
@@ -75,19 +80,27 @@
 
 //-------------------------CreditClassPosts-------------------------
 
-.postContainer{
-    padding: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+.postContainer {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    box-shadow: 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.userAvatar{
+.userAvatar {
     padding-right: 20px;
 }
 
-.postTime{
+.postTime {
     margin-left: auto !important;
+    color: #979797;
+    font-size: 14px;
 }
 
-.postContent{
-    margin-top: 40px;
+.postContent {
+    display: block;
+    margin-top: 24px;
+}
+
+.postRepContainer {
+    border-top: 1px solid rgba(0, 0, 0, 0.15)
 }
