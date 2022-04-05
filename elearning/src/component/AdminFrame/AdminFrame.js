@@ -1,5 +1,5 @@
 import {Fragment, useState} from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -8,12 +8,21 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from '../../pages/Admin/listItems';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AdminItems from './AdminItems';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Avatar from '@mui/material/Avatar';
+import {useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setInfor, setLogin } from '../../actions/action';
+import stringAvatar from '../../myTool/handleAvatar';
+import { useSelector} from 'react-redux'
+
 
 export function Copyright(props) {
   return (
@@ -77,11 +86,52 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 function AdminFrame() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(true);
+  const username=useSelector(state => state.infor.username||'')
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken')
+    dispatch(setInfor({}));
+    dispatch(setLogin(false));
+    navigate("/login");
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const handleGoInfor = () => {
+    navigate("/infor");
+  };
+  const isMenuOpen = Boolean(anchorEl);
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu sx={{top:'35px'}}
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleGoInfor}><AccountCircle/> Profile</MenuItem>
+      <MenuItem onClick={handleLogout}><LogoutIcon/> Logout</MenuItem>
+    </Menu>
+  );
   return (
     <Fragment>
         <CssBaseline />
@@ -110,15 +160,23 @@ function AdminFrame() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              Elearning
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <p style={{ lineHeight:'60px'}}>{username}</p>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <Avatar {...stringAvatar(username)} sizes='15'/>
+              </IconButton>
           </Toolbar>
         </AppBar>
+        
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -134,12 +192,10 @@ function AdminFrame() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            <AdminItems/>
           </List>
         </Drawer>
-        
+        {renderMenu}
         </Fragment>
   );
 }
