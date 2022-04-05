@@ -4,6 +4,7 @@
 
 .dlFlex {
     display: flex;
+    align-items: center;
 }
 
 .pd20 {
@@ -81,9 +82,9 @@
 //-------------------------CreditClassPosts-------------------------
 
 .postContainer {
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    box-shadow: 2px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.15);
 }
 
 .userAvatar {
@@ -101,6 +102,9 @@
     margin-top: 24px;
 }
 
+//-------------------------PostRep-------------------------
+
 .postRepContainer {
-    border-top: 1px solid rgba(0, 0, 0, 0.15)
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 20px;
 }

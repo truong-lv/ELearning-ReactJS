@@ -6,7 +6,7 @@ import style from './CreditClass.module.scss'
 export default function CreditClassExercise({ exercises }) {
     return (
         <Fragment>
-            <Typography className={style.listExercisesContainer} variant="div" component="div">
+            <Typography sx={{ mt: 3 }} className={style.listExercisesContainer} variant="div" component="div">
                 <p className={style.justifyCenter}>Bài tập</p>
                 <p>Đã nộp</p>
             </Typography>

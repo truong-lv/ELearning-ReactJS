@@ -10,6 +10,7 @@ export default function FomatDateTime({ datetime }) {
         </p>)
 }
 
+//
 export function fomatDateTimeText(datetime) {
     let getDateTime = datetime.split(" ");
     let date = getDateTime[0];
@@ -18,12 +19,21 @@ export function fomatDateTimeText(datetime) {
     return time + " " + date
 }
 
+
+//chỉ lấy ngày + tháng + năm
 export function getOnlyDate(datetime) {
     let getDateTime = datetime.split(" ");
     let date = getDateTime[0];
     return formatDate(date);
 }
 
+export function getOnlyDateISO(datetime) {
+    let getDateTime = datetime.split('T');
+    let date = getDateTime[0];
+    return formatDate(date);
+}
+
+// định dạng theo dd/MM/yyyy
 function formatDate(date) {
     let getDateTime = date.split("-");
     let year = getDateTime[0];
