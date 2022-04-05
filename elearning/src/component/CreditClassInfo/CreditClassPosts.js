@@ -19,7 +19,7 @@ export default function CreditClassPosts({ posts }) {
     return (
         <Fragment>
             {posts === undefined ? console.log('Post undefined') :
-                <div>
+                <div style={{ paddingRight: 16 }}>
                     <Fragment>
                         {posts.map((value) => {
                             return (

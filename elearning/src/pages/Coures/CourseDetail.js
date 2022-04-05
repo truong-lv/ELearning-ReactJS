@@ -46,26 +46,29 @@ function CourseDetail() {
                             </Grid>
                         </Grid>
                         <Grid container item md={9} xs={12} direction='column' rowSpacing={2}>
-                            {/* <Grid item={true}>
+                            <Grid item={true}>
                                 <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Thông tin môn học</Typography>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassInfo info={info} />
                                 </Typography>
-                            </Grid> */}
+                            </Grid>
                             <Grid item={true}>
                                 <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>POSTS</Typography>
-                                <Typography component="div">
+                                <Typography component="div" className={style.listPostContainer}>
                                     <CreditClassPosts posts={info.listPost} />
                                 </Typography>
                             </Grid>
                         </Grid>
                         <Grid container item md={3} xs={12} direction='column' rowSpacing={2}>
-                            {/* <Grid item>
-                                <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Tài liệu chia sẻ</Typography>
+                            <Grid item>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className={style.title}>
+                                    <Typography gutterBottom component="div" color="#2980B9" fontSize="22px" fontWeight="bold">Tài liệu chia sẻ</Typography>
+                                    <Typography gutterBottom component="div" color="#FF0000" fontSize="13px" fontWeight="bold">Xem tất cả {'>>'}</Typography>
+                                </div>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassFolder folders={info.folders} />
                                 </Typography>
-                            </Grid> */}
+                            </Grid>
                             <Grid item>
                                 <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Bài tập đã giao</Typography>
                                 <Typography component="div" className={style.listInfoContainer}>
