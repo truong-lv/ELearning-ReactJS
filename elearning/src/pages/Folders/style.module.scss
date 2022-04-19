@@ -1,0 +1,39 @@
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.relative {
+    position: relative;
+}
+
+.headingContainer {
+
+    margin-top: 60px !important;
+    border-bottom: 1px solid rgb(163, 163, 163);
+
+    .heading {
+        color: #2980b9;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .btnBack {
+        color: red;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+}
+
+.folderShareInfo {
+    font-size: 10px;
+    padding-top: 8px !important;
+    color: #7c7c7c;
+}
+
+.exerciseContent {
+    background-color: rgba(0, 0, 0, 0.03);
+    min-height: 425px;
+    border-radius: 6px;
+}

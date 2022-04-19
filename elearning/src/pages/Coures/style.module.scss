@@ -61,5 +61,12 @@
         font-size: 16px;
         font-weight: bold;
     }
+}
 
+
+//-------------------------ListPost------------------------------
+
+.listPostContainer {
+    max-height: 500px;
+    overflow-y: scroll;
 }

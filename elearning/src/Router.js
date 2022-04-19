@@ -20,6 +20,8 @@ import Member from './pages/Members/Member.js'
 import Schedule from './pages/Schedule/Schedule'
 import CourseDetail from './pages/Coures/CourseDetail'
 import Notification from './pages/Notification/Notification'
+import ExerciseDetail from './pages/Exercise/ExerciseDetail'
+import FolderShare from './pages/Folders/FolderShare'
 
 import { useSelector } from 'react-redux'
 
@@ -56,6 +58,7 @@ function Router() {
                     <Route path="/schedule" element={<Schedule />} />
                     <Route path="/infor" element={<Infor />} />
                     <Route path="/notification" element={<Notification />} />
+                    <Route path="/folderShare" element={<FolderShare />} />
                 </Route>
                 <Route path="/admin" element={<CheckAdmin />}>
                     <Route path="/admin/" element={<AdminApp />} >
