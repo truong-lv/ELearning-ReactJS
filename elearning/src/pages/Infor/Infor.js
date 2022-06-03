@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -23,7 +22,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
 
-import stringAvatar from '../../myTool/handleAvatar';
+import AppAvatar from '../../myTool/handleAvatar';
 import axios from 'axios'
 
 
@@ -162,22 +161,27 @@ function Infor() {
                     </Typography>
                     <Container maxWidth="md" >
                         <div className={style.styleAvatar}>
-                            <Avatar
-
-                                alt="Remy Sharp"
-                                {...stringAvatar("Vĩnh Trường", 100, 100)}
-                            />
+                            <AppAvatar url={userInfo.avatar} imgSize={100}/>
                         </div>
                         <Grid container rowSpacing={2}>
-                            <Grid item container direction='row' columnSpacing={3}>
+                            <Grid item={true} container direction='row' columnSpacing={3}>
                                 <Grid item={true} md={6}>
                                     <TextField label="Mã" color="primary" fullWidth={true}
                                         focused
                                         disabled={true}
-                                        value={userInfo.userId || ''}
+                                        value={userInfo.userCode || ''}
 
                                     />
                                 </Grid>
+                                <Grid item={true} md={6}>
+                                    <TextField label="Thuộc" color="primary" fullWidth={true}
+                                        focused
+                                        disabled={true}
+                                        value={userInfo.userClass || ''}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid item={true} container direction='row' columnSpacing={3}>
                                 <Grid item={true} md={6}>
                                     <TextField label="Họ tên" color="primary" fullWidth={true}
                                         focused
@@ -185,8 +189,6 @@ function Infor() {
                                         value={userInfo.fullname || ''}
                                     />
                                 </Grid>
-                            </Grid>
-                            <Grid item container direction='row' columnSpacing={3}>
                                 <Grid item={true} md={6}>
                                     <TextField label="Giới tính" color="primary" fullWidth={true}
                                         focused
@@ -194,13 +196,6 @@ function Infor() {
                                         value={userInfo.gender === 1 ? "Nam" : "Nữ"}
                                     />
 
-                                </Grid>
-                                <Grid item={true} md={6}>
-                                    <TextField label="Ngày sinh" color="primary" fullWidth={true}
-                                        focused
-                                        disabled={true}
-                                        value={userInfo.dateOfBirth || ''}
-                                    />
                                 </Grid>
                             </Grid>
                             <Grid item={true} md={12}>
@@ -247,14 +242,14 @@ function Infor() {
                                                 helperText={!isValidOldPass ? '' : "Mật khẩu không hợp lệ"}
                                             />
                                         </DialogContentText>
-                                        <Grid item="true" md={12}>
+                                        <Grid item={true} md={12}>
                                             <TextField label="Địa chỉ" color="primary" fullWidth={true}
                                                 focused
                                                 disabled={true}
                                                 value={userInfo.address}
                                             />
                                         </Grid>
-                                        <Grid item="true" md={12}>
+                                        <Grid item={true} md={12}>
                                             <Button variant="contained" onClick={handleClickOpen}>
                                                 Đổi mật khẩu
                                             </Button>
@@ -276,7 +271,7 @@ function Infor() {
                                                             error={isValidOldPass}
                                                             helperText={!isValidOldPass ? '' : "Mật khẩu không hợp lệ"}
                                                         />
-                                                        <p className={style.txtNewPass}>
+                                                        <div className={style.txtNewPass}>
                                                             <TextField label="Mật khẩu mới" color="success" fullWidth={true}
                                                                 focused
                                                                 margin="dense"
@@ -290,7 +285,7 @@ function Infor() {
                                                                 onChange={handleChangeConfirmdPass}
                                                                 error={isValidConfirmPass}
                                                                 helperText={!isValidConfirmPass ? '' : "Nhập lại không hợp lệ"}
-                                                            /></p>
+                                                            /></div>
                                                     </DialogContentText>
                                                 </DialogContent>
                                                 <DialogActions>

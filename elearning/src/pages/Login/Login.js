@@ -57,14 +57,14 @@ function Login() {
                 let { accessToken, ...infor } = response.data
                 dispatch(setInfor(infor));
                 dispatch(setLogin(true));
-                console.log(infor);
+                
                 localStorage.setItem('accessToken', accessToken)
                 navigate("/home");
                 setLoading(false);
             })
             .catch(function (error) {
                 setValid('block')
-                console.log(error);
+                console.log({error});
                 setLoading(false);
             });
     }

@@ -10,8 +10,8 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import {Copyright} from './component/AdminFrame/AdminFrame'
-import AdminFrame from './component/AdminFrame/AdminFrame'
+import {Copyright} from './component/Admin/AdminFrame'
+import AdminFrame from './component/Admin/AdminFrame'
 export function CustomerApp() {
   return (
     <div>

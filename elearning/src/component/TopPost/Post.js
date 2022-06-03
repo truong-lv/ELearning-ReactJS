@@ -10,13 +10,16 @@ import Grid from '@mui/material/Grid';
 import stringAvatar from '../../myTool/handleAvatar';
 import FomatDateTime from '../../myTool/fomatDateTime';
 
+import AppAvatar from '../../myTool/handleAvatar'
+
 const MyPost = ({ post }) => {
   return (
     <Card variant="outlined">
       <CardContent>
         <Grid container spacing={1}>
           <Grid item={true} md={0}>
-            <Avatar {...stringAvatar(post.fullname)} />
+            {/* <Avatar src={post.avartarPublisher} /> */}
+            <AppAvatar url={post.avartarPublisher}/>
           </Grid>
           <Grid container item={true} md={11} direction='row'>
             <Grid container item={true} style={{ position: 'relative' }}>

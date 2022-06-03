@@ -21,7 +21,7 @@ import Avatar from '@mui/material/Avatar';
 import './HeaderStyle.css';
 import { useDispatch } from 'react-redux';
 import { setInfor, setLogin } from '../../actions/action';
-import stringAvatar from '../../myTool/handleAvatar';
+import {stringAvatar} from '../../myTool/handleAvatar';
 
 import Banner from './banner'
 

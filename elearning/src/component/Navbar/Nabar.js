@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <div className="navbar-container">
       <Container maxWidth="lg" style={{ display: 'flex' }}>
-        <NavLink className="navLink" to='/home' activeClassName="active">
+        <NavLink className="navLink" to='/home' activeclassname="active">
           <Tab icon={<HomeIcon color="#ffff" />} iconPosition="start" label="TRANG CHỦ" />
         </NavLink>
         <NavLink className="navLink" to='/course'>

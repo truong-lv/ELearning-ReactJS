@@ -20,7 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setInfor, setLogin } from '../../actions/action';
-import stringAvatar from '../../myTool/handleAvatar';
+import {stringAvatar} from '../../myTool/handleAvatar';
 import { useSelector} from 'react-redux'
 
 
