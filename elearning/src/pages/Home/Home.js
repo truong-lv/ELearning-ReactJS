@@ -71,7 +71,6 @@ function Home() {
                                     <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                                         KHÓA HỌC HIỆN CÓ
                                     </Typography>
-                                    {console.log(listTopCourse)}
                                     <CouresAvaiable courses={listTopCourse} />
                                 </div>
                             </Grid>
@@ -80,7 +79,6 @@ function Home() {
                                     BÀI ĐĂNG MỚI NHẤT
                                 </Typography>
                                 <div className="top-post">
-                                    {console.log(listNewPost)}
                                     <Post listPost={listNewPost} />
                                 </div>
                             </Grid>
