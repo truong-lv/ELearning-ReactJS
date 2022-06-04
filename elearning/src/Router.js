@@ -14,10 +14,11 @@ import Course from './pages/Coures/Coures'
 import { CustomerApp, AdminApp } from './App'
 import Member from './pages/Members/Member.js'
 import Schedule from './pages/Schedule/Schedule'
+import FolderShare from './pages/Folders/FolderShare'
 import CourseDetail from './pages/Coures/CourseDetail'
 import Notification from './pages/Notification/Notification'
 import ExerciseDetail from './pages/Exercise/ExerciseDetail'
-import FolderShare from './pages/Folders/FolderShare'
+import ExerciseAssigned from './pages/Exercise/ExerciseAssigned'
 
 import { useSelector } from 'react-redux'
 
@@ -62,9 +63,12 @@ function Router() {
                 </Route>
             </Route>
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/courseDetail" element={<CourseDetail />} />
+            <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/course" element={<Course />} /> */}
+            <Route path="/course" element={<Course />} />
+            <Route path="/exerciseDetail" element={<ExerciseDetail />} />
+            <Route path="/exerciseAssigned" element={<ExerciseAssigned />} />
+            <Route path="/folderShare" element={<FolderShare />} />
         </Routes>
     )
 }

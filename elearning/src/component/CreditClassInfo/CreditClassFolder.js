@@ -5,7 +5,6 @@ import { Typography } from '@mui/material'
 import clsx from 'clsx'
 
 import style from './CreditClass.module.scss'
-
 export default function CreditClassFolder({ folders }) {
     console.log(folders);
     return (
@@ -13,6 +12,9 @@ export default function CreditClassFolder({ folders }) {
             {folders === undefined ? console.log('folder undefined') :
                 <ul className={style.listFolder}>
                     {folders.map((value) => {
+                        if (folders.indexOf(value) > 3) {
+                            return ""
+                        }
                         return (
                             <li className={clsx(style.listFolderItem, style.fwBold)} key={value.folderId}>{value.folderName}</li>
                         )

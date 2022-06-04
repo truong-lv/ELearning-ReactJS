@@ -21,25 +21,28 @@ export default function CreditClassPosts({ posts }) {
             {posts === undefined ? console.log('Post undefined') :
                 <div style={{ paddingRight: 16 }}>
                     <Fragment>
-                        {posts.map((value) => {
-                            return (
-                                <Typography sx={{ mt: 3 }} component="div" key={value.postId} className={style.postContainer}>
-                                    < Typography variant="div" component="div" className={style.pd20} >
-                                        <Typography variant="div" component="div" className={style.dlFlex}>
-                                            <div className={style.userAvatar}>
-                                                <Avatar {...stringAvatar(value.fullname)} />
-                                            </div>
-                                            <Typography variant="div" component="div" style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>{value.fullname}</Typography>
-                                            <Typography variant="div" component="div" className={style.postTime}>
-                                                <FomatDateTime datetime={value.postedTime} />
+                        {posts.length === 0 ? <div className={style.noPostToDisPlay}>Không có post nào để hiển thị</div> :
+
+                            posts.map((value) => {
+                                return (
+                                    <Typography sx={{ mt: 3 }} component="div" key={value.postId} className={style.postContainer}>
+                                        < Typography variant="div" component="div" className={style.pd20} >
+                                            <Typography variant="div" component="div" className={style.dlFlex}>
+                                                <div className={style.userAvatar}>
+                                                    <Avatar {...stringAvatar(value.fullname)} />
+                                                </div>
+                                                <Typography variant="div" component="div" style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>{value.fullname}</Typography>
+                                                <Typography variant="div" component="div" className={style.postTime}>
+                                                    <FomatDateTime datetime={value.postedTime} />
+                                                </Typography>
                                             </Typography>
+                                            <Typography sx={{ pt: 3 }} component={'span'} className={style.postContent}>{value.postContent}</Typography>
                                         </Typography>
-                                        <Typography sx={{ pt: 3 }} component={'span'} className={style.postContent}>{value.postContent}</Typography>
+                                        <PostRep id={value.postId}></PostRep>
                                     </Typography>
-                                    <PostRep id={value.postId}></PostRep>
-                                </Typography>
-                            )
-                        })}
+                                )
+                            })
+                        }
                     </Fragment>
                 </div>
             }

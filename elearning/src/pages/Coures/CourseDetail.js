@@ -24,7 +24,7 @@ function CourseDetail() {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken')
-        axios.get('/api/credit-class/creditclass-detail?creditclass_id=1', {
+        axios.get('/api/credit-class/creditclass-detail?creditclass_id=14', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

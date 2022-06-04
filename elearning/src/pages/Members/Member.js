@@ -19,10 +19,10 @@ function Member() {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        axios.get('/api/credit-class/creditclass-all-members?creditclass_id=2', {
+        axios.get('/api/credit-class/creditclass-all-members?creditclass_id=11', {
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
+            } 
         }).then((response) => {
             console.log(response.data)
             setListSV(response.data)

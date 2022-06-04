@@ -23,7 +23,7 @@ function ExerciseDetail() {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken')
-        axios.get('api/user/submit-info?excercise-id=1', {
+        axios.get('api/user/submit-info?excercise-id=13', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
