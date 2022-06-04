@@ -16,19 +16,20 @@ export default function CreditClassInfo({ info }) {
         <Fragment>
             {array.map((value) => {
                 if (value.teacherInfos !== undefined) {
+                    let size = value.teacherInfos.length;
                     return (
                         <ul className={style.listInfo} key={value}>
                             <li className={style.dlFlex}>
                                 <Typography component="div" className={clsx(style.minWidthTitle, style.fwBold)}>GIẢNG VIÊN:</Typography>
-                                {value.teacherInfos.map((info) => { return info.fullname })}
+                                <div>{value.teacherInfos.map((info) => { return <div key={info.fullname} className={size > 1 ? style.itemInfo : ""}>{info.fullname}</div> })}</div>
                             </li>
                             <li className={style.dlFlex}>
                                 <Typography component="div" className={clsx(style.minWidthTitle, style.fwBold)}>EMAIL:</Typography>
-                                {value.teacherInfos.map((info) => { return info.email })}
+                                <div>{value.teacherInfos.map((info) => { return <div key={info.email} className={size > 1 ? style.itemInfo : ""}> {info.email}</div> })}</div>
                             </li>
                             <li className={style.dlFlex}>
                                 <Typography component="div" className={clsx(style.minWidthTitle, style.fwBold)}>SĐT:</Typography>
-                                {value.teacherInfos.map((info) => { return info.phone })}
+                                <div>{value.teacherInfos.map((info) => { return <div key={info.phone} className={size > 1 ? style.itemInfo : ""}>{info.phone}</div> })}</div>
                             </li>
                             <li className={style.dlFlex}>
                                 <Typography component="div" className={clsx(style.minWidthTitle, style.fwBold)}>KHOA:</Typography>
@@ -47,7 +48,6 @@ export default function CreditClassInfo({ info }) {
                 }
             })}
 
-        </Fragment>
-
+        </Fragment >
     )
 }
