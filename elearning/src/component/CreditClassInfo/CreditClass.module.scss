@@ -27,6 +27,10 @@
     }
 }
 
+.itemInfo {
+    margin-bottom: 10px;
+}
+
 .minWidthTitle {
     min-width: 300px;
 }
@@ -67,13 +71,13 @@
 .listFolder {
     margin-top: 20px;
     padding: 10px;
-    min-height: 425px;
+    height: 425px;
 }
 
 .listFolderItem {
     padding: 20px 10px;
     border: 1px solid rgba(0, 0, 0, 0.3);
-    margin: 20px 10px 10px;
+    margin: 28px 10px 10px;
     border-radius: 10px;
 }
 
@@ -100,6 +104,16 @@
 .postContent {
     display: block;
     margin-top: 24px;
+}
+
+.noPostToDisPlay {
+    width: 100%;
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
 //-------------------------PostRep-------------------------

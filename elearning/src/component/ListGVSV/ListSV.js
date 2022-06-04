@@ -16,7 +16,6 @@ function Member({ value }) {
         <Typography component='div'>
             {array.current.map((value) => {
                 if (value.teacherInfos === undefined || value.students === undefined) {
-                    console.log('Khong')
                 }
                 else {
                     gvCount = value.teacherInfos.length
@@ -30,8 +29,8 @@ function Member({ value }) {
 
                             {value.teacherInfos.map((info) => {
                                 return (
-                                    <Typography key={value} className={style.listMember}>
-                                        {info.fullname}
+                                    <Typography key={value.teacherInfos.phones} className={style.listMember}>
+                                        Avatar - {info.fullname}
                                     </Typography>
                                 )
                             })}
@@ -39,10 +38,10 @@ function Member({ value }) {
                                 <Typography variant='h6' component='div' className={style.headingRole}>SINH VIÊN</Typography>
                                 <Typography component='div' className={clsx(style.headingRole, style.grayText)}> {svCount} sinh viên </Typography>
                             </div>
-                            {value.students.map((info) => {
+                            {value.students.map((info2) => {
                                 return (
-                                    <Typography key={value} className={style.listMember}>
-                                        {info.fullname}
+                                    <Typography key={value.students.studentCode} className={style.listMember}>
+                                        Avatar - {info2.studentCode} - {info2.fullnanme}
                                     </Typography>
                                 )
                             })}
