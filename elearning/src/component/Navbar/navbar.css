@@ -4,6 +4,23 @@
 }
 .navLink{
     text-decoration: none;
-    color: #FFFFFF;
-    display:flex
+    color: #FFFF;
+    display:flex;
+    position:relative;
+}
+.navLink::before{
+    content: "";
+    background-color:#FFFFFF;
+    position:absolute;
+    bottom:1px;
+    left:50%;
+    transform:translate(-50%,0);
+    width:0%;
+    height:2px;
+    
+}
+.active.navLink::before{
+    display: block;
+    transition: all 2s linear 1s;
+    width:80%;
 }

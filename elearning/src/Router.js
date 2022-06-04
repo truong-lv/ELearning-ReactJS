@@ -9,7 +9,11 @@ import { MODERATOR } from './config'
 import Home from './pages/Home/Home'
 import Infor from './pages/Infor/Infor'
 import Login from './pages/Login/Login'
-import Orders from './pages/Admin/Orders'
+import CreditClassInfor from './pages/Admin/CreditClassInfor'
+import CreditClassMember from './pages/Admin/CreditClassMember'
+import CreditClassPost from './pages/Admin/CreditClassPost'
+import CreditClassFile from './pages/Admin/CreditClassFile'
+import Account from './pages/Admin/Account'
 import Course from './pages/Coures/Coures'
 import { CustomerApp, AdminApp } from './App'
 import Member from './pages/Members/Member.js'
@@ -37,9 +41,8 @@ function CheckAdmin() {
     const isLogin = useSelector(state => state.isLogin.value)
     const userRole = useSelector(state => state.infor.roles)
     const isAdmin = userRole.some((role) => (role === MODERATOR))
-    console.log(userRole)
     return (
-        isAdmin ? <AdminApp /> : (isLogin ? <Outlet /> : <Navigate to='/login' />)
+        isAdmin ? <Outlet /> : (isLogin ? <Outlet /> : <Navigate to='/login' />)
     );
 }
 
@@ -59,7 +62,13 @@ function Router() {
                     <Route path="/folderShare" element={<FolderShare />} />
                 </Route>
                 <Route path="/admin" element={<CheckAdmin />}>
-                    <Route path="/admin/*" element={<Orders />} />
+                    <Route path="/admin/" element={<AdminApp />} >
+                        <Route path="/admin/credit-class-infor" element={<CreditClassInfor />} />
+                        <Route path="/admin/credit-class-member" element={<CreditClassMember />} />
+                        <Route path="/admin/credit-class-post" element={<CreditClassPost />} />
+                        <Route path="/admin/credit-class-file" element={<CreditClassFile />} />
+                        <Route path="/admin/account" element={<Account />} />
+                    </Route>
                 </Route>
             </Route>
             <Route path="/login" element={<Login />} />

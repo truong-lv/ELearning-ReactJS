@@ -27,9 +27,9 @@ function Course({ course }) {
                         <Typography variant="body1" component="div" align="center" noWrap>
                             {course.subjectName}
                         </Typography>
-                        <Typography variant="body2" align="center">
+                        {/* <Typography variant="body2" align="center">
                             {course.teachers.reduce((pre, cur) => (pre + '\n' + cur))}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant="body2" align="center">
                             {course.departmentName}
                         </Typography>
@@ -50,7 +50,7 @@ export default function CouresAvaiable(courses) {
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                 {/* KHÓA HỌC HIỆN CÓ */}
             </Typography>
-            <Grid container columnSpacing={2}>
+            <Grid container columnSpacing={2} rowSpacing={2}>
                 {courses.courses.map((course) => {
                     return <Course key={course.creditClassId} course={course} />
                 })}
