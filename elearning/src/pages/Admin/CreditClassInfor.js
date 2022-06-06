@@ -23,8 +23,14 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import InputBase from '@mui/material/InputBase';
 
-import FormDialog from '../../component/Admin/FormDialog';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
+import FormDialog from '../../component/Admin/FormCreditClassInfor';
+import AppToast from '../../myTool/AppToast'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -93,26 +99,34 @@ export default function CreditClassInfor() {
   const [pageNo,setPageNo]=useState(1);
   
   const [open, setOpen] = React.useState(false);
-  const handleClose=useCallback(()=>setOpen(false),open);
-
+  const handleClose=useCallback(()=>{setOpen(false); loadCreditClass()},[open,listCreditClass]);
+  const [openToast, setOpenToast] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   
-  
+  const [creditClassIdFocus,setCreditClassIdFocus]=useState(0)
   const [creditClassUpdate,setCreditClassUpdate]=useState({
     startTime:'',
     endTime:'',
     schoolYear:'',
     status: 1,
     joinedPassword:'',
-    departmentId:'',
-    subjectId:'',
+    departmentId:0,
+    subjectId:0,
     teacherId:[]
   })
-  
-  useEffect(() => {
+  const [timeline,setTimeline]=useState({
+    creditClassId:0,
+    dayOfWeek:0,
+    startLesson:0,
+    endLesson: 0,
+    roomId:0
+  })
+
+  const loadCreditClass=()=>{
     const token=localStorage.getItem('accessToken')
         axios.get('api/credit-class/all/'+pageNo,{
             headers: {
@@ -124,11 +138,51 @@ export default function CreditClassInfor() {
             setListCreditClass(response.data.creditClassDTOS)
 
         }).catch(error => console.log(error))
+  }
+  
+  useEffect(() => {
+    loadCreditClass();
   },[pageNo])
 
-
-
-
+  const deleteCreditClass =()=>{
+    const token=localStorage.getItem('accessToken')
+        var config = {
+          method: 'put',
+          url: axios.defaults.baseURL + '/api/admin/creditclass/cancel-credit-class?credit-class-id='+creditClassIdFocus,
+          headers: { 
+            'Authorization': `Bearer ${token}`
+          }
+        };
+  
+        axios(config)
+          .then(function (response) {
+            if(response.status===200){
+              setOpenToast(true)
+              loadCreditClass();
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+  }
+  const handleChangePage = (event, value) => {
+    setPageNo(value);
+  };
+  function handleEdit(id) {
+    
+  };
+  const handleDelete=(id) => {
+      setCreditClassIdFocus(id)
+      setOpenDetail(true);
+        
+  };
+  const handleCloseConfirm = () => {
+    setOpenDetail(false);
+  };
+  const handleConfirm = () => {
+    deleteCreditClass();
+    setOpenDetail(false);
+  };
 
   return (
     <Fragment>
@@ -171,10 +225,10 @@ export default function CreditClassInfor() {
                 <StyledTableCell align="center">{creditClass.schoolYear}</StyledTableCell>
                 <StyledTableCell align="center">{creditClass.semester}</StyledTableCell>
                 <StyledTableCell align="center">
-                <IconButton aria-label="edit" size="large" color='secondary'>
+                <IconButton aria-label="edit" size="large" color='secondary' data-id={creditClass.creditClassId} onClick={() => handleEdit(creditClass.creditClassId)}>
                   <EditOutlinedIcon fontSize="inherit" />
                 </IconButton>  
-                <IconButton aria-label="delete" size="large" color='error'>
+                <IconButton aria-label="delete" size="large" color='error' onClick={() => handleEdit(handleDelete(creditClass.creditClassId))}>
                   <DeleteIcon fontSize="inherit" />
                 </IconButton>  
                 </StyledTableCell>
@@ -185,9 +239,36 @@ export default function CreditClassInfor() {
         
       </TableContainer>
       <Stack spacing={2} sx={{margin:'20px'}}>
-        <Pagination count={pageSum} variant="outlined" color="primary" />
+        <Pagination count={pageSum} variant="outlined" color="primary" onChange={handleChangePage}/>
       </Stack>
-      <FormDialog isOpen={open} handleClose={handleClose} creditClass={creditClassUpdate}/>
+      <FormDialog isOpen={open} 
+                  handleClose={handleClose} 
+                  creditClass={creditClassUpdate} 
+                  timeline={timeline}/>
+      <AppToast content={"Xóa lớp có mã "+ creditClassIdFocus +" thành công"} type={0} isOpen={openToast} callback={() => {
+            setOpenToast(false);
+          }}/>
+          <Dialog
+          open={openDetail}
+          onClose={handleCloseConfirm}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Thông báo từ hệ thống"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Bạn có muốn xóa lớp có mã {creditClassIdFocus} không
+              </DialogContentText>
+            </DialogContent>
+
+            <DialogActions>
+            <Button onClick={handleCloseConfirm}>Cancel</Button>
+              <Button onClick={handleConfirm}>Ok</Button>
+            </DialogActions>
+
+          </Dialog>
     </Fragment>
   );
 }

@@ -34,7 +34,7 @@ function CheckLogin() {
     document.title = (titleName === '') ? "Elearning" : titleName;
     const isLogin = useSelector(state => state.isLogin.value)
     return (
-        isLogin ? <Outlet /> : <Navigate to='/login' />
+        isLogin ? <Outlet /> : <Navigate to="/login" />
     );
 }
 function CheckAdmin() {
@@ -72,12 +72,12 @@ function Router() {
                 </Route>
             </Route>
             <Route path="/login" element={<Login />} />
-            <Route path="/courseDetail" element={<CourseDetail />} />
+            {/* <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
             <Route path="/course" element={<Course />} />
             <Route path="/exerciseDetail" element={<ExerciseDetail />} />
             <Route path="/exerciseAssigned" element={<ExerciseAssigned />} />
-            <Route path="/folderShare" element={<FolderShare />} />
+            <Route path="/folderShare" element={<FolderShare />} /> */}
         </Routes>
     )
 }
