@@ -99,7 +99,7 @@ export default function CreditClassInfor() {
   const [pageNo,setPageNo]=useState(1);
   
   const [open, setOpen] = React.useState(false);
-  const handleClose=useCallback(()=>{setOpen(false); loadCreditClass()},[open,listCreditClass]);
+  const handleClose=useCallback(()=>{setOpen(false);resetInput(); loadCreditClass()},[open]);
   const [openToast, setOpenToast] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
 
@@ -107,6 +107,7 @@ export default function CreditClassInfor() {
     setOpen(true);
   };
   
+  const [timelineIdFocus,setTimelineIdFocus]=useState(0)
   const [creditClassIdFocus,setCreditClassIdFocus]=useState(0)
   const [creditClassUpdate,setCreditClassUpdate]=useState({
     startTime:'',
@@ -126,6 +127,26 @@ export default function CreditClassInfor() {
     roomId:0
   })
 
+  const resetInput=() =>{
+    setCreditClassUpdate({
+      startTime:'',
+      endTime:'',
+      schoolYear:'',
+      status: 1,
+      joinedPassword:'',
+      departmentId:0,
+      subjectId:0,
+      teacherId:[]
+    });
+    setTimeline({
+      creditClassId:0,
+      dayOfWeek:0,
+      startLesson:0,
+      endLesson: 0,
+      roomId:0
+    });
+  }
+
   const loadCreditClass=()=>{
     const token=localStorage.getItem('accessToken')
         axios.get('api/credit-class/all/'+pageNo,{
@@ -133,7 +154,6 @@ export default function CreditClassInfor() {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-
             setPageSum(response.data.totalPage)
             setListCreditClass(response.data.creditClassDTOS)
 
@@ -165,12 +185,57 @@ export default function CreditClassInfor() {
             console.log(error);
           });
   }
+
+  const getTimeLine=(id) => {
+    const token=localStorage.getItem('accessToken')
+    var config = {
+      method: 'get',
+      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-time-line-newly?creditclass-id='+id,
+      headers: { 
+        'Authorization': `Bearer ${token}`
+      }
+    };
+      axios(config)
+        .then(function (response) {
+          // console.log(response.data);
+          if(response.status===200){
+            // let { timeline, timelineId, ...rest }=response.data
+            setTimeline(response.data.timelineDTORequest)
+            setTimelineIdFocus(response.data.timelineId)
+            setOpen(true);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  }
   const handleChangePage = (event, value) => {
     setPageNo(value);
   };
   function handleEdit(id) {
-    
-  };
+    const token=localStorage.getItem('accessToken')
+    var config = {
+      method: 'get',
+      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-for-update?creditclass-id='+id,
+      headers: { 
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    axios(config)
+      .then(function (response) {
+        if(response.status===200){
+          let { creditClassId, ...creditClassInfor }=response.data
+          
+          setCreditClassIdFocus(creditClassId)
+          setCreditClassUpdate(creditClassInfor)
+          getTimeLine(id);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+   
   const handleDelete=(id) => {
       setCreditClassIdFocus(id)
       setOpenDetail(true);
@@ -225,12 +290,14 @@ export default function CreditClassInfor() {
                 <StyledTableCell align="center">{creditClass.schoolYear}</StyledTableCell>
                 <StyledTableCell align="center">{creditClass.semester}</StyledTableCell>
                 <StyledTableCell align="center">
-                <IconButton aria-label="edit" size="large" color='secondary' data-id={creditClass.creditClassId} onClick={() => handleEdit(creditClass.creditClassId)}>
-                  <EditOutlinedIcon fontSize="inherit" />
-                </IconButton>  
-                <IconButton aria-label="delete" size="large" color='error' onClick={() => handleEdit(handleDelete(creditClass.creditClassId))}>
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>  
+                  <IconButton aria-label="edit" size="large" color='secondary' 
+                    onClick={() => handleEdit(creditClass.creditClassId)}>
+                    <EditOutlinedIcon fontSize="inherit" />
+                  </IconButton>  
+                  <IconButton aria-label="delete" size="large" color='error' 
+                    onClick={() => handleEdit(handleDelete(creditClass.creditClassId))}>
+                    <DeleteIcon fontSize="inherit" />
+                  </IconButton>  
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -244,7 +311,8 @@ export default function CreditClassInfor() {
       <FormDialog isOpen={open} 
                   handleClose={handleClose} 
                   creditClass={creditClassUpdate} 
-                  timeline={timeline}/>
+                  timeline={timeline}
+                  timelineId={timelineIdFocus}/>
       <AppToast content={"Xóa lớp có mã "+ creditClassIdFocus +" thành công"} type={0} isOpen={openToast} callback={() => {
             setOpenToast(false);
           }}/>
