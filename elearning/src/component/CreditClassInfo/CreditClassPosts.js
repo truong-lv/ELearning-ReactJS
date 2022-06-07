@@ -18,18 +18,18 @@ import PostRep from './PostRep'
 export default function CreditClassPosts({ posts }) {
     return (
         <Fragment>
-            {posts === undefined ? console.log('Post undefined') :
+            {posts === undefined ? "" :
                 <div style={{ paddingRight: 16 }}>
                     <Fragment>
                         {posts.length === 0 ? <div className={style.noPostToDisPlay}>Không có post nào để hiển thị</div> :
-
                             posts.map((value) => {
                                 return (
                                     <Typography sx={{ mt: 3 }} component="div" key={value.postId} className={style.postContainer}>
                                         < Typography variant="div" component="div" className={style.pd20} >
                                             <Typography variant="div" component="div" className={style.dlFlex}>
                                                 <div className={style.userAvatar}>
-                                                    <Avatar {...stringAvatar(value.fullname)} />
+                                                    {/* <Avatar {...stringAvatar(value.fullname)} /> */}
+                                                    {/* <Avatar show={stringAvatar(value.fullname).show} onHide={stringAvatar(value.fullname).onHide} /> */}
                                                 </div>
                                                 <Typography variant="div" component="div" style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>{value.fullname}</Typography>
                                                 <Typography variant="div" component="div" className={style.postTime}>

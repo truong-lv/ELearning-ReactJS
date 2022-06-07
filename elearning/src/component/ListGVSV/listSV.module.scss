@@ -11,6 +11,8 @@
     font-weight: bold !important;
     line-height: 2 !important;
     padding-left: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .headingContainer {
@@ -21,4 +23,10 @@
 
 .grayText {
     color: rgba(0, 0, 0, 0.4);
+}
+
+.imgTeacher {
+    width: 50px;
+    height: 50px;
+    margin: 5px 10px;
 }

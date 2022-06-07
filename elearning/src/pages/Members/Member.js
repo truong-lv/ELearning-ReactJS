@@ -12,17 +12,19 @@ import style from './style.module.scss'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import { useParams } from 'react-router-dom'
 
 function Member() {
 
-    const [listSV, setListSV] = useState([])
+    const [listSV, setListSV] = useState([]);
+    const { id } = useParams();
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        axios.get('/api/credit-class/creditclass-all-members?creditclass_id=11', {
+        axios.get(`/api/credit-class/creditclass-all-members?creditclass_id=${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
-            } 
+            }
         }).then((response) => {
             console.log(response.data)
             setListSV(response.data)

@@ -5,16 +5,28 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
+import CourseDetail from '../../pages/Coures/CourseDetail'
+
+import { useNavigate } from 'react-router-dom'
+
 import './style.css'
 import courseIcon from "../../assets/image/course-icon.png"
 
-function Course({course}){
-    return(
+
+function Course({ course }) {
+    let navigate = useNavigate();
+
+    const handleCourseItem = () => {
+        navigate(`/CourseDetail/credit_class_id=${course.creditClassId}`)
+
+    }
+
+    return (
         <Grid item={true} xs={4} md={3}  >
-            <Card className="course-box" title={course.subjectName}>
+            <Card className="course-box" title={course.subjectName} onClick={handleCourseItem}>
                 <CardActionArea>
-                    <div className="course-img" ><img src={courseIcon} /></div>
-                    <CardContent style={{display: 'flex',flexDirection: 'column'}}>
+                    <div className="course-img" ><img src={courseIcon} alt="courseIcon" /></div>
+                    <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="body1" component="div" align="center" noWrap>
                             {course.subjectName}
                         </Typography>

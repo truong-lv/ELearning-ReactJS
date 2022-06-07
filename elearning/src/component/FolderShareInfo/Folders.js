@@ -5,11 +5,11 @@ import { Fragment } from 'react'
 
 
 import style from './Folders.module.scss'
+import folder from '../../assets/image/folder.png'
 
 import { getOnlyDateISO } from '../../myTool/fomatDateTime'
 
-export default function Folders({ folders }) {
-    console.log(folders)
+export default function Folders({ folders, teacherName }) {
     return (
         <Fragment>
             <Typography component="div" className={style.foldersTitle}>
@@ -22,9 +22,12 @@ export default function Folders({ folders }) {
             <div>
                 {folders.map(value => {
                     return (
-                        <ul className={style.foldersItem}>
-                            <li className={style.folderName}>Avatar?? - {value.folderName}</li>
-                            <li className={style.teacherName}>TeacherName?</li>
+                        <ul className={style.foldersItem} key={value.folderId}>
+                            <li className={style.folderName}>
+                                <img className={style.imgFolder} src={folder} alt='folder img' />
+                                <div>{value.folderName}</div>
+                            </li>
+                            <li className={style.teacherName}>{teacherName}</li>
                             <li className={style.upTime}>{getOnlyDateISO(value.upTime)}</li>
                         </ul>
                     )
