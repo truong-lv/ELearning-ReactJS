@@ -14,18 +14,23 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import AppToast from '../../myTool/AppToast'
 
-const token=localStorage.getItem('accessToken')
-const today=new Date().getFullYear()+ '-'+((new Date()).getMonth()).padStart(2, '0') + '-' + new Date().getDate().padStart(2, '0')
+// const today=new Date().getFullYear()+ '-'+((new Date()).getMonth()).padStart(2, '0') + '-' + new Date().getDate().padStart(2, '0')
 //===============UPDATE(ADD/UPDATE) CREDIT_CLASS FORM================
-export default function FormDialog({isOpen,handleClose, creditClass}){
+//isOpen: open status; type: 0-INSERT, 1-UPDATE
+export default function FormDialog({isOpen, handleClose, creditClass, timeline,timelineId}){
   
+  const token=localStorage.getItem('accessToken')
 
   const [listTeacher, setListTeacher] = useState([]);
   const [listSubject, setListSubject] = useState([]);
   const [listDepartment, setListDepartment] = useState([]);
   const [listRoom, setListRoom] = useState([]);
   const listLesson=[1,2,3,4,5,6,7,8,9,10]
+  const [checkJoinedPasswordChange, setCheckJoinedPasswordChange] = useState(false);
+  const [checkTimelineChange, setCheckTimelineChange] = useState(false);
+
 // console.log(today)
   const [startTime, setStartTime] = useState(creditClass.startTime);
   const [endTime, setEndTime] = useState(creditClass.endTime);
@@ -39,7 +44,21 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
   const [startLesson, setStartLesson] = useState(0);
   const [endLesson, setEndLesson] = useState(0);
   const [roomId, setRoomId] = useState(0);
+  const [openToast, setOpenToast] = useState(false);
+  const [checkValid, setCheckValid] = useState({
+    startTime:false,
+    endTime:false,
+    schoolYear:false,
+    joinedPassword:false,
+    departmentId:false,
+    subjectId:false,
+    teacherSelects:false,
 
+    dayOfWeek:false,
+    startLesson:false,
+    endLesson:false,
+    roomId:false
+  });
   
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -51,6 +70,21 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
         },
       },
     };
+
+    useEffect(()=>{
+      setStartTime(creditClass.startTime.split(" ")[0])
+      setEndTime(creditClass.endTime.split(" ")[0])
+      setSchoolYear(creditClass.schoolYear)
+      setJoinedPassword("")
+      setDepartmentId(creditClass.departmentId)
+      setSubjectId(creditClass.subjectId)
+      setTeacherSelects(creditClass.teacherId)
+
+      setDayOfWeek(timeline.dayOfWeek)
+      setStartLesson(timeline.startLesson)
+      setEndLesson(timeline.endLesson)
+      setRoomId(timeline.roomId)
+    },[creditClass, timeline])
 
     useEffect(() => {
           axios.get('api/subject/all',{
@@ -119,10 +153,134 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
       );
+      creditClass.teacherId=event.target.value 
     };
-    
+
+    const validateInput = () => {
+      //startTime===""?setCheckValid(checkValid.startTime=true):setCheckValid(checkValid.startTime=false)
+      //endTime===""?setCheckValid(checkValid.endTime=true):setCheckValid(checkValid.endTime=false)
+      //schoolYear===""?setCheckValid(checkValid.schoolYear=true):setCheckValid(checkValid.schoolYear=false)
+      //joinedPassword===""?setCheckValid(checkValid.joinedPassword=true):setCheckValid(checkValid.joinedPassword=false)
+      //departmentId===""?setCheckValid(checkValid.departmentId=true):setCheckValid(checkValid.departmentId=false)
+      //subjectId===""?setCheckValid(checkValid.subjectId=true):setCheckValid(checkValid.subjectId=false)
+      //teacherSelects===""?setCheckValid(checkValid.teacherSelects=true):setCheckValid(checkValid.teacherSelects=false)
+  
+      //dayOfWeek===""?setCheckValid(checkValid.dayOfWeek=true):setCheckValid(checkValid.dayOfWeek=false)
+      //startLesson===""?setCheckValid(checkValid.startLesson=true):setCheckValid(checkValid.startLesson=false)
+      //endLesson===""?setCheckValid(checkValid.endLesson=true):setCheckValid(checkValid.endLesson=false)
+      //roomId===""?setCheckValid(checkValid.roomId=true):setCheckValid(checkValid.roomId=false)
+    }
+
+    const setTimeline=(id)=>{
+      timeline.creditClassId=id
+      var config = {
+        method: 'post',
+        url: axios.defaults.baseURL + '/api/timeline/create-new',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        data : JSON.stringify(timeline)
+      };
+
+      axios(config)
+        .then(function (response) {
+          if(response.status===200){
+            setOpenToast(true)
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    const updateTimeline=()=>{
+      var config = {
+        method: 'put',
+        url: axios.defaults.baseURL + '/api/timeline/update',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        data : JSON.stringify({timelineId:timelineId, timelineDTORequest:timeline})
+      };
+      
+      axios(config)
+        .then(function (response) {
+          if(response.status===200){
+            console.log("update timeline success")
+            setOpenToast(true)
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
+    const handleConfirm = (event) => {
+      validateInput();
+      for(let item in checkValid){
+        if(checkValid[item]){
+          return
+        }
+      }
+      
+
+      if(timeline.creditClassId===0){
+        let config = {
+          method: 'post',
+          url: axios.defaults.baseURL + '/api/admin/creditclass/create-new-class',
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          data : JSON.stringify(creditClass)
+        };
+        
+        axios(config)
+          .then(function (response) {
+            if(response.status===200){
+              setTimeline(response.data.creditClassId)
+              handleClose();
+              setCheckTimelineChange(false);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+      }else{
+        let config = {
+          method: 'put',
+          url: axios.defaults.baseURL + '/api/admin/creditclass/update-credit-class?credit-class-id='+timeline.creditClassId,
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          data : JSON.stringify(creditClass)
+        };
+        console.log(JSON.stringify(creditClass))
+        axios(config)
+          .then(function (response) {
+            console.log(response.status);
+            if(response.status===200){
+              if(checkTimelineChange===true){
+                updateTimeline()
+                
+              }
+              handleClose();
+              setCheckTimelineChange(false);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+       
+    };
+
 
       return (
+        <Fragment>
         <Dialog open={isOpen} onClose={handleClose} 
         component="form"
         sx={{
@@ -141,7 +299,7 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               id="demo-simple-select"
               value={subjectId}
               label="Môn học"
-              onChange={(event) => {setSubjectId(event.target.value) }}
+              onChange={(event) => {setSubjectId(event.target.value); creditClass.subjectId=event.target.value}}
               >
                 {listSubject.map((subject) => (
                 <MenuItem
@@ -160,7 +318,7 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               id="demo-simple-select"
               value={departmentId}
               label="Khoa"
-              onChange={(event) => {setDepartmentId(event.target.value) }}
+              onChange={(event) => {setDepartmentId(event.target.value); creditClass.departmentId=event.target.value }}
               >
                 {listDepartment.map((department) => (
                 <MenuItem
@@ -210,7 +368,7 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={schoolYear}
-              onChange={(event) => {setSchoolYear(event.target.value) }}
+              onChange={(event) => {setSchoolYear(event.target.value); creditClass.schoolYear=event.target.value }}
               input={<OutlinedInput label="Năm học" />}
               MenuProps={MenuProps}
             >
@@ -226,8 +384,12 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
           </FormControl>
           {/* ====================================MÃ MỜI======================================= */}
           <TextField
-            error={false}
-            onChange={(event) => {setJoinedPassword(event.target.value) }}
+            error={checkValid.joinedPassword}
+            helperText={checkValid.joinedPassword?"Không được để trống.":""}
+            value={joinedPassword}
+            onChange={(event) => {setJoinedPassword(event.target.value);
+                                  setCheckJoinedPasswordChange(true); 
+                                  creditClass.joinedPassword=event.target.value }}
             id="outlined-basic"
             label="Mã mời"
             
@@ -236,10 +398,11 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
         <div style={{display: 'flex'}}>
           {/* ====================================TGIAN BẮT ĐẦU======================================= */}
           <TextField
-            InputProps={{inputProps: { min: today}}}
+            // InputProps={{inputProps: { min: today}}}
             type="date"
             error={false}
-            onChange={(event) => {setStartTime(event.target.value); console.log(event.target.value)}}
+            value={startTime}
+            onChange={(event) => {setStartTime(event.target.value); creditClass.startTime=event.target.value+" 00:00:00"}}
             id="outlined-basic"
             label="Thời gian bắt đầu"
             focused={true}
@@ -249,8 +412,8 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
             InputProps={{inputProps: { min: startTime} }}
             type="date"
             error={false}
-            
-            onChange={(event) => {setEndTime(event.target.value)}}
+            value={endTime}
+            onChange={(event) => {setEndTime(event.target.value); creditClass.endTime=event.target.value+" 00:00:00"}}
             id="outlined-basic"
             label="Thời gian kết thúc"
             focused={true}
@@ -270,7 +433,9 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={dayOfWeek}
-              onChange={(event) => {setDayOfWeek(event.target.value)}}
+              onChange={(event) => {setDayOfWeek(event.target.value);
+                                    setCheckTimelineChange(true); 
+                                    timeline.dayOfWeek=event.target.value}}
               input={<OutlinedInput label="Ngày trong tuần" />}
               MenuProps={MenuProps}
             >
@@ -290,7 +455,9 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={startLesson}
-              onChange={(event) => {setStartLesson(event.target.value)}}
+              onChange={(event) => {setStartLesson(event.target.value); 
+                                    setCheckTimelineChange(true); 
+                                    timeline.startLesson=event.target.value}}
               input={<OutlinedInput label="Tiết bắt đầu" />}
               MenuProps={MenuProps}
             >
@@ -312,7 +479,9 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={endLesson}
-              onChange={(event) => {setEndLesson(event.target.value)}}
+              onChange={(event) => {setEndLesson(event.target.value); 
+                                    setCheckTimelineChange(true); 
+                                    timeline.endLesson=event.target.value}}
               input={<OutlinedInput label="Tiết kết thúc" />}
               MenuProps={MenuProps}
             >
@@ -334,7 +503,9 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               value={roomId}
-              onChange={(event) => {setRoomId(event.target.value)}}
+              onChange={(event) => {setRoomId(event.target.value) ;
+                                    setCheckTimelineChange(true);  
+                                    timeline.roomId=event.target.value}}
               input={<OutlinedInput label="Phòng học" />}
               MenuProps={MenuProps}
             >
@@ -354,8 +525,13 @@ export default function FormDialog({isOpen,handleClose, creditClass}){
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Hủy</Button>
-              <Button onClick={handleClose}>Xác nhận</Button>
+              <Button onClick={handleConfirm}>Xác nhận</Button>
             </DialogActions>
+            
           </Dialog>
+          <AppToast content={"Thêm lớp thành công"} type={0} isOpen={openToast} callback={() => {
+            setOpenToast(false);
+          }}/>
+          </Fragment>
       );
     }
