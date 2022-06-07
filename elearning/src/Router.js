@@ -34,7 +34,7 @@ function CheckLogin() {
     document.title = (titleName === '') ? "Elearning" : titleName;
     const isLogin = useSelector(state => state.isLogin.value)
     return (
-        isLogin ? <Outlet /> : <Navigate to='/login' />
+        isLogin ? <Outlet /> : <Navigate to="/login" />
     );
 }
 function CheckAdmin() {
