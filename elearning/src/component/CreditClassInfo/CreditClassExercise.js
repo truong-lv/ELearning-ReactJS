@@ -1,9 +1,28 @@
 import { Typography } from '@mui/material'
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
+import axios from "axios"
 
 import style from './CreditClass.module.scss'
 
-export default function CreditClassExercise({ exercises }) {
+import { useNavigate } from 'react-router-dom'
+
+function CreditClassExercise({ listExercises }) {
+
+    const [submit, setSubmit] = useState({});
+    let navigate = useNavigate();
+    let i = 0;
+
+    useEffect(() => {
+        const token = localStorage.getItem('accessToken')
+        axios.get(`/api/user/submit-info?excercise-id=15`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
+            setSubmit(response.data)
+        }).catch(error => console.log(error))
+    }, [])
+
     return (
         <Fragment>
             <Typography sx={{ mt: 3 }} className={style.listExercisesContainer} variant="div" component="div">
@@ -11,17 +30,27 @@ export default function CreditClassExercise({ exercises }) {
                 <p>Đã nộp</p>
             </Typography>
 
-            {exercises === undefined ? console.log('exercise undefined') :
+            {console.log(listExercises)}
+            {listExercises === undefined ? "" :
                 <ul className={style.listExercise}>
-
-                    {exercises.map((value) => {
+                    {console.log("no_submit ")}
+                    {listExercises.map((value) => {
                         return (
-                            <li className={style.listExerciseItem} key={value.excerciseId}>{value.title}</li>
+                            <li
+                                onClick={() => {
+                                    navigate(`/exerciseDetail/exercise_id=${value.excerciseId}`, { state: value });
+                                }}
+                                className={style.listExerciseItem} key={value.excerciseId}>
+                                <div style={{ maxWidth: '170px' }}>{value.title}</div>
+                                {/* {console.log(value)} */}
+                                {console.log("submit " + ++i)}
+                            </li>
                         )
                     })}
                 </ul>
             }
-
         </Fragment>
     )
 }
+
+export default CreditClassExercise

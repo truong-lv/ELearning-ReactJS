@@ -54,12 +54,13 @@ function Router() {
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/course" element={<Course />} />
-                    <Route path="/courseDetail" element={<CourseDetail />} />
-                    <Route path="/member" element={<Member />} />
+                    <Route path="/courseDetail/credit_class_id=:id" element={<CourseDetail />} />
+                    <Route path="/member/credit_class_id=:id" element={<Member />} />
                     <Route path="/schedule" element={<Schedule />} />
                     <Route path="/infor" element={<Infor />} />
                     <Route path="/notification" element={<Notification />} />
-                    <Route path="/folderShare" element={<FolderShare />} />
+                    <Route path="/exerciseDetail/exercise_id=:id" element={<ExerciseDetail />} />
+                    <Route path="/folderShare/credit_class_id=:id/subject_name=:subjectName" element={<FolderShare />} />
                 </Route>
                 <Route path="/admin" element={<CheckAdmin />}>
                     <Route path="/admin/" element={<AdminApp />} >
@@ -72,12 +73,12 @@ function Router() {
                 </Route>
             </Route>
             <Route path="/login" element={<Login />} />
-            <Route path="/courseDetail" element={<CourseDetail />} />
+            {/* <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
             <Route path="/course" element={<Course />} />
             <Route path="/exerciseDetail" element={<ExerciseDetail />} />
             <Route path="/exerciseAssigned" element={<ExerciseAssigned />} />
-            <Route path="/folderShare" element={<FolderShare />} />
+            <Route path="/folderShare" element={<FolderShare />} /> */}
         </Routes>
     )
 }

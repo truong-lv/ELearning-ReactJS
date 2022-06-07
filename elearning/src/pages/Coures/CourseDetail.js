@@ -1,4 +1,3 @@
-
 import style from './style.module.scss'
 import Navbar from "../../component/Navbar/Nabar"
 import CreditClassInfo from "../../component/CreditClassInfo/CreditClassInfo"
@@ -15,81 +14,91 @@ import Container from '@mui/material/Container'
 import { Typography } from '@mui/material'
 import axios from "axios"
 
+import { useNavigate, useParams } from 'react-router-dom'
+import member from '../../assets/image/member.png'
+
+
+
 import clsx from 'clsx'
 
 
-function CourseDetail({ route, navigation }) {
+function CourseDetail() {
+    const [info, setInfo] = useState([]);
+    const [teacherInfos, setTeacherInfos] = useState([]);
+    const { id } = useParams();
 
-    const [info, setInfo] = useState([])
+    let navigate = useNavigate();
 
+    const handleBtnShowAll = () => {
+        navigate(`/folderShare/credit_class_id=${id}/subject_name=${info.creditClassName}`, { state: { teacherInfos } })
+    }
+
+    const handleBtnMember = () => {
+        navigate(`/member/credit_class_id=${id}`)
+    }
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken')
-        axios.get('/api/credit-class/creditclass-detail?creditclass_id=14', {
+        axios.get(`/api/credit-class/creditclass-detail?creditclass_id=${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
             setInfo(response.data)
+            setTeacherInfos(response.data.teacherInfos)
         }).catch(error => console.log(error))
     }, [])
 
     return (
-
         <Fragment>
-            <Fragment>
-                {navigation === undefined ? console.log('navigation undefined') : console.log('navigation' + navigation.getParam('itemID'))}
-            </Fragment>
-
-            <Fragment>
-                <Navbar />
-                <Container maxWidth="lg">
-                    <Box sx={{ flexGrow: 1 }}>
-                        <Grid container columnSpacing={4}>
-                            <Grid container item md={12} xs={12} direction='column' rowSpacing={2}>
-                                <Grid item sx={{ pb: 1 }} className={clsx(style.headingContainer, style.flex)}>
-                                    <Typography variant='h5' className={style.heading}>{'className?'}</Typography>
-                                    <Typography variant='h6' className={style.btnBack}>Quay lại</Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container item md={9} xs={12} direction='column' rowSpacing={2}>
-                                <Grid item={true}>
-                                    <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Thông tin môn học</Typography>
-                                    <Typography component="div" className={style.listInfoContainer}>
-                                        <CreditClassInfo info={info} />
-                                    </Typography>
-                                </Grid>
-                                <Grid item={true}>
-                                    <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>POSTS</Typography>
-                                    <Typography component="div" className={style.listPostContainer}>
-                                        <CreditClassPosts posts={info.listPost} />
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container item md={3} xs={12} direction='column' rowSpacing={2}>
-                                <Grid item>
-                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className={style.title}>
-                                        <Typography gutterBottom component="div" color="#2980B9" fontSize="22px" fontWeight="bold">Tài liệu chia sẻ</Typography>
-                                        <Typography gutterBottom component="div" color="#FF0000" fontSize="13px" fontWeight="bold">Xem tất cả {'>>'}</Typography>
-                                    </div>
-                                    <Typography component="div" className={style.listInfoContainer}>
-                                        <CreditClassFolder folders={info.folders} />
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography gutterBottom variant="h4" component="div" color="#2980B9" className={style.title}>Bài tập đã giao</Typography>
-                                    <Typography component="div" className={style.listInfoContainer}>
-                                        <CreditClassExercise exercises={info.excercises} />
-                                    </Typography>
-                                </Grid>
+            <Navbar />
+            <Container maxWidth="lg">
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container columnSpacing={4}>
+                        <Grid container item md={12} xs={12} direction='column' rowSpacing={2}>
+                            <Grid item sx={{ pb: 1 }} className={clsx(style.headingContainer, style.flex)}>
+                                <Typography variant='h5' component='div' sx={{ fontSize: 30 }} className={style.heading}>{info.creditClassName}</Typography>
+                                <Typography variant='h6' className={clsx(style.btnMember, style.flex)} onClick={handleBtnMember}>
+                                    <img className={style.imgMember} src={member} alt='member img' />
+                                    <div className={style.btnMemberContent}>Xem thành viên</div>
+                                </Typography>
                             </Grid>
                         </Grid>
-                    </Box>
-                </Container>
-            </Fragment >
-        </Fragment>
-
-
+                        <Grid container item md={9} xs={12} direction='column' rowSpacing={2}>
+                            <Grid item={true}>
+                                <Typography gutterBottom variant="h5" component="div" color="#2980B9" className={style.title}>Thông tin môn học</Typography>
+                                <Typography component="div" className={style.listInfoContainer}>
+                                    <CreditClassInfo info={info} />
+                                </Typography>
+                            </Grid>
+                            <Grid item={true}>
+                                <Typography gutterBottom variant="h5" component="div" color="#2980B9" className={style.title}>POSTS</Typography>
+                                <Typography component="div" className={style.listPostContainer}>
+                                    <CreditClassPosts posts={info.listPost} />
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid container item md={3} xs={12} direction='column' rowSpacing={2}>
+                            <Grid item>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className={style.title}>
+                                    <Typography gutterBottom component="div" color="#2980B9" fontSize="20px" fontWeight="bold">Tài liệu chia sẻ</Typography>
+                                    <Typography gutterBottom className={style.btnShowAll} onClick={handleBtnShowAll} component="div" color="#FF0000" fontSize="13px" fontWeight="bold">Xem tất cả {'>>'}</Typography>
+                                </div>
+                                <Typography component="div" className={style.listInfoContainer}>
+                                    <CreditClassFolder folders={info.folders} />
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography gutterBottom variant="h5" component="div" color="#2980B9" className={style.title}>Bài tập đã giao</Typography>
+                                <Typography component="div" className={style.listInfoContainer}>
+                                    <CreditClassExercise listExercises={info.excercises} />
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Container>
+        </Fragment >
     )
 }
 

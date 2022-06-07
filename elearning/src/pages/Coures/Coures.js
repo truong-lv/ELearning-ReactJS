@@ -53,7 +53,6 @@ var departmentSelect;
 
 function Course() {
 
-    const colHeight = 'value'
     const [schoolYear, setSchoolYear] = useState('')
     const [semester, setSemester] = useState('')
     const [department, setDepartment] = useState('')

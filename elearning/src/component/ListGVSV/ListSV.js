@@ -1,4 +1,4 @@
-
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import clsx from 'clsx'
 
 import { Fragment } from 'react'
@@ -6,7 +6,9 @@ import { Fragment } from 'react'
 import { useRef } from 'react'
 import Typography from '@mui/material/Typography'
 
+
 import style from './listSV.module.scss'
+import teacher from '../../assets/image/teacher.png'
 
 function Member({ value }) {
     const array = useRef([value])
@@ -30,7 +32,8 @@ function Member({ value }) {
                             {value.teacherInfos.map((info) => {
                                 return (
                                     <Typography key={value.teacherInfos.phones} className={style.listMember}>
-                                        Avatar - {info.fullname}
+                                        <img className={style.imgTeacher} src={teacher} alt='folder img' />
+                                        <span>{info.fullname}</span>
                                     </Typography>
                                 )
                             })}
@@ -41,7 +44,8 @@ function Member({ value }) {
                             {value.students.map((info2) => {
                                 return (
                                     <Typography key={value.students.studentCode} className={style.listMember}>
-                                        Avatar - {info2.studentCode} - {info2.fullnanme}
+                                        <AccountCircle sx={{ color: 'action.active', mr: 2.5, ml: 0.5, width: 32, height: 32, justifyContent: 'center' }} />
+                                        <span>{info2.studentCode} - {info2.fullnanme}</span>
                                     </Typography>
                                 )
                             })}

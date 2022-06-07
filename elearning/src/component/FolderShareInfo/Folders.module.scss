@@ -19,6 +19,14 @@
     .folderName {
         width: 400px;
         font-weight: bold;
+        display: flex;
+        align-items: center;
+
+        .imgFolder {
+            width: 30px;
+            height: 30px;
+            margin: 0 28px;
+        }
     }
 
     .teacherName {
