@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
-import DialogTitle from '@mui/material/DialogTitle';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -45,6 +45,7 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
   const [endLesson, setEndLesson] = useState(0);
   const [roomId, setRoomId] = useState(0);
   const [openToast, setOpenToast] = useState(false);
+  const [toastMess, setToastMess] = useState("");
   const [checkValid, setCheckValid] = useState({
     startTime:false,
     endTime:false,
@@ -186,6 +187,7 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
       axios(config)
         .then(function (response) {
           if(response.status===200){
+            setToastMess("Thêm lớp tín chỉ thành công")
             setOpenToast(true)
           }
         })
@@ -207,8 +209,7 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
       axios(config)
         .then(function (response) {
           if(response.status===200){
-            console.log("update timeline success")
-            setOpenToast(true)
+            
           }
         })
         .catch(function (error) {
@@ -263,6 +264,8 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
           .then(function (response) {
             console.log(response.status);
             if(response.status===200){
+              setToastMess("Sửa thông tin lớp tín chỉ thành công")
+              setOpenToast(true)
               if(checkTimelineChange===true){
                 updateTimeline()
                 
@@ -529,7 +532,7 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
             </DialogActions>
             
           </Dialog>
-          <AppToast content={"Thêm lớp thành công"} type={0} isOpen={openToast} callback={() => {
+          <AppToast content={toastMess} type={0} isOpen={openToast} callback={() => {
             setOpenToast(false);
           }}/>
           </Fragment>
