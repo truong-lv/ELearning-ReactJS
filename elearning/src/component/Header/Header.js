@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useNavigate } from 'react-router-dom'
-import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import AppBar from '@mui/material/AppBar';
@@ -21,33 +21,33 @@ import Avatar from '@mui/material/Avatar';
 import './HeaderStyle.css';
 import { useDispatch } from 'react-redux';
 import { setInfor, setLogin } from '../../actions/action';
-import {stringAvatar} from '../../myTool/handleAvatar';
+import { stringAvatar } from '../../myTool/handleAvatar';
 
 import Banner from './banner'
 
-import { useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default function Header() {
-  let navigate=useNavigate()
+  let navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [unseenNoti,setUnseenNoti]=useState(0)
-  const username=useSelector(state=>state.infor.username || '')
-  const userRoles=useSelector(state=>state.infor.roles || [])
+  const [unseenNoti, setUnseenNoti] = useState(0)
+  const username = useSelector(state => state.infor.username || '')
+  const userRoles = useSelector(state => state.infor.roles || [])
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const token=localStorage.getItem('accessToken')
-    axios.get('/api/notification/unseen-notification',{
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-      }).then((res) => {
-        setUnseenNoti(res.data)
-      }).catch((err) => {
-        handleLogout();
-      })
-  },[])
+    const token = localStorage.getItem('accessToken')
+    axios.get('/api/notification/unseen-notification', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((res) => {
+      setUnseenNoti(res.data)
+    }).catch((err) => {
+      handleLogout();
+    })
+  }, [])
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -64,7 +64,7 @@ export default function Header() {
     navigate("/infor");
   };
 
-  const handleGoNotifi= () => {
+  const handleGoNotifi = () => {
     navigate("/notification")
   }
 
@@ -86,7 +86,7 @@ export default function Header() {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-    <Menu sx={{top:'35px'}}
+    <Menu sx={{ top: '35px' }}
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
@@ -101,8 +101,8 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleGoInfor}><AccountCircle/> Profile</MenuItem>
-      <MenuItem onClick={handleLogout}><LogoutIcon/> Logout</MenuItem>
+      <MenuItem onClick={handleGoInfor}><AccountCircle /> Profile</MenuItem>
+      <MenuItem onClick={handleLogout}><LogoutIcon /> Logout</MenuItem>
     </Menu>
   );
 
@@ -123,8 +123,8 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-     
-     {userRoles.some(role => role==="ROLE_USER")&&<MenuItem onClick={handleGoNotifi}>
+
+      {userRoles.some(role => role === "ROLE_USER") && <MenuItem onClick={handleGoNotifi}>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -156,7 +156,7 @@ export default function Header() {
           aria-haspopup="true"
           color="inherit"
         >
-         <AccountCircle />
+          <AccountCircle />
         </IconButton>
         <p>Logout</p>
       </MenuItem>
@@ -165,73 +165,73 @@ export default function Header() {
 
   return (
     <div>
-    <Box  sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Container maxWidth="lg">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              
-            </Typography>
-            <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {userRoles.some(role => role==="ROLE_USER")&&
-              <IconButton
-              onClick={handleGoNotifi}
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={unseenNoti} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>}
-              
-              <p style={{ lineHeight:'60px'}}>{username}</p>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Container maxWidth="lg">
+            <Toolbar>
               <IconButton
                 size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                edge="start"
                 color="inherit"
+                aria-label="open drawer"
+                sx={{ mr: 2 }}
               >
-                <Avatar {...stringAvatar(username)} sizes='15'/>
+                <MenuIcon />
               </IconButton>
-            </Box>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ display: { xs: 'none', sm: 'block' } }}
               >
-                <MoreIcon />
-              </IconButton>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
-    <Banner/>
+
+              </Typography>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                {userRoles.some(role => role === "ROLE_USER") &&
+                  <IconButton
+                    onClick={handleGoNotifi}
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={unseenNoti} color="error">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>}
+
+                <p style={{ lineHeight: '60px' }}>{username}</p>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Avatar {...stringAvatar(username)} sizes='15' />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </Box>
+      <Banner />
     </div>
   );
 }

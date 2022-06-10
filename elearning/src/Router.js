@@ -58,6 +58,7 @@ function Router() {
                     <Route path="/member/credit_class_id=:id" element={<Member />} />
                     <Route path="/schedule" element={<Schedule />} />
                     <Route path="/infor" element={<Infor />} />
+                    <Route path="/exerciseAssigned/credit_class_id=:id/subject_name=:subjectName" element={<ExerciseAssigned />} />
                     <Route path="/notification" element={<Notification />} />
                     <Route path="/exerciseDetail/exercise_id=:id" element={<ExerciseDetail />} />
                     <Route path="/folderShare/credit_class_id=:id/subject_name=:subjectName" element={<FolderShare />} />

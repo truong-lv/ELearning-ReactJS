@@ -1,6 +1,18 @@
-.headingRole {
+.bold {
     font-weight: bold !important;
-    color: #000000;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.grayText {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.mt50 {
     margin-top: 50px !important;
 }
 
@@ -11,18 +23,10 @@
     font-weight: bold !important;
     line-height: 2 !important;
     padding-left: 20px;
-    display: flex;
-    align-items: center;
 }
 
 .headingContainer {
-    display: flex;
-    justify-content: space-between;
     border-bottom: 1px solid rgb(163, 163, 163);
-}
-
-.grayText {
-    color: rgba(0, 0, 0, 0.4);
 }
 
 .imgTeacher {

@@ -5,6 +5,8 @@ import style from './ExerciseInfo.module.scss'
 import { Fragment } from 'react'
 
 import clsx from 'clsx'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 import jpg from '../../assets/image/jpg.png'
 import doc from '../../assets/image/doc.png'
@@ -14,21 +16,75 @@ import ppxt from '../../assets/image/ppxt.png'
 
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles';
 
-export default function ExerciseSubmitted({ exercise }) {
+import { useParams } from 'react-router-dom';
+
+
+
+export default function ExerciseSubmitted({ exercise, endTime }) {
+
+    console.log(exercise);
+    const { id } = useParams();
+    const token = localStorage.getItem('accessToken')
 
     const folder = exercise.submitFile;
-    const summit = exercise.submitTime;
+    const submit = exercise.submitTime;
+
+    const submitDeadline = new Date(endTime);
+    const toDay = new Date();
+
+    const Input = styled('input')({
+        display: 'none',
+    });
 
     const handleImg = (imgtype) => {
         let value = "";
-        imgtype === 'jpg' ? value = jpg :
+        imgtype === 'jpg' || imgtype === 'png' ? value = jpg :
             imgtype === 'xlsx' ? value = xlsx :
                 imgtype === 'pdf' ? value = pdf :
                     imgtype === 'ppxt' ? value = ppxt : value = doc
 
 
         return value;
+    }
+
+    function submitExercise(file) {
+
+        var data = new FormData();
+        data.append('excerciseId', id);
+        data.append('file', file);
+        data.append('submitContent', 'Hello');
+
+        var config = {
+            method: 'post',
+            url: axios.defaults.baseURL + '/api/submit/index',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            },
+            data: data
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(response.data);
+                window.location.reload()
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const onChange = (e) => {
+        let files = e.target.files;
+
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+
+        reader.onload = (e) => {
+            submitExercise(files[0]);
+        }
     }
 
     return (
@@ -38,12 +94,12 @@ export default function ExerciseSubmitted({ exercise }) {
                     <Typography variant="div" component="div" className={style.bold}>Bài tập của bạn</Typography>
                     <Typography component="div">
                         <Typography variant="div" component="div"
-                            className={clsx(style.bold, typeof summit === 'undefined' ? style.notSubmit : style.submitted)}>
-                            {typeof summit === 'undefined' ? 'Chưa nộp' : 'Đã nộp'}
+                            className={clsx(style.bold, typeof submit === 'undefined' ? style.notSubmit : style.submitted)}>
+                            {typeof submit === 'undefined' ? 'Chưa nộp' : 'Đã nộp'}
                         </Typography>
-                        {typeof summit === 'undefined' ? "" :
+                        {typeof submit === 'undefined' ? "" :
                             <Typography component="div" className={style.submitTime}>
-                                <FomatDateTime datetime={summit} />
+                                <FomatDateTime datetime={submit} />
                             </Typography >}
                     </Typography>
                 </Typography>
@@ -58,10 +114,18 @@ export default function ExerciseSubmitted({ exercise }) {
                         </ul>
                     }
                 </Fragment>
-                <Button variant="outlined" size="small" style={{ fontWeight: "bold", padding: "3px 20px", color: 'red' }} className={clsx(style.absolute, style.bold, style.btnSubmit)}>
-                    {typeof summit === 'undefined' ? 'Nộp bài' : 'Hủy nộp bài'}
-                </Button>
+                <label htmlFor="contained-button-file">
+                    <Input accept="*/*" id="contained-button-file" multiple type="file" onChange={(e) => onChange(e)} />
+                    <Button variant="contained" component="span" size="small"
+                        disabled={submit !== undefined || toDay > submitDeadline}
+                        // disabled={submit !== undefined}
+                        color='success' style={{ fontWeight: "bold", padding: "3px 20px" }}
+                        className={clsx(style.absolute, style.bold, style.btnSubmit)}>
+                        {typeof submit !== 'undefined' ? 'Hủy nộp bài' : toDay > submitDeadline ? 'Hết hạn' : 'Nộp bài'}
+                    </Button>
+                </label>
+
             </Typography>
-        </Fragment>
+        </Fragment >
     )
 }

@@ -9,6 +9,10 @@
     justify-content: space-between;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 
 .listFolder {
     list-style: none;
@@ -75,4 +79,29 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 0 20px;
+}
+
+
+//---------------------------ListStudentSubmitExercise---------------------------
+
+.headingContainer {
+
+    margin-top: 60px !important;
+    border-bottom: 1px solid rgb(163, 163, 163);
+
+    .heading {
+        color: #2980b9;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .btnBack {
+        color: red;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+.listStudentSubmitTitle {
+    background-color: #C7D9FD;
 }

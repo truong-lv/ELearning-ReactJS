@@ -1,8 +1,8 @@
 import Navbar from "../../component/Navbar/Nabar"
-import CourseAvaiable from "../../component/CourseAvaiable/CourseAvaiable"
+import CourseAvaiable from "../../component/CourseAvaiable/CourseAvaiable";
 
 import * as React from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -79,7 +79,6 @@ function Course() {
             }
         }).then(response => {
             departmentSelect = response.data;
-            console.log(departmentSelect);
         })
     }, [])
 
@@ -95,7 +94,7 @@ function Course() {
     }, [semester, schoolYear])
 
     return (
-        <>
+        <Fragment>
             <Navbar />
             <Container maxWidth="lg">
                 <Box sx={{ flexGrow: 1 }}>
@@ -103,9 +102,9 @@ function Course() {
                         <Grid container item md={6} lg={12} xs={12} direction="column" rowSpacing={2}>
                             <Grid item>
                                 <Typography gutterBottom variant="h6" component="div" color="#2980B9">
-                                    CÁC KHÓA HỌC HIỆN TẠI (? - ?)
+                                    CÁC KHÓA HỌC HIỆN TẠI
                                     <Container style={{ border: '1px solid #000', padding: '20px 30px', marginTop: '20px' }}>
-                                        <CourseAvaiable courses={listCurrentCourses} />
+                                        <CourseAvaiable courses={listCurrentCourses} fullWidth={true} />
                                     </Container>
                                 </Typography>
                             </Grid>
@@ -123,9 +122,8 @@ function Course() {
                                         </Typography>
                                     </Typography>
                                     <Container style={{ border: '1px solid #000', padding: '20px 30px', marginTop: '20px' }}>
-                                        <CourseAvaiable courses={listCurrentDifferenceCourse} />
+                                        <CourseAvaiable courses={listCurrentCourses} fullWidth={true} />
                                     </Container>
-
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -134,7 +132,7 @@ function Course() {
                 </Box>
 
             </Container>
-        </>
+        </Fragment>
     )
 }
 

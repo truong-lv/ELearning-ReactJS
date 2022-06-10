@@ -28,7 +28,7 @@ function FolderShare() {
 
 
 
-    const handleTeacherArray = () => {
+    const handleTeacherArray = (() => {
         teacherArray.map((value) => {
             if (teacherArray.indexOf(value) === 0)
                 teacherNames += value.fullname
@@ -37,9 +37,7 @@ function FolderShare() {
 
             return teacherNames;
         })
-    }
-
-    handleTeacherArray();
+    })()
 
 
     useEffect(() => {
