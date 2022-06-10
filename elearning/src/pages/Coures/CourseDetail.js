@@ -24,18 +24,25 @@ import clsx from 'clsx'
 
 function CourseDetail() {
     const [info, setInfo] = useState([]);
+    const [listExercises, setListExercises] = useState([]);
     const [teacherInfos, setTeacherInfos] = useState([]);
     const { id } = useParams();
 
     let navigate = useNavigate();
 
-    const handleBtnShowAll = () => {
-        navigate(`/folderShare/credit_class_id=${id}/subject_name=${info.creditClassName}`, { state: { teacherInfos } })
-    }
-
     const handleBtnMember = () => {
         navigate(`/member/credit_class_id=${id}`)
     }
+
+    const handleBtnShowFolder = () => {
+        navigate(`/folderShare/credit_class_id=${id}/subject_name=${info.creditClassName}`, { state: { teacherInfos } })
+    }
+
+    const handleBtnShowExercises = () => {
+        navigate(`/exerciseAssigned/credit_class_id=${id}/subject_name=${info.creditClassName}`, { state: { teacherInfos, listExercises } })
+    }
+
+
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken')
@@ -46,6 +53,7 @@ function CourseDetail() {
         }).then((response) => {
             setInfo(response.data)
             setTeacherInfos(response.data.teacherInfos)
+            setListExercises(response.data.excercises)
         }).catch(error => console.log(error))
     }, [])
 
@@ -82,16 +90,20 @@ function CourseDetail() {
                             <Grid item>
                                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className={style.title}>
                                     <Typography gutterBottom component="div" color="#2980B9" fontSize="20px" fontWeight="bold">Tài liệu chia sẻ</Typography>
-                                    <Typography gutterBottom className={style.btnShowAll} onClick={handleBtnShowAll} component="div" color="#FF0000" fontSize="13px" fontWeight="bold">Xem tất cả {'>>'}</Typography>
+                                    <Typography gutterBottom className={style.btnShowAll} onClick={handleBtnShowFolder} component="div" color="#FF0000" fontSize="13px" fontWeight="bold">Xem tất cả {'>>'}</Typography>
                                 </div>
                                 <Typography component="div" className={style.listInfoContainer}>
                                     <CreditClassFolder folders={info.folders} />
                                 </Typography>
                             </Grid>
                             <Grid item>
-                                <Typography gutterBottom variant="h5" component="div" color="#2980B9" className={style.title}>Bài tập đã giao</Typography>
+                                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }} className={style.title}>
+                                    <Typography gutterBottom component="div" color="#2980B9" fontSize="20px" fontWeight="bold">Bài tập đã giao</Typography>
+                                    <Typography gutterBottom className={style.btnShowAll} onClick={handleBtnShowExercises} component="div" color="#FF0000" fontSize="13px" fontWeight="bold">Xem tất cả {'>>'}</Typography>
+                                </div>
+
                                 <Typography component="div" className={style.listInfoContainer}>
-                                    <CreditClassExercise listExercises={info.excercises} />
+                                    <CreditClassExercise listExercises={listExercises} />
                                 </Typography>
                             </Grid>
                         </Grid>

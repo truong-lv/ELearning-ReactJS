@@ -161,7 +161,7 @@ function Infor() {
                     </Typography>
                     <Container maxWidth="md" >
                         <div className={style.styleAvatar}>
-                            <AppAvatar url={userInfo.avatar} imgSize={100}/>
+                            <AppAvatar url={userInfo.avatar} imgSize={100} />
                         </div>
                         <Grid container rowSpacing={2}>
                             <Grid item={true} container direction='row' columnSpacing={3}>

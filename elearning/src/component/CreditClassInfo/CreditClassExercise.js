@@ -12,16 +12,16 @@ function CreditClassExercise({ listExercises }) {
     let navigate = useNavigate();
     let i = 0;
 
-    useEffect(() => {
-        const token = localStorage.getItem('accessToken')
-        axios.get(`/api/user/submit-info?excercise-id=15`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((response) => {
-            setSubmit(response.data)
-        }).catch(error => console.log(error))
-    }, [])
+    // useEffect(() => {
+    //     const token = localStorage.getItem('accessToken')
+    //     axios.get(`/api/user/submit-info?excercise-id=15`, {
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`
+    //         }
+    //     }).then((response) => {
+    //         setSubmit(response.data)
+    //     }).catch(error => console.log(error))
+    // }, [])
 
     return (
         <Fragment>
@@ -30,10 +30,8 @@ function CreditClassExercise({ listExercises }) {
                 <p>Đã nộp</p>
             </Typography>
 
-            {console.log(listExercises)}
             {listExercises === undefined ? "" :
                 <ul className={style.listExercise}>
-                    {console.log("no_submit ")}
                     {listExercises.map((value) => {
                         return (
                             <li
@@ -42,8 +40,6 @@ function CreditClassExercise({ listExercises }) {
                                 }}
                                 className={style.listExerciseItem} key={value.excerciseId}>
                                 <div style={{ maxWidth: '170px' }}>{value.title}</div>
-                                {/* {console.log(value)} */}
-                                {console.log("submit " + ++i)}
                             </li>
                         )
                     })}

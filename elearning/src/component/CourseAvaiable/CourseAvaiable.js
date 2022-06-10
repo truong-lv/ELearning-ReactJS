@@ -13,7 +13,9 @@ import './style.css'
 import courseIcon from "../../assets/image/course-icon.png"
 
 
-function Course({ course }) {
+function Course({ course, fullWidth }) {
+
+
     let navigate = useNavigate();
 
     const handleCourseItem = () => {
@@ -22,7 +24,7 @@ function Course({ course }) {
     }
 
     return (
-        <Grid item={true} xs={4} md={3}  >
+        <Grid item={true} xs={4} md={fullWidth === false ? 3 : 2.4}  >
             <Card className="course-box" title={course.subjectName} onClick={handleCourseItem}>
                 <CardActionArea>
                     <div className="course-img" ><img src={courseIcon} alt="courseIcon" /></div>
@@ -46,16 +48,17 @@ function Course({ course }) {
     )
 }
 
-export default function CouresAvaiable(courses) {
-    // console.log(courses.courses)
+export default function CouresAvaiable({ courses, fullWidth }) {
+
+    console.log(fullWidth);
     return (
         <React.Fragment>
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                 {/* KHÓA HỌC HIỆN CÓ */}
             </Typography>
             <Grid container columnSpacing={2} rowSpacing={2}>
-                {courses.courses.map((course) => {
-                    return <Course key={course.creditClassId} course={course} />
+                {courses.map((course) => {
+                    return <Course key={course.creditClassId} course={course} fullWidth={fullWidth} />
                 })}
             </Grid>
         </React.Fragment>
