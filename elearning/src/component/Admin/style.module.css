@@ -1,0 +1,12 @@
+.navLink {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 20px;
+}
+
+.active {
+  background-color: #fb009f;
+}
+/*# sourceMappingURL=style.module.css.map */

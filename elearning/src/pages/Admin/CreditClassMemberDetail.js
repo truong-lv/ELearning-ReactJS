@@ -463,9 +463,9 @@ export default function MemberDetail() {
                       </FormControl>
                     </DialogContent>
                     <DialogActions>
-                <Button onClick={handleClose}>Hủy</Button>
-                <Button onClick={handleConfirm}>Xác nhận</Button>
-            </DialogActions>
+                        <Button onClick={handleClose}>Hủy</Button>
+                        <Button onClick={handleConfirm}>Xác nhận</Button>
+                    </DialogActions>
                   </Dialog>
             </Fragment>
     )

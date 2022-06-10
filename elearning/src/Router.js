@@ -65,11 +65,12 @@ function Router() {
                 </Route>
                 <Route path="/admin" element={<CheckAdmin />}>
                     <Route path="/admin/" element={<AdminApp />} >
+                        <Route path="/admin/" element={<CreditClassInfor />} />
                         <Route path="/admin/credit-class-infor" element={<CreditClassInfor />} />
                         <Route path="/admin/credit-class-member" element={<CreditClassMember />} />
                         <Route path="/admin/credit-class-memberdetail/:id" element={<CreditClassMemberDetail />} />
                         <Route path="/admin/credit-class-post" element={<CreditClassPost />} />
-                        <Route path="/admin/credit-class-postdetail/:id" element={<CreditClassPostDetail />} />
+                        <Route path="/admin/credit-class-postdetail/:id/:name" element={<CreditClassPostDetail />} />
                         <Route path="/admin/credit-class-file" element={<CreditClassFile />} />
                         <Route path="/admin/account" element={<Account />} />
                     </Route>

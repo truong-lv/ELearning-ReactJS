@@ -149,7 +149,7 @@ function CreditClassPost(){
                 <StyledTableCell align="center">Posts: {creditClass.totalPost} - Comments: {creditClass.totalComment} </StyledTableCell>
                 <StyledTableCell align="center">
                 <IconButton aria-label="edit" size="large" color='secondary' 
-                            onClick={()=>{navigate("/admin/credit-class-postdetail/"+creditClass.creditClassId);}}>
+                            onClick={()=>{navigate("/admin/credit-class-postdetail/"+creditClass.creditClassId+"/"+creditClass.subjectName);}}>
                   <FeedOutlinedIcon fontSize="inherit" />
                 </IconButton> 
                 </StyledTableCell>
