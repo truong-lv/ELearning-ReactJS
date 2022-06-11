@@ -15,6 +15,7 @@ import CreditClassMemberDetail from './pages/Admin/CreditClassMemberDetail'
 import CreditClassPost from './pages/Admin/CreditClassPost'
 import CreditClassPostDetail from './pages/Admin/CreditClassPostDetail'
 import CreditClassFile from './pages/Admin/CreditClassFile'
+import CreditClassFileDetail from './pages/Admin/CreditClassFileDetail'
 import Account from './pages/Admin/Account'
 import Course from './pages/Coures/Coures'
 import { CustomerApp, AdminApp } from './App'
@@ -72,6 +73,7 @@ function Router() {
                         <Route path="/admin/credit-class-post" element={<CreditClassPost />} />
                         <Route path="/admin/credit-class-postdetail/:id/:name" element={<CreditClassPostDetail />} />
                         <Route path="/admin/credit-class-file" element={<CreditClassFile />} />
+                        <Route path="/admin/credit-class-filedetail/:id/:name" element={<CreditClassFileDetail />} />
                         <Route path="/admin/account" element={<Account />} />
                     </Route>
                 </Route>

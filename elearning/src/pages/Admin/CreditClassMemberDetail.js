@@ -221,16 +221,16 @@ export default function MemberDetail() {
     };
 
     const loadMembers=() => {
-            axios.get('api/credit-class/creditclass-all-members-active?creditclass_id='+id,{
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }).then((response) => {
-                
-                setListTeacher(response.data.teacherInfos)
-                setListStudent(response.data.students)
-    
-            }).catch(error => console.log(error))
+      axios.get('api/credit-class/creditclass-all-members-active?creditclass_id='+id,{
+          headers: {
+              'Authorization': `Bearer ${token}`
+          }
+      }).then((response) => {
+          
+          setListTeacher(response.data.teacherInfos)
+          setListStudent(response.data.students)
+
+      }).catch(error => console.log(error))
     }
 
     useEffect(() => {

@@ -23,13 +23,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import InputBase from '@mui/material/InputBase';
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
-import AppToast from '../../myTool/AppToast'
+import { useNavigate } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -95,7 +89,7 @@ function CreditClassFile(){
     const [listCreditClass,setListCreditClass]=useState([]);
     const [pageNo,setPageNo]=useState(1);
     const [pageSum,setPageSum]=useState(0);
-    const [creditClassIdFocus,setCreditClassIdFocus]=useState(0)
+    let navigate = useNavigate();
     const loadCreditClass=()=>{
         const token=localStorage.getItem('accessToken')
             axios.get('api/admin/creditclass/get-credit-class-total-document/'+pageNo,{
@@ -159,7 +153,8 @@ function CreditClassFile(){
                 <StyledTableCell align="center">{creditClass.semester}</StyledTableCell>
                 <StyledTableCell align="center">Folders: {creditClass.totalFolder} - Files: {creditClass.totalDocument} </StyledTableCell>
                 <StyledTableCell align="center">
-                <IconButton aria-label="edit" size="large" color='secondary' >
+                <IconButton aria-label="edit" size="large" color='secondary' 
+                            onClick={()=>{navigate("/admin/credit-class-filedetail/"+creditClass.creditClassId+"/"+creditClass.subjectName);}}>
                   <FeedOutlinedIcon fontSize="inherit" />
                 </IconButton> 
                 </StyledTableCell>

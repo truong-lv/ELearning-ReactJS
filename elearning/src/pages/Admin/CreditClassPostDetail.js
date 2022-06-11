@@ -37,6 +37,7 @@ export default function CreditClassPostDetail() {
     const [openToast, setOpenToast] = useState(false);
     const [toastMess, setToastMess] = useState('');
     const [openDeleteForm, setOpenDeleteForm] = useState(false);
+
     const [postFocus,setPostFocus]=useState({
         postId:0,
         avartarPublisher:'',
@@ -51,7 +52,6 @@ export default function CreditClassPostDetail() {
     const handleCloseLoadding = () => {
         setLoadding(false);
       };
-      console.log("chạy")
     const loadPosts=() => {
         const token=localStorage.getItem('accessToken')
         axios.get('api/credit-class/creditclass-list-post?creditclass_id='+id,{
@@ -124,7 +124,33 @@ export default function CreditClassPostDetail() {
               setOpenToast(true);
                setToastMess("Thêm bình luận thất bại")
             });
-            newPost='';
+    }
+
+    const handleDeleteComment=(idComment)=>{
+        console.log(idComment);
+        const token=localStorage.getItem('accessToken')
+        var config = {
+            method: 'delete',
+            url: axios.defaults.baseURL + '/api/post/delete-comment?post-comment-id='+idComment,
+            headers: { 
+              'Authorization': `Bearer ${token}`
+            }
+          };
+          axios(config)
+            .then(function (response) {
+              if(response.status===200){
+                loadComment(postFocus.postId);
+                loadPosts();
+                setOpenToast(true);
+                setToastMess("Xóa bình luận thành công");
+                
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+              setOpenToast(true);
+               setToastMess("Xóa bình luận thất bại")
+            });
     }
     
     //HANDLE ADD/DELTE POST
@@ -289,7 +315,8 @@ export default function CreditClassPostDetail() {
                                         {" - " + comment.createdAt.substring(0,comment.createdAt.indexOf('T'))+" "
                                         +comment.createdAt.substring(comment.createdAt.indexOf(':')+1,comment.createdAt.lastIndexOf('.'))}
                                     </p>
-                                    <IconButton aria-label="delete" color='error' >
+                                    <IconButton aria-label="delete" color='error' 
+                                            onClick={() =>handleDeleteComment(comment.commentId)}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </div>
@@ -330,6 +357,8 @@ export default function CreditClassPostDetail() {
           <Button onClick={handleConfirmAddPost}>Xác nhận</Button>
         </DialogActions>
       </Dialog>
+
+      {/* DIALOG CONFIRM DELETE POST */}
         <Dialog
         open={openDeleteForm}
         onClose={handleCloseDeleteDialog}
