@@ -1,9 +1,18 @@
 //---------------------------*---------------------------
 
+.content {
+    align-self: center;
+}
+
 .flex {
     display: flex;
     justify-content: space-between;
 }
+
+.bold {
+    font-weight: bold;
+}
+
 
 .listFolder {
     list-style: none;
@@ -14,15 +23,25 @@
     border: 1px solid rgba(0, 0, 0, 0.3);
     margin: 20px 10px 10px;
     border-radius: 10px;
-    max-width: 230px;
     width: 100%;
+    max-width: 230px;
+    max-height: 90px;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
+
 
 //---------------------------ExerciseContent---------------------------
 
 .exerciseContainer {
     font-size: 18px;
     padding: 25px;
+}
+
+.imgFileType {
+    width: 40px;
+    height: 40px;
+    margin: 5px 10px 5px 0;
 }
 
 //---------------------------ExerciseSubmitted---------------------------
@@ -60,4 +79,29 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 0 20px;
+}
+
+
+//---------------------------ListStudentSubmitExercise---------------------------
+
+.headingContainer {
+
+    margin-top: 60px !important;
+    border-bottom: 1px solid rgb(163, 163, 163);
+
+    .heading {
+        color: #2980b9;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .btnBack {
+        color: red;
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+
+.listStudentSubmitTitle {
+    background-color: #C7D9FD;
 }

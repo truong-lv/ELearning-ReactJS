@@ -2,6 +2,7 @@
 .flex {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 //-------------------------Course------------------------------
@@ -31,6 +32,28 @@
 
 //-------------------------CourseDetail------------------------------
 
+.imgMember {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.btnMember {
+    padding: 5px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+
+}
+
+.btnMemberContent {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+}
 
 .listInfoContainer {
     background-color: rgba(0, 0, 0, 0.03);
@@ -43,7 +66,19 @@
 .title {
     margin-top: 40px !important;
     font-weight: bold !important;
+
+    .btnShowAll {
+        padding: 3px;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    }
 }
+
+
 
 .headingContainer {
 

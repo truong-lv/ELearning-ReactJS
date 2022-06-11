@@ -56,6 +56,11 @@
 .listExerciseItem {
     padding: 10px 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+    }
 }
 
 .justifyCenter {
@@ -67,18 +72,25 @@
 
 //-------------------------CreditClassFolder-------------------------
 
+.imgFolder {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
 
 .listFolder {
-    margin-top: 20px;
+    margin-top: 14px;
     padding: 10px;
     height: 425px;
 }
 
 .listFolderItem {
-    padding: 20px 10px;
+    padding: 18px 10px;
     border: 1px solid rgba(0, 0, 0, 0.3);
-    margin: 28px 10px 10px;
+    margin: 25px 10px 10px;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
 }
 
 

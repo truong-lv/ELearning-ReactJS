@@ -16,15 +16,33 @@ import clsx from 'clsx'
 import Folders from '../../component/FolderShareInfo/Folders'
 
 import style from './style.module.scss'
+import { useParams, useLocation } from 'react-router-dom'
 
 function FolderShare() {
 
     const [data, setData] = useState([])
+    const { id, subjectName } = useParams();
+    const location = useLocation();
+    const teacherArray = location.state.teacherInfos;
+    let teacherNames = '';
+
+
+
+    const handleTeacherArray = (() => {
+        teacherArray.map((value) => {
+            if (teacherArray.indexOf(value) === 0)
+                teacherNames += value.fullname
+            else
+                teacherNames += `/${value.fullname}`
+
+            return teacherNames;
+        })
+    })()
 
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken')
-        axios.get('/api/credit-class/creditclass-detail?creditclass_id=15', {
+        axios.get(`/api/credit-class/creditclass-detail?creditclass_id=${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -46,11 +64,11 @@ function FolderShare() {
                             </Grid>
                             <Grid item={true} sx={{ mb: 6 }} className={clsx(style.folderShareInfo, style.flex)}>
                                 <Typography component="div" >
-                                    {'SubjectName'} - {' TeacherName'}
+                                    {subjectName} - {teacherNames}
                                 </Typography>
                             </Grid>
                             <Grid item={true}>
-                                <Folders folders={data}></Folders>
+                                <Folders folders={data} teacherName={teacherNames}></Folders>
                             </Grid>
                         </Grid>
                     </Grid>

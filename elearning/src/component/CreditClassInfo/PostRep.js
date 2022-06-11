@@ -29,7 +29,6 @@ export default function PostRep(id) {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            console.log(response.data)
             setPostRep(response.data)
         }).catch(error => console.log(error))
 

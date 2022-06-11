@@ -1,7 +1,7 @@
 import './homeStyle.css'
 import Post from "../../component/TopPost/Post";
 import Navbar from "../../component/Navbar/Nabar"
-import CouresAvaiable from "../../component/CourseAvaiable/CourseAvaiable";
+import CourseAvaiable from "../../component/CourseAvaiable/CourseAvaiable";
 
 
 import axios from "axios";
@@ -24,9 +24,8 @@ function Home() {
     const [listNewPost, setListNewPost] = useState([])
     const [date, setDate] = useState(new Date());
     const [unseenNoti, setUnseenNoti] = useState(0)
-    // const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        // setLoading(true)
         const token = localStorage.getItem('accessToken')
         axios.get('/api/credit-class/', {
             headers: {
@@ -44,7 +43,6 @@ function Home() {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            // console.log(response.data)
             setListNewPost(response.data)
         }).catch(error => console.log(error))
     }, [])
@@ -59,6 +57,7 @@ function Home() {
             setUnseenNoti(res.data)
         })
     }, [])
+
     return (
         <Fragment>
             <Navbar />
@@ -71,7 +70,7 @@ function Home() {
                                     <Typography gutterBottom variant="h6" component="div" color="#2980B9">
                                         KHÓA HỌC HIỆN CÓ
                                     </Typography>
-                                    <CouresAvaiable courses={listTopCourse} />
+                                    <CourseAvaiable courses={listTopCourse} fullWidth={false} />
                                 </div>
                             </Grid>
                             <Grid item={true}>

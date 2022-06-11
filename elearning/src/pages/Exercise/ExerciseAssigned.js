@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react'
 
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 import axios from 'axios'
+
+import Button from '@mui/material/Button'
 
 import { Fragment } from 'react'
 
@@ -17,21 +21,29 @@ import AssignItem from '../../component/ExerciseAssigned/AssignItem'
 
 import style from './style.module.scss'
 
+import { useParams, useLocation } from 'react-router-dom'
+
+
 function ExerciseAssigned() {
 
-    // const [data, setData] = useState([])
+    const { id, subjectName } = useParams();
+    const location = useLocation();
+    const teacherArray = location.state.teacherInfos;
+    const exercisesArray = location.state.listExercises;
+    let teacherNames = '';
+
+    const handleTeacherArray = (() => {
+        teacherArray.map((value) => {
+            if (teacherArray.indexOf(value) === 0)
+                teacherNames += value.fullname
+            else
+                teacherNames += `/${value.fullname}`
+
+            return teacherNames;
+        })
+    })()
 
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('accessToken')
-    //     axios.get('/api/credit-class/creditclass-detail?creditclass_id=15', {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //     }).then((response) => {
-    //         setData(response.data.folders)
-    //     }).catch(error => console.log(error))
-    // }, [])
 
     return (
         <Fragment>
@@ -42,15 +54,17 @@ function ExerciseAssigned() {
                         <Grid container item md={12} xs={12} direction='column' rowSpacing={2}>
                             <Grid item={true} sx={{ pb: 1 }} className={clsx(style.headingContainer, style.flex)}>
                                 <Typography variant='h5' className={style.heading}>DANH SÁCH BÀI TẬP</Typography>
-                                <Typography variant='h6' className={style.btnBack}>Quay lại</Typography>
                             </Grid>
-                            <Grid item={true} sx={{ mb: 6 }} className={clsx(style.folderShareInfo, style.flex)}>
+                            <Grid item={true} sx={{ mb: 6 }} className={clsx(style.exerciseInfo, style.flex)}>
                                 <Typography component="div" >
-                                    {'SubjectName'} - {' TeacherName'}
+                                    {subjectName} - {teacherNames}
                                 </Typography>
+                                <Button variant="contained" startIcon={<AddCircleOutlineIcon />} component="span" size="small" color='success' style={{ fontWeight: "bold", padding: "3px 20px" }}>
+                                    Thêm bài tập
+                                </Button>
                             </Grid>
                             <Grid item={true}>
-                                <AssignItem></AssignItem>
+                                <AssignItem listExercise={exercisesArray}></AssignItem>
                             </Grid>
                         </Grid>
                     </Grid>
