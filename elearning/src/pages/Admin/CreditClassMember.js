@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {useState,useEffect, useCallback, Fragment} from 'react';
+import {useState,useEffect, Fragment} from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 
 import { styled,alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -11,25 +11,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
 import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import InputBase from '@mui/material/InputBase';
-
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
-import AppToast from '../../myTool/AppToast'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -96,6 +84,7 @@ function CreditClassMember(){
     const [pageNo,setPageNo]=useState(1);
     const [pageSum,setPageSum]=useState(0);
     const [creditClassIdFocus,setCreditClassIdFocus]=useState(0)
+    let navigate = useNavigate();
     const loadCreditClass=()=>{
         const token=localStorage.getItem('accessToken')
             axios.get('api/admin/creditclass/get-credit-class-total/'+pageNo,{
@@ -130,9 +119,6 @@ function CreditClassMember(){
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          {/* <Button color="success" variant="contained" onClick={handleClickOpen} endIcon={<AddIcon />}>
-            Thêm
-          </Button> */}
           </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -159,7 +145,8 @@ function CreditClassMember(){
                 <StyledTableCell align="center">{creditClass.semester}</StyledTableCell>
                 <StyledTableCell align="center">GV: {creditClass.totalTeacher} - SV: {creditClass.totalStudent} </StyledTableCell>
                 <StyledTableCell align="center">
-                <IconButton aria-label="edit" size="large" color='secondary' >
+                <IconButton aria-label="edit" size="large" color='secondary' 
+                    onClick={()=>{navigate("/admin/credit-class-memberdetail/"+creditClass.creditClassId);}}>
                   <FeedOutlinedIcon fontSize="inherit" />
                 </IconButton> 
                 </StyledTableCell>
@@ -172,34 +159,6 @@ function CreditClassMember(){
       <Stack spacing={2} sx={{margin:'20px'}}>
         <Pagination count={pageSum} variant="outlined" color="primary" onChange={handleChangePage}/>
       </Stack>
-      {/* <FormDialog isOpen={open} 
-                  handleClose={handleClose} 
-                  creditClass={creditClassUpdate} 
-                  timeline={timeline}/> */}
-      {/* <AppToast content={"Xóa lớp có mã "+ creditClassIdFocus +" thành công"} type={0} isOpen={openToast} callback={() => {
-            setOpenToast(false);
-          }}/>
-          <Dialog
-          open={openDetail}
-          onClose={handleCloseConfirm}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Thông báo từ hệ thống"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Bạn có muốn xóa lớp có mã {creditClassIdFocus} không
-              </DialogContentText>
-            </DialogContent>
-
-            <DialogActions>
-            <Button onClick={handleCloseConfirm}>Cancel</Button>
-              <Button onClick={handleConfirm}>Ok</Button>
-            </DialogActions>
-
-          </Dialog> */}
     </Fragment>
     )
 }

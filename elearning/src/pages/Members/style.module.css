@@ -1,0 +1,22 @@
+.headingContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 60px !important;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid #a3a3a3;
+}
+
+.headingContainer .heading {
+  color: #2980b9;
+  font-weight: bold;
+}
+
+.headingContainer .btnBack {
+  color: red;
+  font-size: 16px;
+  font-weight: bold;
+}
+/*# sourceMappingURL=style.module.css.map */

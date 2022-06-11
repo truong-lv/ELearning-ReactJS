@@ -59,7 +59,7 @@ export default function AdminItems(){
       <ListItemIcon>
         <LocalPostOfficeIcon />
       </ListItemIcon>
-      <ListItemText primary="Bài post" />
+      <ListItemText primary="Bài đăng" />
     </ListItemButton>
     <ListItemButton
     selected={selectedIndex === 3}
