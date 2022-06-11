@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useState,useEffect, useCallback, Fragment} from 'react';
+import { useState, useEffect, useCallback, Fragment } from 'react';
 import axios from 'axios'
 
-import { styled,alpha } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -94,138 +94,138 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CreditClassInfor() {
-  const [listCreditClass,setListCreditClass]=useState([]);
-  const [pageSum,setPageSum]=useState(0);
-  const [pageNo,setPageNo]=useState(1);
-  
+  const [listCreditClass, setListCreditClass] = useState([]);
+  const [pageSum, setPageSum] = useState(0);
+  const [pageNo, setPageNo] = useState(1);
+
   const [open, setOpen] = React.useState(false);
-  const handleClose=useCallback(()=>{setOpen(false);resetInput(); loadCreditClass()},[open]);
+  const handleClose = useCallback(() => { setOpen(false); resetInput(); loadCreditClass() }, [open]);
   const [openToast, setOpenToast] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-  
-  const [timelineIdFocus,setTimelineIdFocus]=useState(0)
-  const [creditClassIdFocus,setCreditClassIdFocus]=useState(0)
-  const [creditClassUpdate,setCreditClassUpdate]=useState({
-    startTime:'',
-    endTime:'',
-    schoolYear:'',
+
+  const [timelineIdFocus, setTimelineIdFocus] = useState(0)
+  const [creditClassIdFocus, setCreditClassIdFocus] = useState(0)
+  const [creditClassUpdate, setCreditClassUpdate] = useState({
+    startTime: '',
+    endTime: '',
+    schoolYear: '',
     status: 1,
-    joinedPassword:'',
-    departmentId:0,
-    subjectId:0,
-    teacherId:[]
+    joinedPassword: '',
+    departmentId: 0,
+    subjectId: 0,
+    teacherId: []
   })
-  const [timeline,setTimeline]=useState({
-    creditClassId:0,
-    dayOfWeek:0,
-    startLesson:0,
+  const [timeline, setTimeline] = useState({
+    creditClassId: 0,
+    dayOfWeek: 0,
+    startLesson: 0,
     endLesson: 0,
-    roomId:0
+    roomId: 0
   })
 
-  const resetInput=() =>{
+  const resetInput = () => {
     setCreditClassUpdate({
-      startTime:'',
-      endTime:'',
-      schoolYear:'',
+      startTime: '',
+      endTime: '',
+      schoolYear: '',
       status: 1,
-      joinedPassword:'',
-      departmentId:0,
-      subjectId:0,
-      teacherId:[]
+      joinedPassword: '',
+      departmentId: 0,
+      subjectId: 0,
+      teacherId: []
     });
     setTimeline({
-      creditClassId:0,
-      dayOfWeek:0,
-      startLesson:0,
+      creditClassId: 0,
+      dayOfWeek: 0,
+      startLesson: 0,
       endLesson: 0,
-      roomId:0
+      roomId: 0
     });
   }
 
-  const loadCreditClass=()=>{
-    const token=localStorage.getItem('accessToken')
-        axios.get('api/credit-class/all/'+pageNo,{
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((response) => {
-            setPageSum(response.data.totalPage)
-            setListCreditClass(response.data.creditClassDTOS)
+  const loadCreditClass = () => {
+    const token = localStorage.getItem('accessToken')
+    axios.get('api/credit-class/all/' + pageNo, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((response) => {
+      setPageSum(response.data.totalPage)
+      setListCreditClass(response.data.creditClassDTOS)
 
-        }).catch(error => console.log(error))
+    }).catch(error => console.log(error))
   }
-  
+
   useEffect(() => {
     loadCreditClass();
-  },[pageNo])
+  }, [pageNo])
 
-  const deleteCreditClass =()=>{
-    const token=localStorage.getItem('accessToken')
-        var config = {
-          method: 'put',
-          url: axios.defaults.baseURL + '/api/admin/creditclass/cancel-credit-class?credit-class-id='+creditClassIdFocus,
-          headers: { 
-            'Authorization': `Bearer ${token}`
-          }
-        };
-  
-        axios(config)
-          .then(function (response) {
-            if(response.status===200){
-              setOpenToast(true)
-              loadCreditClass();
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-  }
-
-  const getTimeLine=(id) => {
-    const token=localStorage.getItem('accessToken')
+  const deleteCreditClass = () => {
+    const token = localStorage.getItem('accessToken')
     var config = {
-      method: 'get',
-      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-time-line-newly?creditclass-id='+id,
-      headers: { 
+      method: 'put',
+      url: axios.defaults.baseURL + '/api/admin/creditclass/cancel-credit-class?credit-class-id=' + creditClassIdFocus,
+      headers: {
         'Authorization': `Bearer ${token}`
       }
     };
-      axios(config)
-        .then(function (response) {
-          // console.log(response.data);
-          if(response.status===200){
-            // let { timeline, timelineId, ...rest }=response.data
-            setTimeline(response.data.timelineDTORequest)
-            setTimelineIdFocus(response.data.timelineId)
-            setOpen(true);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+
+    axios(config)
+      .then(function (response) {
+        if (response.status === 200) {
+          setOpenToast(true)
+          loadCreditClass();
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
-  const handleChangePage = (event, value) => {
-    setPageNo(value);
-  };
-  function handleEdit(id) {
-    const token=localStorage.getItem('accessToken')
+
+  const getTimeLine = (id) => {
+    const token = localStorage.getItem('accessToken')
     var config = {
       method: 'get',
-      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-for-update?creditclass-id='+id,
-      headers: { 
+      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-time-line-newly?creditclass-id=' + id,
+      headers: {
         'Authorization': `Bearer ${token}`
       }
     };
     axios(config)
       .then(function (response) {
-        if(response.status===200){
-          let { creditClassId, ...creditClassInfor }=response.data
-          
+        // console.log(response.data);
+        if (response.status === 200) {
+          // let { timeline, timelineId, ...rest }=response.data
+          setTimeline(response.data.timelineDTORequest)
+          setTimelineIdFocus(response.data.timelineId)
+          setOpen(true);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  const handleChangePage = (event, value) => {
+    setPageNo(value);
+  };
+  function handleEdit(id) {
+    const token = localStorage.getItem('accessToken')
+    var config = {
+      method: 'get',
+      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-for-update?creditclass-id=' + id,
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    axios(config)
+      .then(function (response) {
+        if (response.status === 200) {
+          let { creditClassId, ...creditClassInfor } = response.data
+
           setCreditClassIdFocus(creditClassId)
           setCreditClassUpdate(creditClassInfor)
           getTimeLine(id);
@@ -234,12 +234,12 @@ export default function CreditClassInfor() {
       .catch(function (error) {
         console.log(error);
       });
-    }
-   
-  const handleDelete=(id) => {
-      setCreditClassIdFocus(id)
-      setOpenDetail(true);
-        
+  }
+
+  const handleDelete = (id) => {
+    setCreditClassIdFocus(id)
+    setOpenDetail(true);
+
   };
   const handleCloseConfirm = () => {
     setOpenDetail(false);
@@ -251,20 +251,20 @@ export default function CreditClassInfor() {
 
   return (
     <Fragment>
-      <div style={{display:'flex',margin:'10px 0', justifyContent:'flex-end'}}>
-      <Search >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Button color="success" variant="contained" onClick={handleClickOpen} endIcon={<AddIcon />}>
-            Thêm
-          </Button>
-          </div>
+      <div style={{ display: 'flex', margin: '10px 0', justifyContent: 'flex-end' }}>
+        <Search >
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+        <Button color="success" variant="contained" onClick={handleClickOpen} endIcon={<AddIcon />}>
+          Thêm
+        </Button>
+      </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -290,53 +290,53 @@ export default function CreditClassInfor() {
                 <StyledTableCell align="center">{creditClass.schoolYear}</StyledTableCell>
                 <StyledTableCell align="center">{creditClass.semester}</StyledTableCell>
                 <StyledTableCell align="center">
-                  <IconButton aria-label="edit" size="large" color='secondary' 
+                  <IconButton aria-label="edit" size="large" color='secondary'
                     onClick={() => handleEdit(creditClass.creditClassId)}>
                     <EditOutlinedIcon fontSize="inherit" />
-                  </IconButton>  
-                  <IconButton aria-label="delete" size="large" color='error' 
+                  </IconButton>
+                  <IconButton aria-label="delete" size="large" color='error'
                     onClick={() => handleEdit(handleDelete(creditClass.creditClassId))}>
                     <DeleteIcon fontSize="inherit" />
-                  </IconButton>  
+                  </IconButton>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
-        
+
       </TableContainer>
-      <Stack spacing={2} sx={{margin:'20px'}}>
-        <Pagination count={pageSum} variant="outlined" color="primary" onChange={handleChangePage}/>
+      <Stack spacing={2} sx={{ margin: '20px' }}>
+        <Pagination count={pageSum} variant="outlined" color="primary" onChange={handleChangePage} />
       </Stack>
-      <FormDialog isOpen={open} 
-                  handleClose={handleClose} 
-                  creditClass={creditClassUpdate} 
-                  timeline={timeline}
-                  timelineId={timelineIdFocus}/>
-      <AppToast content={"Xóa lớp có mã "+ creditClassIdFocus +" thành công"} type={0} isOpen={openToast} callback={() => {
-            setOpenToast(false);
-          }}/>
-          <Dialog
-          open={openDetail}
-          onClose={handleCloseConfirm}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Thông báo từ hệ thống"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Bạn có muốn xóa lớp có mã {creditClassIdFocus} không
-              </DialogContentText>
-            </DialogContent>
+      <FormDialog isOpen={open}
+        handleClose={handleClose}
+        creditClass={creditClassUpdate}
+        timeline={timeline}
+        timelineId={timelineIdFocus} />
+      <AppToast content={"Xóa lớp có mã " + creditClassIdFocus + " thành công"} type={0} isOpen={openToast} callback={() => {
+        setOpenToast(false);
+      }} />
+      <Dialog
+        open={openDetail}
+        onClose={handleCloseConfirm}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Thông báo từ hệ thống"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Bạn có muốn xóa lớp có mã {creditClassIdFocus} không
+          </DialogContentText>
+        </DialogContent>
 
-            <DialogActions>
-            <Button onClick={handleCloseConfirm}>Cancel</Button>
-              <Button onClick={handleConfirm}>Ok</Button>
-            </DialogActions>
+        <DialogActions>
+          <Button onClick={handleCloseConfirm}>Cancel</Button>
+          <Button onClick={handleConfirm}>Ok</Button>
+        </DialogActions>
 
-          </Dialog>
+      </Dialog>
     </Fragment>
   );
 }
