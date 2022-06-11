@@ -1,0 +1,77 @@
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.selectTitle {
+  font-size: 16px;
+  color: #000000;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  padding: 0 20px;
+}
+
+.comboboxSelect {
+  max-width: 140px;
+  max-height: 40px;
+  padding: 0;
+}
+
+.selectArea {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.titleAnotherClasses {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.listInfoContainer {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.listFolderContainer {
+  padding: 10px;
+}
+
+.title {
+  margin-top: 40px !important;
+  font-weight: bold !important;
+}
+
+.headingContainer {
+  margin-top: 60px !important;
+  border-bottom: 1px solid #a3a3a3;
+}
+
+.headingContainer .heading {
+  color: #2980b9;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.headingContainer .btnBack {
+  color: red;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.listPostContainer {
+  max-height: 500px;
+  overflow-y: scroll;
+}
+/*# sourceMappingURL=style.module.css.map */

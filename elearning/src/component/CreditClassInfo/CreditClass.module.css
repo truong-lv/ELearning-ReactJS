@@ -1,0 +1,126 @@
+.fwBold {
+  font-weight: bold !important;
+}
+
+.dlFlex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.pd20 {
+  padding: 20px;
+}
+
+.listInfo {
+  list-style: none;
+  color: #000;
+  margin-top: 20px;
+  padding: 20px 0;
+}
+
+.listInfo li {
+  padding: 20px 20px;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+.itemInfo {
+  margin-bottom: 10px;
+}
+
+.minWidthTitle {
+  min-width: 300px;
+}
+
+.listExercisesContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: #c7d9fd;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.listExercise,
+.listFolder {
+  list-style: none;
+}
+
+.listExerciseItem {
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.justifyCenter {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.listFolder {
+  margin-top: 20px;
+  padding: 10px;
+  height: 425px;
+}
+
+.listFolderItem {
+  padding: 20px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin: 28px 10px 10px;
+  border-radius: 10px;
+}
+
+.postContainer {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  -webkit-box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.15);
+          box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.15);
+}
+
+.userAvatar {
+  padding-right: 20px;
+}
+
+.postTime {
+  margin-left: auto !important;
+  color: #979797;
+  font-size: 14px;
+}
+
+.postContent {
+  display: block;
+  margin-top: 24px;
+}
+
+.noPostToDisPlay {
+  width: 100%;
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 50px;
+}
+
+.postRepContainer {
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 20px;
+}
+/*# sourceMappingURL=CreditClass.module.css.map */

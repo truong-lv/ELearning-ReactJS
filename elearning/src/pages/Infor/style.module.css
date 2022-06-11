@@ -1,0 +1,19 @@
+.boxContainer {
+  background-color: #FFFF;
+  padding: 15px;
+}
+
+.styleAvatar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-bottom: 15px;
+}
+
+.txtNewPass {
+  margin-top: 1rem;
+}
+/*# sourceMappingURL=style.module.css.map */

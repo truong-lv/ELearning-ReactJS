@@ -3,7 +3,6 @@ import {useState,useEffect, useCallback, Fragment} from 'react';
 import axios from 'axios'
 
 import { styled,alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -190,7 +189,7 @@ export default function CreditClassInfor() {
     const token=localStorage.getItem('accessToken')
     var config = {
       method: 'get',
-      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-time-line-newly?creditclass-id='+id,
+      url: axios.defaults.baseURL + '/api/admin/creditclass/get-credit-class-time-line?creditclass-id='+id,
       headers: { 
         'Authorization': `Bearer ${token}`
       }
