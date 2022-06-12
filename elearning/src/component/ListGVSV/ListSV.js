@@ -174,7 +174,8 @@ function Member({ value }) {
                             <div className={clsx(style.headingContainer, style.flex, style.spaceBetween, style.mt50)}>
                                 <Typography variant='h6' component='div' className={style.bold}>SINH VIÊN</Typography>
                                 <div className={clsx(style.flex, style.spaceBetween)}>
-                                    <Button onClick={() => { handleAdd() }} variant="contained" startIcon={<AddCircleOutlineIcon />} component="span" size="small" color='success' style={{ fontWeight: "bold", padding: "3px 20px", marginRight: 16 }}>
+                                    <Button onClick={() => { handleAdd() }} variant="contained" startIcon={<AddCircleOutlineIcon />} component="span" size="small"
+                                        color='success' style={{ fontWeight: "bold", padding: "3px 20px", marginRight: 16, display: isTeacherModer ? "inherit" : "none" }}>
                                         Thêm sinh viên
                                     </Button>
                                     <Typography component='div' className={clsx(style.grayText, style.bold)}> {svCount} sinh viên </Typography>

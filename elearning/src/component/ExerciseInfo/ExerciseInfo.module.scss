@@ -10,7 +10,7 @@
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: bold !important;
 }
 
 
@@ -46,10 +46,6 @@
 
 //---------------------------ExerciseSubmitted---------------------------
 
-
-.bold {
-    font-weight: bold;
-}
 
 .submitted {
     display: flex;

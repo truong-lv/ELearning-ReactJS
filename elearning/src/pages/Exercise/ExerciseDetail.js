@@ -88,7 +88,7 @@ function ExerciseDetail() {
                             <Grid item>
                                 {isTeacherModer ?
                                     <Typography component="div" className={style.flex}>
-                                        <ListStudentSubmitExercise listStudent={listStudentSubmit} />
+                                        <ListStudentSubmitExercise listStudent={listStudentSubmit} exerciseName={exerciseInformation.title} />
                                     </Typography>
                                     :
                                     <Typography component="div" className={clsx(style.exerciseContent, style.relative)}>
