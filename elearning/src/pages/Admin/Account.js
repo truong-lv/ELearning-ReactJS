@@ -142,6 +142,18 @@ const resetFieldState=()=>{
   setErorrMess('')
 }
 
+function checkValidInput(){
+  let erorrStr=[];
+  let checkErorr=false;
+  if(roleSelecteds.length===0){erorrStr.push('Quyền không được để trống');checkErorr=true}
+  if(setUserId===0){erorrStr.push('Thông tin người dùng không được để trống');checkErorr=true}
+  if(username===''){erorrStr.push('Tên tài khoản không được để trống');checkErorr=true}
+  if(password===''){erorrStr.push('Mật khẩu không được để trống');checkErorr=true}
+  else if(password.length<6) {erorrStr.push('Mật khẩu tối thiểu 6 kí tự');checkErorr=true}
+  setErorrMess(erorrStr.join(', '));
+  return checkErorr;
+}
+
   function getStyles(name, teacherSelects, theme) {
     return {
       fontWeight:
@@ -183,6 +195,8 @@ const resetFieldState=()=>{
     };
 
     const handleConfirm = () => {
+      if(checkValidInput())return;
+
       const token=localStorage.getItem('accessToken')
       const data={
         username:username,
@@ -206,7 +220,7 @@ const resetFieldState=()=>{
           if(response.status===200){
             loadAccount();
             resetFieldState();
-            setIsOpen(false);
+            handleCloseConfirm();
             setToastMess("Thêm tài khoản thành công")
             setOpenToast(true);
             
@@ -219,7 +233,7 @@ const resetFieldState=()=>{
     }
     const handleCloseConfirm = () => {
       setIsOpen(false)
-      
+      resetFieldState();
     }
 
     //HANDLE UPDATE PASSWORD
@@ -259,6 +273,7 @@ const resetFieldState=()=>{
     }
     const handleCloseUpdatePass= () => {
       setIsOpenUpdatePass(false)
+      resetFieldState();
     }
 
   return (
@@ -452,7 +467,7 @@ function Asynchronous({handleSetUserId}) {
           <TextField
             {...params}
             
-            label="Nhập thông tin tìm kiếm: email, sđt, tên"
+            label="Người cần tạo tài khoản(gợi ý nhập email, sđt hoặc tên để tìm kiếm)"
             value={keySearch}
             onChange={(event)=>setKeySearch(event.target.value)}
             InputProps={{
