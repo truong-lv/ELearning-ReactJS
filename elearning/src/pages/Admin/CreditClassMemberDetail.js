@@ -456,7 +456,7 @@ export default function MemberDetail() {
                               value={student.studentCode}
                               style={getStyles(student.fullnanme, studentSelects, theme)}
                             >
-                              {student.fullnanme}
+                              {student.studentCode +" - "+ student.fullnanme}
                             </MenuItem>
                           ))}
                         </Select>
