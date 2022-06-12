@@ -6,22 +6,14 @@ import style from './CreditClass.module.scss'
 
 import { useNavigate } from 'react-router-dom'
 
+import IconSubmit from './IconSubmit'
+
+import clsx from 'clsx'
+
 function CreditClassExercise({ listExercises }) {
 
     const [submit, setSubmit] = useState({});
     let navigate = useNavigate();
-    let i = 0;
-
-    // useEffect(() => {
-    //     const token = localStorage.getItem('accessToken')
-    //     axios.get(`/api/user/submit-info?excercise-id=15`, {
-    //         headers: {
-    //             'Authorization': `Bearer ${token}`
-    //         }
-    //     }).then((response) => {
-    //         setSubmit(response.data)
-    //     }).catch(error => console.log(error))
-    // }, [])
 
     return (
         <Fragment>
@@ -38,8 +30,9 @@ function CreditClassExercise({ listExercises }) {
                                 onClick={() => {
                                     navigate(`/exerciseDetail/exercise_id=${value.excerciseId}`, { state: value });
                                 }}
-                                className={style.listExerciseItem} key={value.excerciseId}>
-                                <div style={{ maxWidth: '170px' }}>{value.title}</div>
+                                className={clsx(style.listExerciseItem, style.dlFlex)} key={value.excerciseId}>
+                                <div style={{ width: '200px' }}>{value.title}</div>
+                                <IconSubmit id={value.excerciseId} />
                             </li>
                         )
                     })}

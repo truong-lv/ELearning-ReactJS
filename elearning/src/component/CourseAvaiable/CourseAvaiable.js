@@ -49,8 +49,6 @@ function Course({ course, fullWidth }) {
 }
 
 export default function CouresAvaiable({ courses, fullWidth }) {
-
-    console.log(fullWidth);
     return (
         <React.Fragment>
             <Typography gutterBottom variant="h6" component="div" color="#2980B9">

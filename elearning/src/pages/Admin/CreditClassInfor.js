@@ -2,12 +2,7 @@ import * as React from 'react';
 import { useState, useEffect, useCallback, Fragment } from 'react';
 import axios from 'axios'
 
-<<<<<<< HEAD
 import { styled, alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box'
-=======
-import { styled,alpha } from '@mui/material/styles';
->>>>>>> 1a6a3a074ba8fb300913470971276eb5bffa0138
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';

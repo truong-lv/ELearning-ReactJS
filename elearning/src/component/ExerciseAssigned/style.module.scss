@@ -16,6 +16,11 @@
     border-radius: 4px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(199, 217, 251, 0.7);
+    }
+
     .folderName {
         width: 400px;
         font-weight: bold;
