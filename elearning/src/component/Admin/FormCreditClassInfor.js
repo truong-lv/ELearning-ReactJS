@@ -298,6 +298,7 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
             <FormControl sx={{width: '50%',margin:'16px'}}>
             <InputLabel id="demo-simple-select-label">Môn học</InputLabel>
             <Select
+              required
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={subjectId}
