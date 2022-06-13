@@ -375,7 +375,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="right">
             {folder.upTime.substring(0,folder.upTime.indexOf('T'))+" "
-            + folder.upTime.substring(folder.upTime.indexOf(':')+1,folder.upTime.lastIndexOf('.'))}
+            + folder.upTime.substring(folder.upTime.indexOf('T')+1,folder.upTime.lastIndexOf('.'))}
         </TableCell>
         <TableCell align="right">
             <IconButton aria-label="delete" size="large" color='error' onClick={()=>{handleDeleteFolder(folder)}} >
@@ -417,7 +417,7 @@ function Row(props) {
                       <TableCell>{document.documentName}</TableCell>
                       <TableCell align="right">
                         {document.createAt.substring(0,document.createAt.indexOf('T'))+" "
-                        + document.createAt.substring(document.createAt.indexOf(':')+1,document.createAt.lastIndexOf('.'))}
+                        + document.createAt.substring(document.createAt.indexOf('T')+1,document.createAt.lastIndexOf('.'))}
                         </TableCell>
                       <TableCell align="right">
                       <IconButton aria-label="download" size="large" color='success' onClick={()=>{getFileToDownload(document)}} >
