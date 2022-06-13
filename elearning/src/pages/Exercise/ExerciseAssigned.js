@@ -97,10 +97,8 @@ function ExerciseAssigned() {
         formData.append('title', title);
         formData.append('creditClassId', id);
         formData.append('excerciseContent', content);
-        console.log(fileSubmit);
         if (JSON.stringify(fileSubmit) !== JSON.stringify([])) {
-            console.log(fileSubmit);
-            formData.append('files', fileSubmit[0]);
+            formData.append('files', fileSubmit);
         }
         var config = {
             method: 'post',

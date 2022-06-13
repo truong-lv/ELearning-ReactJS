@@ -10,46 +10,14 @@ import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Autocomplete from '@mui/material/Autocomplete';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import axios from "axios"
 
 import style from "./style.module.scss"
-
-
-
-function ComboBox({ label, className, setValue }) {
-    return (
-        <Autocomplete
-            className={className}
-            disablePortal
-            id="combo-box-demo"
-            options={label === 'Năm học' ? schoolYear : label === 'Khoa' ? departmentSelect : semester}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label={label} />}
-            onChange={(event, newValue) =>
-                label === 'Năm học' ? setValue(newValue) : label === 'Khoa' ? setValue(newValue) : setValue(newValue)
-            }
-        />
-    )
-}
-
-
-const schoolYear = [
-    '2020',
-    '2021',
-    '2022',
-    '2023'
-]
-
-const semester = [
-    '1',
-    '2',
-    '3'
-]
-
-var departmentSelect;
-
-
 
 function Course() {
 
@@ -58,6 +26,110 @@ function Course() {
     const [department, setDepartment] = useState('')
     const [listCurrentCourses, setListCurrentCourses] = useState([])
     const [listCurrentDifferenceCourse, setlistCurrentDifferenceCourse] = useState([])
+
+    const [departmentSelect, setDepartmentSelect] = useState([]);
+
+    // function ComboBox({ label, className, setValue }) {
+    //     // console.log((department === undefined || JSON.stringify(department) === JSON.stringify([]) ? "Unde" : department.find((value) => value.departmentName === 'Kinh tế').departmentId));
+    //     return (
+    //         // <Autocomplete
+    //         //     className={className}
+    //         //     disablePortal
+    //         //     id="combo-box-demo"
+    //         //     options={label === 'Năm học' ? schoolYearSelect : label === 'Khoa' ? departmentSelect.map((value) => value.departmentName) : semesterSelect}
+    //         //     sx={{ width: 300 }}
+    //         //     renderInput={(params) => <TextField {...params} label={label} />}
+    //         //     onChange={(e, newValue) => {
+    //         //         label === 'Năm học' ? setValue(newValue) : label === 'Khoa' ? setValue(newValue) :
+    //         //             setValue((department === undefined || JSON.stringify(department) === JSON.stringify([]) ? "" : department.find((value) => value.departmentName === newValue).departmentId));
+    //         //     }
+    //         //     }
+    //         // />
+    //     )
+    // }
+
+    function ComboBoxSchoolYear({ setValue }) {
+        const [year, setYear] = React.useState('');
+
+        const handleChange = (event) => {
+            setYear(event.target.value);
+            setValue(event.target.value);
+        };
+
+        return (
+            <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Năm học</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Năm học"
+                        value={year}
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={2020}>2020</MenuItem>
+                        <MenuItem value={2021}>2021</MenuItem>
+                        <MenuItem value={2022}>2022</MenuItem>
+                        <MenuItem value={2023}>2023</MenuItem>
+                        <MenuItem value={2024}>2024</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+        );
+    }
+
+    function ComboBoxSemester({ setValue }) {
+        const [semester, setSemester] = React.useState('');
+        const handleChange = (event) => {
+            setSemester(event.target.value);
+            setValue(event.target.value);
+        };
+
+        return (
+            <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Học kỳ</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Học kỳ"
+                        value={semester}
+                        onChange={handleChange}
+                    >
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={3}>3</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+        );
+    }
+
+    function ComboBoxDepartment({ setValue, department }) {
+        const [departmentSelect, setDepartmentSelect] = React.useState('');
+        const handleChange = (event) => {
+            setDepartmentSelect(event.target.value);
+            setValue(event.target.value);
+        };
+
+        return (
+            <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Khoa</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Khoa"
+                        value={departmentSelect}
+                        onChange={handleChange}
+                        defaultValue={""}
+                    >
+                        {department.map((value) => <MenuItem value={value.departmentId}>{value.departmentName}</MenuItem>)}
+                    </Select>
+                </FormControl>
+            </Box>
+        );
+    }
 
 
     useEffect(() => {
@@ -78,8 +150,8 @@ function Course() {
                 'Authorization': `Bearer ${token}`
             }
         }).then(response => {
-            departmentSelect = response.data;
-        })
+            setDepartmentSelect(response.data);
+        }).catch(error => console.log(error))
     }, [])
 
     useEffect(() => {
@@ -91,7 +163,7 @@ function Course() {
         }).then((response) => {
             setlistCurrentDifferenceCourse(response.data)
         }).catch(error => console.log(error))
-    }, [semester, schoolYear])
+    }, [semester, schoolYear, department])
 
     return (
         <Fragment>
@@ -114,15 +186,15 @@ function Course() {
                                         <p className={style.titleAnotherClasses}>CÁC KHÓA HỌC KHÁC</p>
                                         <Typography variant="div" display="flex" className={style.selectArea}>
                                             <p className={style.selectTitle}>Năm học</p>
-                                            <ComboBox className={style.comboboxSelect} label="Năm học" setValue={setSchoolYear} />
+                                            <ComboBoxSchoolYear className={style.comboboxSelect} setValue={setSchoolYear} />
                                             <p className={style.selectTitle}>Học kỳ</p>
-                                            <ComboBox className={style.comboboxSelect} label="Học kỳ" setValue={setSemester} />
+                                            <ComboBoxSemester className={style.comboboxSelect} setValue={setSemester} />
                                             <p className={style.selectTitle}>Khoa</p>
-                                            <ComboBox className={style.comboboxSelect} label="Khoa" setValue={setDepartment} />
+                                            <ComboBoxDepartment className={style.comboboxSelect} setValue={setDepartment} department={departmentSelect} />
                                         </Typography>
                                     </Typography>
                                     <Container style={{ border: '1px solid #000', padding: '20px 30px', marginTop: '20px' }}>
-                                        <CourseAvaiable courses={listCurrentCourses} fullWidth={true} />
+                                        <CourseAvaiable courses={listCurrentDifferenceCourse} fullWidth={true} />
                                     </Container>
                                 </Typography>
                             </Grid>

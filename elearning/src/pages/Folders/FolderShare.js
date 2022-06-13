@@ -60,7 +60,6 @@ function FolderShare() {
                         <Grid container item md={12} xs={12} direction='column' rowSpacing={2}>
                             <Grid item={true} sx={{ pb: 1 }} className={clsx(style.headingContainer, style.flex)}>
                                 <Typography variant='h5' className={style.heading}>TÀI LIỆU CHIA SẺ</Typography>
-                                <Typography variant='h6' className={style.btnBack}>Quay lại</Typography>
                             </Grid>
                             <Grid item={true} sx={{ mb: 6 }} className={clsx(style.folderShareInfo, style.flex)}>
                                 <Typography component="div" >
