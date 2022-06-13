@@ -1,6 +1,6 @@
 import Navbar from "../../component/Navbar/Nabar"
 import Container from '@mui/material/Container';
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin, setInfor } from "../../actions/action";
 
@@ -20,15 +20,15 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-
+import Badge from '@mui/material/Badge';
 
 import AppAvatar from '../../myTool/handleAvatar';
 import axios from 'axios'
-
+import EditIcon from '@mui/icons-material/Edit';
 
 function Infor() {
     const [userInfo, setUserInfo] = useState({})
-
+    const inputFile = useRef(null) 
     const [open, setOpen] = useState(false);
     const [openToast, setOpenToast] = useState(false);
 
@@ -45,7 +45,7 @@ function Infor() {
     const dispatch = useDispatch();
     const username = useSelector(state => state.infor.username)
 
-    useEffect(() => {
+    const loadUserInfo=() => {
         const token = localStorage.getItem('accessToken')
         axios.get('/api/user/get-user-info', {
             headers: {
@@ -59,7 +59,47 @@ function Infor() {
 
             console.log(error)
         })
+    }
+    
+    useEffect(() => {
+        loadUserInfo();
     }, [])
+
+    //HANDLE AVARTAR
+    const handleUploadAvatar=()=>{
+        inputFile.current.click();
+    }
+    
+    const onChangeFile=(event)=> {
+        event.preventDefault()
+        handleConfirmAddFile(event.target.files[0]);
+    }
+    const handleConfirmAddFile=(file)=>{
+        const token=localStorage.getItem('accessToken')
+        const FormData = require('form-data');
+        const formData= new FormData();
+        formData.append('file',file);
+        console.log(file)
+        var config = {
+            method: 'post',
+            url: axios.defaults.baseURL + '/api/avatar/upload',
+            headers: { 
+              'Authorization': `Bearer ${token}`,
+              "Content-Type": "multipart/form-data"
+            },
+            data : formData
+          };
+          axios(config)
+            .then(function (response) {
+              if(response.status===200 || response.status===201){
+                loadUserInfo();
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+    }
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -161,7 +201,18 @@ function Infor() {
                     </Typography>
                     <Container maxWidth="md" >
                         <div className={style.styleAvatar}>
+                        <Badge
+                            overlap="circular"
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            badgeContent={
+                                <IconButton style={{backgroundColor: 'rgb(222 216 213)'}} aria-label="edit" size="medium" color='success'
+                                onClick={()=>{handleUploadAvatar()}}>
+                                    <EditIcon fontSize="inherit" />
+                                </IconButton>  
+                              }
+                            >
                             <AppAvatar url={userInfo.avatar} imgSize={100} />
+                            </Badge>
                         </div>
                         <Grid container rowSpacing={2}>
                             <Grid item={true} container direction='row' columnSpacing={3}>
@@ -330,6 +381,7 @@ function Infor() {
                     </Container>
                 </Box>
             </Container>
+            <input type='file' id='file' ref={inputFile} style={{display: 'none'}} onChange={(event)=>onChangeFile(event)}/>
         </Fragment>
     )
 }
