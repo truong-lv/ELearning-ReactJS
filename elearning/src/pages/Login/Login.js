@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { NavLink } from 'react-router-dom';
 
 function Login() {
     const [account, setAccount] = useState('');
@@ -113,7 +114,17 @@ function Login() {
                             label="Password"
                         />
                     </FormControl><strong style={{ color: "red", display: `${isValid}` }}>Tài khoản hoặc mật khẩu không hợp lệ !!</strong><br />
-                    <LoadingButton variant="contained"
+                    <div style={{ display: 'flex',justifyContent:'space-between'}}>
+                        <NavLink to='/verify-forgot-password'>
+                        <p>Quên mật khẩu?</p>
+                        </NavLink>
+                        &nbsp;&nbsp;&nbsp;
+                        <NavLink to='/verify-forgot-password'>
+                        <p>Đăng ký ?</p>
+                    </NavLink>
+                    </div>
+                    <LoadingButton  variant="contained"
+                        style={{marginTop:'10px'}}
                         size="large"
                         type="submit"
                         loading={loading}
