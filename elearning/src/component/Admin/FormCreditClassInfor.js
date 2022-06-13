@@ -28,7 +28,7 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
   const [listDepartment, setListDepartment] = useState([]);
   const [listRoom, setListRoom] = useState([]);
   const listLesson = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  const [checkJoinedPasswordChange, setCheckJoinedPasswordChange] = useState(false);
+  const [checkkoinedPasswordChange, setCheckJoinedPasswordChange] = useState(false);
   const [checkTimelineChange, setCheckTimelineChange] = useState(false);
 
   // console.log(today)
@@ -46,21 +46,20 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
   const [roomId, setRoomId] = useState(0);
   const [openToast, setOpenToast] = useState(false);
   const [toastMess, setToastMess] = useState("");
-  const [checkValid, setCheckValid] = useState({
-    startTime: false,
-    endTime: false,
-    schoolYear: false,
-    joinedPassword: false,
-    departmentId: false,
-    subjectId: false,
-    teacherSelects: false,
 
-    dayOfWeek: false,
-    startLesson: false,
-    endLesson: false,
-    roomId: false
-  });
+  //STATE CHECK INPUT VALID
+  const [checkStartTime, setCheckStartTime] = useState(false)
+  const [checkEndTime, setCheckEndTime] = useState(false)
+  const [checkSchoolYear, setCheckSchoolYear] = useState(false)
+  const [checkJoinedPassword, setCheckJoinedPassword] = useState(false)
+  const [checkDepartmentId, setCheckDepartmentId] = useState(false)
+  const [checkSubjectId, setCheckSubjectId] = useState(false)
+  const [checkTeacherSelects, setCheckTeacherSelects] = useState(false)
 
+  const [checkDayOfWeek, setCheckDayOfWeek] = useState(false)
+  const [checkStartLesson, setCheckStartLesson] = useState(false)
+  const [checkEndLesson, setCheckEndLesson] = useState(false)
+  const [checkRoomId, setCheckRoomId] = useState(false)
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -71,6 +70,7 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
       },
     },
   };
+
 
   useEffect(() => {
     setStartTime(creditClass.startTime.split(" ")[0])
@@ -210,6 +210,92 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
       .then(function (response) {
         if (response.status === 200) {
 
+          const validateInput = (isUpdate = false) => {
+            let isError = false;
+
+            if (startTime === "") { setCheckStartTime(true); isError = true } else { setCheckStartTime(false) }
+            if (endTime === "") { setCheckEndTime(true); isError = true } else { setCheckEndTime(false) }
+            if (schoolYear === "") { setCheckSchoolYear(true); isError = true } else { setCheckSchoolYear(false) }
+
+            if (joinedPassword === "" && !isUpdate) { setCheckJoinedPassword(true); isError = true } else { setCheckJoinedPassword(false) }
+            if (departmentId === 0) { setCheckDepartmentId(true); isError = true } else { setCheckDepartmentId(false) }
+            if (subjectId === 0) { setCheckSubjectId(true); isError = true } else { setCheckSubjectId(false) }
+            if (teacherSelects.length === 0) { setCheckTeacherSelects(true); isError = true } else { setCheckTeacherSelects(false) }
+
+            if (dayOfWeek === 0) { setCheckDayOfWeek(true); isError = true } else { setCheckDayOfWeek(false) }
+            if (startLesson === 0) { setCheckStartLesson(true); isError = true } else { setCheckStartLesson(false) }
+            if (endLesson === 0) { setCheckEndLesson(true); isError = true } else { setCheckEndLesson(false) }
+            if (roomId === 0) { setCheckRoomId(true); isError = true } else { setCheckRoomId(false) }
+
+            return isError;
+          }
+        }
+      })
+  }
+
+  const handleFormClose = () => {
+
+    setCheckStartTime(false);
+    setCheckEndTime(false);
+    setCheckSchoolYear(false);
+    setCheckJoinedPassword(false);
+    setCheckDepartmentId(false);
+    setCheckSubjectId(false);
+    setCheckTeacherSelects(false);
+    setCheckDayOfWeek(false);
+    setCheckStartLesson(false);
+    setCheckEndLesson(false);
+    setCheckRoomId(false);
+    handleClose();
+  }
+
+
+  if (timeline.creditClassId === 0) {
+    let config = {
+      method: 'post',
+      url: axios.defaults.baseURL + '/api/admin/creditclass/create-new-class',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify(creditClass)
+    };
+
+    axios(config)
+      .then(function (response) {
+        if (response.status === 200) {
+          setTimeline(response.data.creditClassId)
+          handleClose();
+          setCheckTimelineChange(false);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  } else {
+    let config = {
+      method: 'put',
+      url: axios.defaults.baseURL + '/api/admin/creditclass/update-credit-class?credit-class-id=' + timeline.creditClassId,
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify(creditClass)
+    };
+    console.log(JSON.stringify(creditClass))
+    axios(config)
+      .then(function (response) {
+        console.log(response.status);
+        if (response.status === 200) {
+          setToastMess("Sửa thông tin lớp tín chỉ thành công")
+          setOpenToast(true)
+          if (checkTimelineChange === true) {
+            updateTimeline()
+
+          }
+          handleClose();
+          setCheckTimelineChange(false);
         }
       })
       .catch(function (error) {
@@ -218,15 +304,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
   }
 
   const handleConfirm = (event) => {
-    validateInput();
-    for (let item in checkValid) {
-      if (checkValid[item]) {
-        return
-      }
-    }
-
-
     if (timeline.creditClassId === 0) {
+      if (validateInput()) { return };
       let config = {
         method: 'post',
         url: axios.defaults.baseURL + '/api/admin/creditclass/create-new-class',
@@ -250,6 +329,10 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
         });
 
     } else {
+      if (validateInput(true)) { return };
+      //nếu rỗng <=> không đổi, set bằng -1-1-1-1-1-1-1-1-1
+      if (creditClass.joinedPassword === '') { creditClass.joinedPassword = '-1-1-1-1-1-1-1-1-1' }
+
       let config = {
         method: 'put',
         url: axios.defaults.baseURL + '/api/admin/creditclass/update-credit-class?credit-class-id=' + timeline.creditClassId,
@@ -284,7 +367,7 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
 
   return (
     <Fragment>
-      <Dialog open={isOpen} onClose={handleClose}
+      <Dialog open={isOpen} onClose={handleFormClose}
         component="form"
         sx={{
           '& .MuiTextField-root': { m: 2, width: '50ch' },
@@ -299,6 +382,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
               <InputLabel id="demo-simple-select-label">Môn học</InputLabel>
               <Select
                 required
+                error={checkSubjectId}
+                helperText={checkSubjectId ? "Không được để trống." : ""}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={subjectId}
@@ -318,6 +403,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
             <FormControl sx={{ width: '50%', margin: '16px' }}>
               <InputLabel id="demo-simple-select-label">Khoa</InputLabel>
               <Select
+                error={checkDepartmentId}
+                helperText={checkDepartmentId ? "Không được để trống." : ""}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={departmentId}
@@ -386,10 +473,67 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
                 ))}
               </Select>
             </FormControl>
+
+          </div>
+
+          <div style={{ display: 'flex' }}>
+            {/* ====================================GIẢNG VIÊN======================================= */}
+            <FormControl sx={{ m: 1, width: '100%', margin: '16px' }}>
+              <InputLabel id="demo-multiple-name-label">Giảng viên</InputLabel>
+              <Select
+                labelId="demo-multiple-name-label"
+                id="demo-multiple-name"
+                multiple
+                error={checkTeacherSelects}
+                helperText={checkTeacherSelects ? "Không được để trống." : ""}
+                value={teacherSelects}
+                onChange={handleChangeTeacher}
+                input={<OutlinedInput label="Giảng viên" />}
+                MenuProps={MenuProps}
+              >
+                {listTeacher.map((teacher) => (
+                  <MenuItem
+                    key={teacher.teacherId}
+                    value={teacher.teacherId}
+                    style={getStyles(teacher.fullname, teacherSelects, theme)}
+                  >
+                    {teacher.fullname}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+
+
+          </div>
+          <div style={{ display: 'flex' }}>
+            {/* ====================================NĂM HỌC======================================= */}
+            <FormControl sx={{ m: 1, width: '50%', margin: '16px' }}>
+              <InputLabel id="demo-multiple-name-label">Năm học</InputLabel>
+              <Select
+                labelId="demo-multiple-name-label"
+                id="demo-multiple-name"
+                error={checkSchoolYear}
+                helperText={checkSchoolYear ? "Không được để trống." : ""}
+                value={schoolYear}
+                onChange={(event) => { setSchoolYear(event.target.value); creditClass.schoolYear = event.target.value }}
+                input={<OutlinedInput label="Năm học" />}
+                MenuProps={MenuProps}
+              >
+                {listSchoolYear.map((year) => (
+                  <MenuItem
+                    key={year}
+                    value={year}
+                  >
+                    {year}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             {/* ====================================MÃ MỜI======================================= */}
             <TextField
-              error={checkValid.joinedPassword}
-              helperText={checkValid.joinedPassword ? "Không được để trống." : ""}
+              error={checkJoinedPassword}
+              helperText={checkJoinedPassword ? "Không được để trống." : ""}
               value={joinedPassword}
               onChange={(event) => {
                 setJoinedPassword(event.target.value);
@@ -406,7 +550,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
             <TextField
               // InputProps={{inputProps: { min: today}}}
               type="date"
-              error={false}
+              error={checkStartTime}
+              helperText={checkStartTime ? "Không được để trống." : ""}
               value={startTime}
               onChange={(event) => { setStartTime(event.target.value); creditClass.startTime = event.target.value + " 00:00:00" }}
               id="outlined-basic"
@@ -417,7 +562,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
             <TextField
               InputProps={{ inputProps: { min: startTime } }}
               type="date"
-              error={false}
+              error={checkEndTime}
+              helperText={checkEndTime ? "Không được để trống." : ""}
               value={endTime}
               onChange={(event) => { setEndTime(event.target.value); creditClass.endTime = event.target.value + " 00:00:00" }}
               id="outlined-basic"
@@ -438,6 +584,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
               <Select
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
+                error={checkDayOfWeek}
+                helperText={checkDayOfWeek ? "Không được để trống." : ""}
                 value={dayOfWeek}
                 onChange={(event) => {
                   setDayOfWeek(event.target.value);
@@ -462,6 +610,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
               <Select
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
+                error={checkStartLesson}
+                helperText={checkStartLesson ? "Không được để trống." : ""}
                 value={startLesson}
                 onChange={(event) => {
                   setStartLesson(event.target.value);
@@ -488,6 +638,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
               <Select
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
+                error={checkEndLesson}
+                helperText={checkEndLesson ? "Không được để trống." : ""}
                 value={endLesson}
                 onChange={(event) => {
                   setEndLesson(event.target.value);
@@ -514,6 +666,8 @@ export default function FormDialog({ isOpen, handleClose, creditClass, timeline,
               <Select
                 labelId="demo-multiple-name-label"
                 id="demo-multiple-name"
+                error={checkRoomId}
+                helperText={checkRoomId ? "Không được để trống." : ""}
                 value={roomId}
                 onChange={(event) => {
                   setRoomId(event.target.value);

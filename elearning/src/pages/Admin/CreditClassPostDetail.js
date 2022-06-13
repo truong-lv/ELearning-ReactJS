@@ -313,7 +313,7 @@ export default function CreditClassPostDetail() {
                                     <p style={{ textAlign: "left", color: "gray" }}>
                                         <strong>{comment.userName}</strong> 
                                         {" - " + comment.createdAt.substring(0,comment.createdAt.indexOf('T'))+" "
-                                        +comment.createdAt.substring(comment.createdAt.indexOf(':')+1,comment.createdAt.lastIndexOf('.'))}
+                                        +comment.createdAt.substring(comment.createdAt.indexOf('T')+1,comment.createdAt.lastIndexOf('.'))}
                                     </p>
                                     <IconButton aria-label="delete" color='error' 
                                             onClick={() =>handleDeleteComment(comment.commentId)}>

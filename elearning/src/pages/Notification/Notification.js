@@ -19,6 +19,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 import style from "./style.module.scss"
 import {fomatDateTimeText} from "../../myTool/fomatDateTime"
@@ -26,7 +28,8 @@ import AppToast from '../../myTool/AppToast'
 
 
 function Notification(){
-  const [pageNo, setPageNo] = useState(0)
+  const [pageNo, setPageNo] = useState(1)
+  const [pageSum, setPageSum] = useState(1)
   const [listNotifi, setListNotifi] = useState([])
   const [unseenNoti,setUnseenNoti]=useState(0)
   const [messApi, setMessApi] = useState({})
@@ -36,15 +39,17 @@ function Notification(){
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const token=localStorage.getItem('accessToken')
-        axios.get('/api/notification/all-notification/',{
+        axios.get('/api/notification/all-notification/'+pageNo,{
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-            
-          setListNotifi(response.data)
+          const {notifications,totalPage}=response.data
+
+          setListNotifi(notifications)
+          setPageSum(totalPage)
         }).catch(error => console.log(error))
-  }, [refresh]);
+  }, [refresh,pageNo]);
 
   useEffect(() => {
     const token=localStorage.getItem('accessToken')
@@ -54,6 +59,7 @@ function Notification(){
         }
       }).then((res) => {
         setUnseenNoti(res.data)
+        
       })
   },[refresh])
   
@@ -128,7 +134,10 @@ function Notification(){
             </Typography>
             <CssBaseline />
             <List >
-              {listNotifi.map((notifi, index) => (
+              {listNotifi.map((notifi, index) => {
+                const timeUp=notifi.time.substring(0,notifi.time.indexOf('T'))+" "
+                +notifi.time.substring(notifi.time.indexOf('T')+1,notifi.time.lastIndexOf('.'))
+                return(
                 <ListItem className={style.listNotifi}  
                 key={notifi.notificationId} data-key={notifi.notificationId}
                 style={{border:`1px solid ${notifi.status?'#0D20C5':'#FFF620'}`,marginBottom:'10px'}}>
@@ -137,7 +146,7 @@ function Notification(){
                     <ListItemAvatar >
                       <ReportGmailerrorredIcon sx={{fontSize:35,color: notifi.status?blue[500]:yellow[500]}}/>
                     </ListItemAvatar>
-                    <ListItemText primary={"PTIT-Elearning * fixing time"} secondary={notifi.notificationContent} />
+                    <ListItemText primary={"PTIT-Elearning * "+timeUp} secondary={notifi.notificationContent} />
                   </ListItem>
                   <IconButton
                   onClick={handleDeleteNotifi}
@@ -145,11 +154,16 @@ function Notification(){
                     <DeleteForeverIcon sx={{ color: red[500] }}/>
                   </IconButton>
                 </ListItem>
-              ))}
+              )})}
             </List>
             
+          <Stack spacing={2} sx={{margin:'20px'}}>
+            <Pagination count={pageSum} variant="outlined" color="primary" 
+                onChange={(event, value)=>{setPageNo(value)}}/>
+          </Stack>
           </Box>
           </Container>
+          
           <AppToast content={messApi.mess} type={messApi.type} isOpen={openToast} callback={() => {
             setOpenToast(false);
           }}/>

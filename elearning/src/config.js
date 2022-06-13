@@ -11,3 +11,7 @@ export const regexEmail=new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+
 export const USER='ROLE_USER'
 export const MODERATOR='ROLE_MODERATOR'
 export const TEACHER='ROLE_TEACHER'
+
+//VERIFY KEYS
+export const VALUE_KEY='VALUE_KEY'
+export const VERIFY_CODE='VERIFY_CODE'
