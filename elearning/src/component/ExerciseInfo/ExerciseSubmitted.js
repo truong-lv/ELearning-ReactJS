@@ -50,7 +50,6 @@ export default function ExerciseSubmitted({ exercise, endTime }) {
     }
 
     function submitExercise(file) {
-
         var data = new FormData();
         data.append('excerciseId', id);
         data.append('file', file);
@@ -118,7 +117,6 @@ export default function ExerciseSubmitted({ exercise, endTime }) {
                     <Input accept="*/*" id="contained-button-file" multiple type="file" onChange={(e) => onChange(e)} />
                     <Button variant="contained" component="span" size="small"
                         disabled={submit !== undefined || toDay > submitDeadline}
-                        // disabled={submit !== undefined}
                         color='success' style={{ fontWeight: "bold", padding: "3px 20px" }}
                         className={clsx(style.absolute, style.bold, style.btnSubmit)}>
                         {typeof submit !== 'undefined' ? 'Hủy nộp bài' : toDay > submitDeadline ? 'Hết hạn' : 'Nộp bài'}
