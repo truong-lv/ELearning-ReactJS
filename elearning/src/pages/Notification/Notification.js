@@ -44,7 +44,6 @@ function Notification(){
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
-          console.log(response.data)
           const {notifications,totalPage}=response.data
 
           setListNotifi(notifications)
@@ -160,7 +159,7 @@ function Notification(){
             
           <Stack spacing={2} sx={{margin:'20px'}}>
             <Pagination count={pageSum} variant="outlined" color="primary" 
-                onChange={(event)=>setPageNo(event.target.value)}/>
+                onChange={(event, value)=>{setPageNo(value)}}/>
           </Stack>
           </Box>
           </Container>

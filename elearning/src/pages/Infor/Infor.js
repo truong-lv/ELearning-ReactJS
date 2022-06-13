@@ -41,7 +41,7 @@ function Infor() {
 
     const [confirmPass, setConfirmPass] = useState('');
     const [isValidConfirmPass, setIsValidConfirmPass] = useState(false);
-
+    
     const dispatch = useDispatch();
     const username = useSelector(state => state.infor.username)
 

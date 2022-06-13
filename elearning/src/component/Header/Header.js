@@ -21,7 +21,7 @@ import Avatar from '@mui/material/Avatar';
 import './HeaderStyle.css';
 import { useDispatch } from 'react-redux';
 import { setInfor, setLogin } from '../../actions/action';
-import { stringAvatar } from '../../myTool/handleAvatar';
+import AppAvatar from '../../myTool/handleAvatar';
 
 import Banner from './banner'
 
@@ -34,7 +34,25 @@ export default function Header() {
   const [unseenNoti, setUnseenNoti] = useState(0)
   const username = useSelector(state => state.infor.username || '')
   const userRoles = useSelector(state => state.infor.roles || [])
+  const [userInfo, setUserInfo] = useState({})
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken')
+        axios.get('/api/user/get-user-info', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }).then((response) => {
+            setUserInfo({ ...response.data })
+            //console.log(response.data)
+
+        }).catch(error => {
+
+            console.log(error)
+        })
+  }, [])
+
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken')
@@ -210,7 +228,7 @@ export default function Header() {
                   onClick={handleProfileMenuOpen}
                   color="inherit"
                 >
-                  <Avatar {...stringAvatar(username)} sizes='15' />
+                  <AppAvatar url={userInfo.avatar}/>
                 </IconButton>
               </Box>
               <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
