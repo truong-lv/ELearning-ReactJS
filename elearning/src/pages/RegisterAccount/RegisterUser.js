@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { setInfor, setLogin } from '../../actions/action';
 import Footer from '../../component/Footer/Footer';
 import Banner from '../../component/Header/banner'
 import background from '../../assets/image/background-login.png'
@@ -19,7 +18,8 @@ import Typography from '@mui/material/Typography'
 import {VALUE_KEY, VERIFY_CODE} from '../../config'
 import AppToast from '../../myTool/AppToast'
 
-function RecoverPassword() {
+function RegisterUser() {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [loading, setLoading] = useState(false);
@@ -46,10 +46,13 @@ function RecoverPassword() {
     const handleMouseDownPasswordConfirm = (event) => {
         event.preventDefault();
     };
+
+    const handleChangeUsername = (event) => {
+        setUsername(event.target.value);
+    };
     const handleChangePassword = (event) => {
         setPassword(event.target.value);
     };
-
     const handleChangePasswordConfirm = (event) => {
         setPasswordConfirm(event.target.value);
     };
@@ -71,15 +74,17 @@ function RecoverPassword() {
         const keyValue = sessionStorage.getItem(VALUE_KEY);
         const verifyCode = sessionStorage.getItem(VERIFY_CODE);
         var data = JSON.stringify({
+            username: username,
+            password:password,
+            role: ['student'],
             key: keyValue,
-            codeValue: verifyCode,
-            password:password
+            codeValue: verifyCode
         });
 
         
         var config = {
             method: 'post',
-            url: axios.defaults.baseURL + '/api/student/recover-password',
+            url: axios.defaults.baseURL + '/api/auth/signup',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -89,20 +94,22 @@ function RecoverPassword() {
         axios(config)
             .then(function (response) {
                 if(response.status===200){
+                    navigate("/login");
+                    setLoading(false);
+                    setOpenToast(true);
                     //clearn sessionStorage
                     sessionStorage.removeItem(VALUE_KEY);
                     sessionStorage.removeItem(VERIFY_CODE);
-                    setOpenToast(true);
-                    navigate("/login");
-                    setLoading(false);
                 }
                 
             })
             .catch(function (error) {
-                setValid('block')
-                console.log({ error });
-                setErorrMess(error.response.data.message)
-                setLoading(false);
+                if(error.response.status===400 || error.response.status===404){
+                    setValid('block')
+                    setErorrMess(error.response.data.message)
+                    setLoading(false);
+                }
+                console.log({error})
             });
     }
 
@@ -113,8 +120,17 @@ function RecoverPassword() {
             <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center' }}>
                 <img src={background} alt="Login" style={{ width: '30%', height: 'auto' }} />
                 <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px' }}>
-                    <Typography variant='h6' component='div' color="#000000">Cập nhập mật khẩu</Typography>
-                    <Typography variant='p' component='div' color="#000000">Vui lòng nhập mật khẩu mới</Typography>
+                    <Typography variant='h6' component='div' color="#000000">Cập nhập thông tin tài khoản</Typography>
+                    <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">Tài khoản</InputLabel>
+                        <OutlinedInput
+                            id="outlined-adornment-password"
+                            type='text'
+                            value={username} onChange={handleChangeUsername}
+                            label="Tài khoản"
+                        />
+                    </FormControl><br />
+
                     <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
@@ -162,6 +178,7 @@ function RecoverPassword() {
                     <LoadingButton variant="contained"
                         size="large"
                         type="submit"
+                        style={{marginBottom:'8px'}}
                         loading={loading}
                         onClick={handleSunmit}>
                         Cập nhật mật khẩu
@@ -169,7 +186,7 @@ function RecoverPassword() {
                 </div>
             </div>
             {/* SHOW TOAST THÔNG BÁO KẾT QUẢ */}
-            <AppToast content={"Cập nhập mật khẩu thành công"} type={0} isOpen={openToast} callback={() => {
+            <AppToast content={"Tạo tài khoản thành công"} type={0} isOpen={openToast} callback={() => {
                     setOpenToast(false);
                     }}/>
             <Footer />
@@ -177,5 +194,5 @@ function RecoverPassword() {
     )
 }
 
-export default RecoverPassword
+export default RegisterUser
 

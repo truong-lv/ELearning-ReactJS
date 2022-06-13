@@ -22,6 +22,7 @@ function VerifyCode() {
     const [verifyCode, setVerifyCode] = useState('');
     const [loading, setLoading] = useState(false);
 
+    const [erorrMess, setErorrMess] = useState('');
     const [isValid, setValid] = useState('none');
     const dispatch = useDispatch()
     let navigate = useNavigate();
@@ -62,9 +63,12 @@ function VerifyCode() {
                 
             })
             .catch(function (error) {
-                setValid('block')
-                console.log({ error });
-                setLoading(false);
+                if(error.response.status===400 || error.response.status===404){
+                    setValid('block')
+                    setErorrMess(error.response.data)
+                    setLoading(false);
+                    
+                }
             });
     }
 
@@ -74,7 +78,7 @@ function VerifyCode() {
             <Banner />
             <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center' }}>
                 <img src={background} alt="Login" style={{ width: '30%', height: 'auto' }} />
-                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF' }}>
+                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px' }}>
                     <Typography variant='h6' component='div' color="#000000">Xác thực email của bạn</Typography>
                     <Typography variant='p' component='div' color="#000000">Vui lòng nhập mã xác thực có 6 số đã gửi đến mail của bạn</Typography>
                     <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
@@ -83,11 +87,11 @@ function VerifyCode() {
                             id="outlined-adornment-text"
                             type='text'
                             value={verifyCode} onChange={handleChangeVerifyCode}
-                            label="Username"
+                            label="Mã xác thực"
                         />
                     </FormControl><br />
 
-                    <strong style={{ color: "red", display: `${isValid}` }}>Mã xác thực không hợp lệ !!</strong><br />
+                    <strong style={{ color: "red", display: `${isValid}` }}>{erorrMess}!</strong><br />
                     <LoadingButton variant="contained"
                         size="large"
                         type="submit"

@@ -119,7 +119,7 @@ function Login() {
                         <p>Quên mật khẩu?</p>
                         </NavLink>
                         &nbsp;&nbsp;&nbsp;
-                        <NavLink to='/verify-forgot-password'>
+                        <NavLink to='/register-signup'>
                         <p>Đăng ký ?</p>
                     </NavLink>
                     </div>

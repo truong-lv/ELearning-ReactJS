@@ -12,6 +12,9 @@ import Login from './pages/Login/Login'
 import VerifyForgotPassword from './pages/ForgotPassword/VerifyForgotPassword'
 import VerifyCode from './pages/ForgotPassword/VerifyCode'
 import RecoverPassword from './pages/ForgotPassword/RecoverPassword'
+import RegisterSignUp from './pages/RegisterAccount/RegisterSignUp'
+import RegisterVerifyCode from './pages/RegisterAccount/RegisterVerifyCode'
+import RegisterUser from './pages/RegisterAccount/RegisterUser'
 import CreditClassInfor from './pages/Admin/CreditClassInfor'
 import CreditClassMember from './pages/Admin/CreditClassMember'
 import CreditClassMemberDetail from './pages/Admin/CreditClassMemberDetail'
@@ -87,6 +90,9 @@ function Router() {
             <Route path="/verify-forgot-password" element={<VerifyForgotPassword />} />
             <Route path="/verify-code" element={<VerifyCode />} />
             <Route path="/recover-password" element={<RecoverPassword />} />
+            <Route path="/register-signup" element={<RegisterSignUp />} />
+            <Route path="/register-verify-code" element={<RegisterVerifyCode />} />
+            <Route path="/register-user" element={<RegisterUser />} />
             {/* <Route path="/courseDetail" element={<CourseDetail />} />
             <Route path="/home" element={<Home />} />
             <Route path="/course" element={<Course />} />

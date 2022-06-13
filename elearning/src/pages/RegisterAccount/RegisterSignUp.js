@@ -18,15 +18,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography'
 import {VALUE_KEY} from '../../config'
 
-function VerifyForgotPassword() {
+function RegisterSignUp() {
     const [userCode, setUserCode] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [isValid, setValid] = useState('none');
-    const [erorrMess, setErorrMess] = useState('');
     const dispatch = useDispatch()
     let navigate = useNavigate();
-
+    const [erorrMess, setErorrMess] = useState('');
 
     const handleChangeUserCode = (event) => {
         setUserCode(event.target.value);
@@ -35,7 +34,7 @@ function VerifyForgotPassword() {
         setLoading(true);
         var config = {
             method: 'post',
-            url: axios.defaults.baseURL + '/api/student/verify-forget-password?student-code='+userCode,
+            url: axios.defaults.baseURL + '/api/auth/verify-register-signup?student-code='+userCode,
         };
 
         axios(config)
@@ -44,7 +43,7 @@ function VerifyForgotPassword() {
                     const {valueKey}=response.data
                     console.log(valueKey);
                     sessionStorage.setItem(VALUE_KEY, valueKey);
-                    navigate("/verify-code");
+                    navigate("/register-verify-code");
                     setLoading(false);
                 }
                 
@@ -52,7 +51,7 @@ function VerifyForgotPassword() {
             .catch(function (error) {
                 if(error.response.status===400 || error.response.status===404){
                     setValid('block')
-                    // setErorrMess(error.response.data)
+                    setErorrMess(error.response.data)
                     setLoading(false);
 
                 }
@@ -65,8 +64,8 @@ function VerifyForgotPassword() {
             <Banner />
             <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center' }}>
                 <img src={background} alt="Login" style={{ width: '30%', height: 'auto' }} />
-                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px'}}>
-                    <Typography variant='h6' component='div' color="#000000">Quên mật khẩu?</Typography>
+                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px' }}>
+                    <Typography variant='h6' component='div' color="#000000">Đăng ký tài khoản</Typography>
                     <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Mã sinh viên</InputLabel>
                         <OutlinedInput
@@ -92,5 +91,5 @@ function VerifyForgotPassword() {
     )
 }
 
-export default VerifyForgotPassword
+export default RegisterSignUp
 

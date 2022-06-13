@@ -16,35 +16,47 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography'
-import {VALUE_KEY} from '../../config'
+import {VALUE_KEY, VERIFY_CODE} from '../../config'
 
-function VerifyForgotPassword() {
-    const [userCode, setUserCode] = useState('');
+function RegisterVerifyCode() {
+    const [verifyCode, setVerifyCode] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const [isValid, setValid] = useState('none');
     const [erorrMess, setErorrMess] = useState('');
+    const [isValid, setValid] = useState('none');
     const dispatch = useDispatch()
     let navigate = useNavigate();
 
 
-    const handleChangeUserCode = (event) => {
-        setUserCode(event.target.value);
+    const handleChangeVerifyCode = (event) => {
+        setVerifyCode(event.target.value);
     };
     const handleSunmit = () => {
         setLoading(true);
+
+        const keyValue = sessionStorage.getItem(VALUE_KEY);
+        var data = JSON.stringify({
+            key: keyValue,
+            codeValue: verifyCode
+        });
+
         var config = {
             method: 'post',
-            url: axios.defaults.baseURL + '/api/student/verify-forget-password?student-code='+userCode,
+            url: axios.defaults.baseURL + '/api/auth/verify-code',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
         };
 
         axios(config)
             .then(function (response) {
                 if(response.status===200){
-                    const {valueKey}=response.data
-                    console.log(valueKey);
-                    sessionStorage.setItem(VALUE_KEY, valueKey);
-                    navigate("/verify-code");
+                    const {valueKey,codeValue}=response.data;
+                    console.log(valueKey+" - "+codeValue)
+                    sessionStorage.setItem(VALUE_KEY, valueKey)
+                    sessionStorage.setItem(VERIFY_CODE, codeValue)
+
+                    navigate("/register-user");
                     setLoading(false);
                 }
                 
@@ -52,7 +64,7 @@ function VerifyForgotPassword() {
             .catch(function (error) {
                 if(error.response.status===400 || error.response.status===404){
                     setValid('block')
-                    // setErorrMess(error.response.data)
+                    setErorrMess(error.response.data)
                     setLoading(false);
 
                 }
@@ -65,25 +77,26 @@ function VerifyForgotPassword() {
             <Banner />
             <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center' }}>
                 <img src={background} alt="Login" style={{ width: '30%', height: 'auto' }} />
-                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px'}}>
-                    <Typography variant='h6' component='div' color="#000000">Quên mật khẩu?</Typography>
+                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px' }}>
+                    <Typography variant='h6' component='div' color="#000000">Xác thực email của bạn</Typography>
+                    <Typography style={{margin:'8px 0',fontSize:'12px'}} variant='p' component='div' color="#000000">Vui lòng nhập mã xác thực có 6 số đã gửi đến mail của bạn</Typography>
                     <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Mã sinh viên</InputLabel>
+                        <InputLabel htmlFor="outlined-adornment-password">Mã xác thực</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-text"
                             type='text'
-                            value={userCode} onChange={handleChangeUserCode}
-                            label="Username"
+                            value={verifyCode} onChange={handleChangeVerifyCode}
+                            label="Mã xác thực"
                         />
                     </FormControl><br />
 
-                    <strong style={{ color: "red", display: `${isValid}` }}>{erorrMess}</strong><br />
+                    <strong style={{ color: "red", display: `${isValid}` }}>{erorrMess}!</strong><br />
                     <LoadingButton variant="contained"
                         size="large"
                         type="submit"
                         loading={loading}
                         onClick={handleSunmit}>
-                        Xác nhận
+                        Xác thực
                     </LoadingButton>
                 </div>
             </div>
@@ -92,5 +105,5 @@ function VerifyForgotPassword() {
     )
 }
 
-export default VerifyForgotPassword
+export default RegisterVerifyCode
 
