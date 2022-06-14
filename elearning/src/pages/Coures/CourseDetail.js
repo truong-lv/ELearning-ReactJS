@@ -2,8 +2,11 @@ import { Fragment, useState, useEffect } from 'react'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button';
+import Backdrop from '@mui/material/Backdrop';
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from "axios"
 
 import { useNavigate, useParams } from 'react-router-dom'
@@ -27,7 +30,13 @@ function CourseDetail() {
     const [teacherInfos, setTeacherInfos] = useState([]);
     const { id } = useParams();
 
+    const [loading, setLoading] = useState(false);
+
     let navigate = useNavigate();
+
+    const handleCloseLoadding = () => {
+        setLoading(false);
+    };
 
     const handleBtnMember = () => {
         navigate(`/member/credit_class_id=${id}`)
@@ -44,16 +53,18 @@ function CourseDetail() {
 
 
     useEffect(() => {
+        setLoading(true);
         const token = localStorage.getItem('accessToken')
         axios.get(`/api/credit-class/creditclass-detail?creditclass_id=${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
+            setLoading(false);
             setInfo(response.data)
             setTeacherInfos(response.data.teacherInfos)
             setListExercises(response.data.excercises)
-        }).catch(error => console.log(error))
+        }).catch(error => { console.log(error); setLoading(false); })
     }, [])
 
     return (
@@ -109,6 +120,12 @@ function CourseDetail() {
                     </Grid>
                 </Box>
             </Container>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+                onClick={handleCloseLoadding}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Fragment >
     )
 }
