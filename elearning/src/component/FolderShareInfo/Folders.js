@@ -70,7 +70,7 @@ function Row(props) {
             const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' })
             const link = document.createElement('a')
             link.href = window.URL.createObjectURL(blob)
-            // link.download = doc.documentName
+            link.download = doc.documentName
             link.click()
         }).catch(error => console.log(error))
     }

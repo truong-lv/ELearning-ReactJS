@@ -7,6 +7,9 @@ import axios from 'axios'
 import { Fragment } from 'react'
 
 import Navbar from "../../component/Navbar/Nabar"
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -18,6 +21,8 @@ import Folders from '../../component/FolderShareInfo/Folders'
 import style from './style.module.scss'
 import { useParams, useLocation } from 'react-router-dom'
 
+
+
 function FolderShare() {
 
     const [data, setData] = useState([])
@@ -26,7 +31,11 @@ function FolderShare() {
     const teacherArray = location.state.teacherInfos;
     let teacherNames = '';
 
+    const [loading, setLoading] = useState(false);
 
+    const handleCloseLoadding = () => {
+        setLoading(false);
+    };
 
     const handleTeacherArray = (() => {
         teacherArray.map((value) => {
@@ -41,14 +50,16 @@ function FolderShare() {
 
 
     useEffect(() => {
+        setLoading(true);
         const token = localStorage.getItem('accessToken')
         axios.get(`/api/credit-class/creditclass-detail?creditclass_id=${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         }).then((response) => {
+            setLoading(false);
             setData(response.data.folders)
-        }).catch(error => console.log(error))
+        }).catch(error => { console.log(error); setLoading(false); })
     }, [])
 
     return (
@@ -73,6 +84,12 @@ function FolderShare() {
                     </Grid>
                 </Box>
             </Container>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+                onClick={handleCloseLoadding}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Fragment >
     )
 
