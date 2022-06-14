@@ -172,7 +172,7 @@ export default function FormDialog({isOpen, handleClose, creditClass, timeline,t
       if(startLesson===0){setCheckStartLesson(true); isError=true }else{setCheckStartLesson(false)}
       if(endLesson===0){setCheckEndLesson(true); isError=true }else{setCheckEndLesson(false)}
       if(roomId===0){setCheckRoomId(true); isError=true }else{setCheckRoomId(false)}
-
+      //update
       return isError;
     }
 
