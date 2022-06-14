@@ -5,9 +5,19 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+
+import axios from 'axios'
+import AppToast from '../../myTool/AppToast'
 import CourseDetail from '../../pages/Coures/CourseDetail'
 
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 import './style.css'
 import courseIcon from "../../assets/image/course-icon.png"
@@ -17,15 +27,77 @@ function Course({ course, fullWidth }) {
 
 
     let navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [inviteCode, setInviteCode] = useState('');
+    const [contentError, setContentError] = useState('');
+    const [openToastError, setOpenToastError] = useState(false);
 
-    const handleCourseItem = () => {
-        navigate(`/CourseDetail/credit_class_id=${course.creditClassId}`)
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleFillInviteCode = (e) => {
+
+        if (e.target.value === "") {
+            setIsError(true);
+        }
+        else {
+            setIsError(false);
+            setInviteCode(parseFloat(e.target.value))
+        }
+    }
+
+    const handleJoinClass = (creditClassId) => {
+
+        const token = localStorage.getItem('accessToken');
+        var config = {
+            method: 'post',
+            url: axios.defaults.baseURL + `/api/user/join-class`,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({ "creditClassId": creditClassId, "joinCode": inviteCode })
+        };
+        axios(config)
+            .then(function (response) {
+                if (response.status === 200) {
+                    navigate(`/CourseDetail/credit_class_id=${creditClassId}`)
+                }
+            })
+            .catch(function (error) {
+                setOpenToastError(true);
+                setContentError("Mã mời không chính xác");
+            });
+
+    }
+
+    const handleCourseItem = (creditClassId) => {
+        const token = localStorage.getItem('accessToken')
+        var config = {
+            method: 'post',
+            url: axios.defaults.baseURL + `/api/user/check-joined?creditclass-id=${creditClassId}`,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        };
+
+        axios(config)
+            .then(function (response) {
+                if (response.status === 200) {
+                    navigate(`/CourseDetail/credit_class_id=${creditClassId}`)
+                }
+            })
+            .catch(function (error) {
+                setOpen(true);
+            });
 
     }
 
     return (
         <Grid item={true} xs={4} md={fullWidth === false ? 3 : 2.4}  >
-            <Card className="course-box" title={course.subjectName} onClick={handleCourseItem}>
+            <Card className="course-box" title={course.subjectName} onClick={() => handleCourseItem(course.creditClassId)}>
                 <CardActionArea>
                     <div className="course-img" ><img src={courseIcon} alt="courseIcon" /></div>
                     <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
@@ -44,6 +116,29 @@ function Course({ course, fullWidth }) {
                     </CardContent>
                 </CardActionArea>
             </Card>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Vui lòng nhập mã mời để vào lớp</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Mã mời"
+                        type="value"
+                        fullWidth
+                        variant="standard"
+                        helperText={isError ? "Mã mời không được bỏ trống" : ""}
+                        onChange={(e) => handleFillInviteCode(e)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Hủy</Button>
+                    <Button onClick={() => handleJoinClass(course.creditClassId)}>Đồng ý</Button>
+                </DialogActions>
+            </Dialog>
+            <AppToast content={contentError} type={1} isOpen={openToastError} callback={() => {
+                setOpenToastError(false);
+            }} />
         </Grid>
     )
 }

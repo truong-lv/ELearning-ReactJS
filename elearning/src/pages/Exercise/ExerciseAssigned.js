@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 import { useState, useEffect, Fragment } from 'react'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 
 import style from './style.module.scss'
 import AppToast from '../../myTool/AppToast'
@@ -30,6 +31,7 @@ function ExerciseAssigned() {
     var startTimeExercise = '';
     var endTimeExercise = '';
     let teacherNames = '';
+    let navigate = useNavigate();
 
     const { id, subjectName } = useParams();
     const [open, setOpen] = useState(false);
@@ -45,6 +47,9 @@ function ExerciseAssigned() {
     const [content, setContent] = useState('');
     const [openToast, setOpenToast] = useState(false);
     const [toastMess, setToastMess] = useState('');
+
+    const userRoles = useSelector(state => state.infor.roles || [])
+    const isTeacherModer = userRoles.some(role => role === 'ROLE_TEACHER' || role === 'ROLE_MODERATOR')
 
 
     const Input = styled('input')({
@@ -112,31 +117,13 @@ function ExerciseAssigned() {
         axios(config)
             .then(function (response) {
                 if (response.status === 200) {
-                    setOpenToast(true);
-                    setToastMess("Thêm bài tập thành công")
-                    // window.location.reload()
+                    navigate(`/CourseDetail/credit_class_id=${id}`);
                 }
             })
             .catch(function (error) {
                 console.log(error);
-                // setOpenToast(true);
-                // setToastMess("Thêm bài tập thất bại")
             });
     }
-
-    // const onChange = (e) => {
-    //     let files = e.target.files;
-    //     let file;
-    //     for (let i = 0; i < files.length; i++) {
-    //         let reader = new FileReader();
-    //         file = files[i];
-    //         reader.readAsDataURL(file);
-    //         reader.onload = (e) => {
-    //             setFileSubmit([...fileSubmit, files[i]]);
-    //         }
-    //     }
-
-    // }
 
     return (
         <Fragment>
@@ -152,7 +139,7 @@ function ExerciseAssigned() {
                                 <Typography component="div" >
                                     {subjectName} - {teacherNames}
                                 </Typography>
-                                <Button onClick={() => handleAddExercise()} variant="contained" startIcon={<AddCircleOutlineIcon />} component="span" size="small" color='success' style={{ fontWeight: "bold", padding: "3px 20px" }}>
+                                <Button onClick={() => handleAddExercise()} variant="contained" startIcon={<AddCircleOutlineIcon />} component="span" size="small" color='success' style={{ fontWeight: "bold", padding: "3px 20px", display: isTeacherModer ? "inherit" : "none" }}>
                                     Thêm bài tập
                                 </Button>
                             </Grid>
