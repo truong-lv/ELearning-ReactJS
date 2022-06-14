@@ -12,14 +12,18 @@ import FomatDateTime from '../../myTool/fomatDateTime';
 
 import AppAvatar from '../../myTool/handleAvatar'
 
+import { useNavigate } from 'react-router-dom'
+
 const MyPost = ({ post }) => {
+
+  let navigate = useNavigate();
   return (
     <Card variant="outlined">
       <CardContent>
         <Grid container spacing={1}>
           <Grid item={true} md={0}>
             {/* <Avatar src={post.avartarPublisher} /> */}
-            <AppAvatar url={post.avartarPublisher}/>
+            <AppAvatar url={post.avartarPublisher} />
           </Grid>
           <Grid container item={true} md={11} direction='row'>
             <Grid container item={true} style={{ position: 'relative' }}>
@@ -44,7 +48,7 @@ const MyPost = ({ post }) => {
 
       </CardContent>
       <CardActions>
-        <Button style={{ margin: 'auto' }} size="small">Xem chi tiết</Button>
+        <Button style={{ margin: 'auto' }} size="small" onClick={() => { navigate(`/CourseDetail/credit_class_id=${post.creditClassId}`) }}>Xem chi tiết</Button>
       </CardActions>
     </Card>
   )

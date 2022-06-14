@@ -28,6 +28,11 @@
     max-height: 90px;
     overflow-y: hidden;
     overflow-x: hidden;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.05)
+    }
 }
 
 

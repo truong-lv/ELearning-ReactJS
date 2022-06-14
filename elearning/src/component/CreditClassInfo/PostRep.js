@@ -25,7 +25,6 @@ export default function PostRep({ id }) {
     }
 
     const callAPIAddComment = () => {
-
         const token = localStorage.getItem('accessToken')
         var config = {
             method: 'post',

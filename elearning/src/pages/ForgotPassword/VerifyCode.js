@@ -16,7 +16,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Typography from '@mui/material/Typography'
-import {VALUE_KEY, VERIFY_CODE} from '../../config'
+import { VALUE_KEY, VERIFY_CODE } from '../../config'
 
 function VerifyCode() {
     const [verifyCode, setVerifyCode] = useState('');
@@ -51,34 +51,34 @@ function VerifyCode() {
 
         axios(config)
             .then(function (response) {
-                if(response.status===200){
-                    const {valueKey,codeValue}=response.data;
-                    console.log(valueKey+" - "+codeValue)
+                if (response.status === 200) {
+                    const { valueKey, codeValue } = response.data;
+                    console.log(valueKey + " - " + codeValue)
                     sessionStorage.setItem(VALUE_KEY, valueKey)
                     sessionStorage.setItem(VERIFY_CODE, codeValue)
 
                     navigate("/recover-password");
                     setLoading(false);
                 }
-                
+
             })
             .catch(function (error) {
-                if(error.response.status===400 || error.response.status===404){
+                if (error.response.status === 400 || error.response.status === 404) {
                     setValid('block')
                     setErorrMess(error.response.data)
                     setLoading(false);
-                    
+
                 }
             });
     }
 
-   
+
     return (
         <div >
             <Banner />
             <div style={{ display: 'flex', marginTop: '20px', justifyContent: 'center' }}>
                 <img src={background} alt="Login" style={{ width: '30%', height: 'auto' }} />
-                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF',width: '40%',padding: '5px' }}>
+                <div style={{ border: '1px solid #CCCCCC', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#FFFF', width: '40%', padding: '5px' }}>
                     <Typography variant='h6' component='div' color="#000000">Xác thực email của bạn</Typography>
                     <Typography variant='p' component='div' color="#000000">Vui lòng nhập mã xác thực có 6 số đã gửi đến mail của bạn</Typography>
                     <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
