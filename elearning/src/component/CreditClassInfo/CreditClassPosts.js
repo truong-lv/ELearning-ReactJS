@@ -1,21 +1,15 @@
 
-
+import PostRep from './PostRep'
 import { Fragment } from 'react'
-
-import { Typography, CardMedia } from '@mui/material'
-import Avatar from '@mui/material/Avatar';
-
 import style from './CreditClass.module.scss'
 
+import { Typography } from '@mui/material'
+import AppAvatar from '../../myTool/handleAvatar';
 import FomatDateTime from '../../myTool/fomatDateTime'
 
-import stringAvatar from '../../myTool/handleAvatar';
-
-import axios from "axios"
-
-import PostRep from './PostRep'
 
 export default function CreditClassPosts({ posts }) {
+
     return (
         <Fragment>
             {posts === undefined ? "" :
@@ -27,9 +21,8 @@ export default function CreditClassPosts({ posts }) {
                                     <Typography sx={{ mt: 3 }} component="div" key={value.postId} className={style.postContainer}>
                                         < Typography variant="div" component="div" className={style.pd20} >
                                             <Typography variant="div" component="div" className={style.dlFlex}>
-                                                <div className={style.userAvatar}>
-                                                    {/* <Avatar {...stringAvatar(value.fullname)} /> */}
-                                                    {/* <Avatar show={stringAvatar(value.fullname).show} onHide={stringAvatar(value.fullname).onHide} /> */}
+                                                <div className={style.styleAvatar}>
+                                                    <AppAvatar url={value.avartarPublisher} imgSize={40} />
                                                 </div>
                                                 <Typography variant="div" component="div" style={{ display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>{value.fullname}</Typography>
                                                 <Typography variant="div" component="div" className={style.postTime}>

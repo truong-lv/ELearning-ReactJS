@@ -1,21 +1,20 @@
-import style from './style.module.scss'
-import Navbar from "../../component/Navbar/Nabar"
-import CreditClassInfo from "../../component/CreditClassInfo/CreditClassInfo"
-import CreditClassExercise from "../../component/CreditClassInfo/CreditClassExercise"
-import CreditClassFolder from "../../component/CreditClassInfo/CreditClassFolder"
-import CreditClassPosts from "../../component/CreditClassInfo/CreditClassPosts"
-
-import { Fragment } from 'react'
-import { useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 import axios from "axios"
 
 import { useNavigate, useParams } from 'react-router-dom'
+
+import style from './style.module.scss'
+import Navbar from "../../component/Navbar/Nabar"
 import member from '../../assets/image/member.png'
+import CreditClassInfo from "../../component/CreditClassInfo/CreditClassInfo"
+import CreditClassExercise from "../../component/CreditClassInfo/CreditClassExercise"
+import CreditClassFolder from "../../component/CreditClassInfo/CreditClassFolder"
+import CreditClassPosts from "../../component/CreditClassInfo/CreditClassPosts"
 
 
 

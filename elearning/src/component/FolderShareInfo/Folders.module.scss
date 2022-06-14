@@ -22,11 +22,7 @@
         display: flex;
         align-items: center;
 
-        .imgFolder {
-            width: 30px;
-            height: 30px;
-            margin: 0 28px;
-        }
+
     }
 
     .teacherName {
@@ -37,4 +33,22 @@
     .upTime {
         margin-right: 40px;
     }
+}
+
+.imgFolder {
+    width: 30px;
+    height: 30px;
+    margin: 0 28px;
+}
+
+
+//------------------------------------------------tableHeader-----------------------------------------------
+
+
+.bold {
+    font-weight: bold;
+}
+
+.tableHeader {
+    background-color: #C7D9FD;
 }
