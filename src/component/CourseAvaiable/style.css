@@ -1,0 +1,19 @@
+
+.course-img{
+    display: flex;
+    justify-content: center;
+}
+
+.course-box{
+    border: 1px solid rgba(62, 83, 207, 0.3);
+}
+
+.course-star-img{
+    position: absolute;
+    top: 20;
+    right: 20;
+    width:20px;
+    height:20px;
+    z-index: 99;
+
+}
