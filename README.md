@@ -5,7 +5,7 @@
 <table>
     <tr>
         <td align="center">
-        <a href="[https://github.com/Phong-Kaster](https://github.com/huynhphuocsang)">
+        <a href="https://github.com/huynhphuocsang">
             <img src="https://avatars.githubusercontent.com/u/64321224?v=4" width="100px;" alt=""/>
             <br />
             <sub><b>Huỳnh Phước Sang</b></sub>
